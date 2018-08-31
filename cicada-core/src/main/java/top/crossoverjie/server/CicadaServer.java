@@ -1,6 +1,7 @@
 package top.crossoverjie.server;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -8,8 +9,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.crossoverjie.server.init.CicadaInitializer;
-
-import java.net.InetSocketAddress;
 
 /**
  * Function:
@@ -27,15 +26,22 @@ public class CicadaServer {
 
     public static void main(String[] args) throws InterruptedException {
 
-        ServerBootstrap bootstrap = new ServerBootstrap()
-                .group(boss, work)
-                .channel(NioServerSocketChannel.class)
-                .localAddress(new InetSocketAddress(7317))
-                .childHandler(new CicadaInitializer());
+        try {
+            ServerBootstrap bootstrap = new ServerBootstrap()
+                    .group(boss, work)
+                    .channel(NioServerSocketChannel.class)
+                    .childHandler(new CicadaInitializer());
 
-        ChannelFuture future = bootstrap.bind().sync();
-        if (future.isSuccess()) {
-            LOGGER.info("启动 Netty 成功");
+            ChannelFuture future = bootstrap.bind(7317).sync();
+            if (future.isSuccess()) {
+                LOGGER.info("启动 Netty 成功");
+            }
+            Channel channel = future.channel();
+            channel.closeFuture().sync();
+
+        }finally {
+            boss.shutdownGracefully();
+            work.shutdownGracefully();
         }
     }
 }

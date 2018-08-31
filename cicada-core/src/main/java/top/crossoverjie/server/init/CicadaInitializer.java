@@ -2,8 +2,11 @@ package top.crossoverjie.server.init;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
+import io.netty.handler.codec.http.HttpRequestDecoder;
+import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import top.crossoverjie.server.http.HttpHandle;
 
 /**
  * Function:
@@ -15,6 +18,10 @@ import io.netty.handler.logging.LoggingHandler;
 public class CicadaInitializer extends ChannelInitializer<Channel> {
     @Override
     protected void initChannel(Channel ch) throws Exception {
-        ch.pipeline().addLast("logging", new LoggingHandler(LogLevel.INFO));
+        ch.pipeline()
+                .addLast(new HttpRequestDecoder())
+                .addLast(new HttpResponseEncoder())
+                .addLast(new HttpHandle())
+                .addLast("logging", new LoggingHandler(LogLevel.INFO));
     }
 }
