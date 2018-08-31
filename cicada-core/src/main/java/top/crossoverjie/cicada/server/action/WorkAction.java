@@ -10,7 +10,12 @@ import top.crossoverjie.cicada.server.action.req.WorkReq;
  *         Date: 2018/8/31 15:58
  * @since JDK 1.8
  */
-public interface WorkAction<T> {
+public interface WorkAction {
 
-    WorkRes<T> process(WorkReq workReq) ;
+    /**
+     * abstract execute method
+     * @param workReq
+     * @return
+     */
+    WorkRes execute(WorkReq workReq) ;
 }

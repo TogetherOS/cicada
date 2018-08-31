@@ -7,8 +7,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import top.crossoverjie.cicada.server.init.CicadaInitializer;
+import top.crossoverjie.cicada.server.util.LoggerBuilder;
 
 /**
  * Function:
@@ -19,27 +19,31 @@ import top.crossoverjie.cicada.server.init.CicadaInitializer;
  */
 public class CicadaServer {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(CicadaServer.class);
+    private final static Logger LOGGER = LoggerBuilder.getLogger(CicadaServer.class) ;
 
     private static EventLoopGroup boss = new NioEventLoopGroup();
     private static EventLoopGroup work = new NioEventLoopGroup();
 
     public static void start(String[] args) throws InterruptedException {
 
+        long start = System.currentTimeMillis();
+
+        int port = 7317;
         try {
             ServerBootstrap bootstrap = new ServerBootstrap()
                     .group(boss, work)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new CicadaInitializer());
 
-            ChannelFuture future = bootstrap.bind(7317).sync();
+            ChannelFuture future = bootstrap.bind(port).sync();
             if (future.isSuccess()) {
-                LOGGER.info("启动 Netty 成功");
+                long end = System.currentTimeMillis();
+                LOGGER.info("start server success,port=[{}] for [{}]ms", port ,end-start);
             }
             Channel channel = future.channel();
             channel.closeFuture().sync();
 
-        }finally {
+        } finally {
             boss.shutdownGracefully();
             work.shutdownGracefully();
         }

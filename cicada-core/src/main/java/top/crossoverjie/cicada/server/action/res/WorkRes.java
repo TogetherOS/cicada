@@ -7,7 +7,7 @@ package top.crossoverjie.cicada.server.action.res;
  *         Date: 2018/8/31 16:03
  * @since JDK 1.8
  */
-public abstract class WorkRes<T> {
+public class WorkRes<T> {
     private String code;
 
     private String message;
