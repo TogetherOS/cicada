@@ -1,4 +1,4 @@
-package top.crossoverjie.server.action.req;
+package top.crossoverjie.cicada.server.action.req;
 
 public abstract class WorkReq {
 

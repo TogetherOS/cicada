@@ -1,4 +1,4 @@
-package top.crossoverjie.server.init;
+package top.crossoverjie.cicada.server.init;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -6,7 +6,7 @@ import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import top.crossoverjie.server.http.HttpHandle;
+import top.crossoverjie.cicada.server.http.HttpHandle;
 
 /**
  * Function:

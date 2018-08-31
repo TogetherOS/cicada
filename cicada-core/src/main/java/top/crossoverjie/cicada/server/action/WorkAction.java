@@ -1,7 +1,7 @@
-package top.crossoverjie.server.action;
+package top.crossoverjie.cicada.server.action;
 
-import top.crossoverjie.server.action.res.WorkRes;
-import top.crossoverjie.server.action.req.WorkReq;
+import top.crossoverjie.cicada.server.action.res.WorkRes;
+import top.crossoverjie.cicada.server.action.req.WorkReq;
 
 /**
  * Function:

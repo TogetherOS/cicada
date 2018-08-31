@@ -1,4 +1,4 @@
-package top.crossoverjie.server.action.res;
+package top.crossoverjie.cicada.server.action.res;
 
 /**
  * Function:

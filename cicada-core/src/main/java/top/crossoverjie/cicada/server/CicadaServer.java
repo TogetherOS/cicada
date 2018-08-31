@@ -1,4 +1,4 @@
-package top.crossoverjie.server;
+package top.crossoverjie.cicada.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -8,7 +8,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.crossoverjie.server.init.CicadaInitializer;
+import top.crossoverjie.cicada.server.init.CicadaInitializer;
 
 /**
  * Function:
@@ -24,7 +24,7 @@ public class CicadaServer {
     private static EventLoopGroup boss = new NioEventLoopGroup();
     private static EventLoopGroup work = new NioEventLoopGroup();
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void start(String[] args) throws InterruptedException {
 
         try {
             ServerBootstrap bootstrap = new ServerBootstrap()

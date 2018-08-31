@@ -1,4 +1,4 @@
-package top.crossoverjie.server.http;
+package top.crossoverjie.cicada.server.http;
 
 import com.alibaba.fastjson.JSON;
 import io.netty.buffer.Unpooled;
@@ -8,7 +8,7 @@ import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.crossoverjie.server.model.Msg;
+import top.crossoverjie.cicada.server.model.Msg;
 
 /**
  * Function:

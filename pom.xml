@@ -10,6 +10,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>cicada-core</module>
+        <module>cicada-example</module>
     </modules>
 
     <properties>

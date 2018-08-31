@@ -1,4 +1,4 @@
-package top.crossoverjie.server.model;
+package top.crossoverjie.cicada.server.model;
 
 /**
  * Function:
