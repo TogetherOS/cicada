@@ -1,6 +1,7 @@
 package top.crossoverjie.cicada.example.action;
 
 import org.slf4j.Logger;
+import top.crossoverjie.cicada.example.enums.StatusEnum;
 import top.crossoverjie.cicada.example.req.DemoReq;
 import top.crossoverjie.cicada.example.res.DemoResVO;
 import top.crossoverjie.cicada.server.action.WorkAction;
@@ -32,8 +33,8 @@ public class DemoAction implements WorkAction {
         DemoResVO demoResVO = new DemoResVO() ;
         demoResVO.setIndex(index.incrementAndGet());
         WorkRes<DemoResVO> res = new WorkRes();
-        res.setCode("200");
-        res.setMessage("success");
+        res.setCode(StatusEnum.SUCCESS.getCode());
+        res.setMessage(StatusEnum.SUCCESS.getMessage());
         res.setDataBody(demoResVO) ;
         return res;
     }
