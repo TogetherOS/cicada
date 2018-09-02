@@ -32,6 +32,8 @@ Lightweight HTTP service framework.
 - [x] `json` 响应格式。
 - [x] 基于 `jar` 启动。
 - [ ] 多种路由风格。
+- [ ] `Cookie` 支持。
+- [ ] 文件上传。
 
 
 ## 快速启动
@@ -88,7 +90,7 @@ public class DemoAction implements WorkAction {
 }
 ```
 
-启动应用访问 [http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10](http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10)：
+启动应用访问 [http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10](http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10)
 
 ![](https://ws1.sinaimg.cn/large/006tNbRwly1fuvibn4xavj31ei074dgj.jpg)
 
