@@ -72,9 +72,6 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
             // Response
             responseMsg(ctx, execute);
 
-        }else {
-            LOGGER.error("only support http request!");
-            ctx.close() ;
         }
 
     }
