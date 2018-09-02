@@ -46,16 +46,9 @@ Lightweight HTTP service framework.
 </dependency>
 ```
 
-创建启动类：
+启动类：
 
-```java
-public class MainStart {
-
-    public static void main(String[] args) throws InterruptedException {
-        CicadaServer.start(MainStart.class,"/cicada-example") ;
-    }
-}
-```
+![](https://ws4.sinaimg.cn/large/006tNbRwly1fuvijd84vhj30zk0fignz.jpg)
 
 ### 配置业务 Action
 
