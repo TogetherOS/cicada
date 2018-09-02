@@ -23,7 +23,7 @@ Lightweight HTTP service framework.
 
 Fast, lightweight Web framework based on Netty; without too much dependency, and the core jar package is only `30KB`.
 
-If you are interested, please click [star](https://github.com/crossoverJie/cicada/stargazers).
+If you are interested, please click [Star](https://github.com/crossoverJie/cicada/stargazers).
 
 ## Features
 
