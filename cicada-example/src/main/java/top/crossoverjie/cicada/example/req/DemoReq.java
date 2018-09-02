@@ -11,7 +11,16 @@ import top.crossoverjie.cicada.server.action.req.WorkReq;
  */
 public class DemoReq extends WorkReq {
 
+    private Integer id ;
     private String name ;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -24,7 +33,8 @@ public class DemoReq extends WorkReq {
     @Override
     public String toString() {
         return "DemoReq{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 "} " + super.toString();
     }
 }

@@ -2,11 +2,11 @@ package top.crossoverjie.cicada.example.action;
 
 import org.slf4j.Logger;
 import top.crossoverjie.cicada.example.enums.StatusEnum;
-import top.crossoverjie.cicada.example.req.DemoReq;
 import top.crossoverjie.cicada.example.res.DemoResVO;
 import top.crossoverjie.cicada.server.action.WorkAction;
-import top.crossoverjie.cicada.server.action.req.WorkReq;
+import top.crossoverjie.cicada.server.action.param.Param;
 import top.crossoverjie.cicada.server.action.res.WorkRes;
+import top.crossoverjie.cicada.server.annotation.CicadaAction;
 import top.crossoverjie.cicada.server.util.LoggerBuilder;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -18,6 +18,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *         Date: 2018/8/31 18:52
  * @since JDK 1.8
  */
+@CicadaAction(value = "demoAction")
 public class DemoAction implements WorkAction {
 
 
@@ -26,9 +27,10 @@ public class DemoAction implements WorkAction {
     private static AtomicLong index = new AtomicLong() ;
 
     @Override
-    public WorkRes<DemoResVO> execute(WorkReq workReq) {
-        DemoReq req = (DemoReq) workReq ;
-        LOGGER.info("request=[{}]" , req.toString());
+    public WorkRes<DemoResVO> execute(Param paramMap) {
+        String name = paramMap.getString("name");
+        Integer id = paramMap.getInteger("id");
+        LOGGER.info("name=[{}],id=[{}]" , name,id);
 
         DemoResVO demoResVO = new DemoResVO() ;
         demoResVO.setIndex(index.incrementAndGet());
@@ -38,4 +40,5 @@ public class DemoAction implements WorkAction {
         res.setDataBody(demoResVO) ;
         return res;
     }
+
 }

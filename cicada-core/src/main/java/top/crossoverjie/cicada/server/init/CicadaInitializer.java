@@ -6,7 +6,7 @@ import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import top.crossoverjie.cicada.server.http.HttpHandle;
+import top.crossoverjie.cicada.server.handle.HttpHandle;
 
 /**
  * Function:

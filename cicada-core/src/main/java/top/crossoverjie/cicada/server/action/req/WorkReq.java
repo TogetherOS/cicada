@@ -1,14 +1,17 @@
 package top.crossoverjie.cicada.server.action.req;
 
-public abstract class WorkReq {
+/**
+ * @author crossoverJie
+ */
+public class WorkReq {
 
-    private int timeStamp;
+    private Integer timeStamp;
 
-    public int getTimeStamp() {
+    public Integer getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(int timeStamp) {
+    public void setTimeStamp(Integer timeStamp) {
         this.timeStamp = timeStamp;
     }
 
