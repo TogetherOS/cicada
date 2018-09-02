@@ -90,7 +90,15 @@ public class DemoAction implements WorkAction {
 
 启动应用访问 [http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10](http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10)
 
-![](https://ws1.sinaimg.cn/large/006tNbRwly1fuvibn4xavj31ei074dgj.jpg)
+```json
+{
+    "code": "9000",
+    "dataBody": {
+        "index": 1
+    },
+    "message": "成功"
+}
+```
 
 
 ## 自定义拦截器
