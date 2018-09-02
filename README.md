@@ -27,15 +27,15 @@ If you are interested, please click [Star](https://github.com/crossoverJie/cicad
 
 ## Features
 
-- [x] clean code, without too much dependency.
+- [x] Clean code, without too much dependency.
 - [x] One line of code to start the HTTP service.
 - [x] Custom interceptor.
-- [x] flexible parameters way.
-- [x] response `json`.
-- [x] start whith `jar`.
+- [x] Flexible parameters way.
+- [x] Response `json`.
+- [x] Start whith `jar`.
 - [ ] Multiple routing ways.
-- [ ] support `HTTPS`.
-- [ ] support `Cookie`.
+- [ ] Support `HTTPS`.
+- [ ] Support `Cookie`.
 - [ ] File Upload。
 
 
