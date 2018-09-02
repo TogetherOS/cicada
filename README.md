@@ -48,7 +48,9 @@ Lightweight HTTP service framework.
 
 启动类：
 
-![](https://ws4.sinaimg.cn/large/006tNbRwly1fuvijd84vhj30zk0fignz.jpg)
+
+<img src="https://ws4.sinaimg.cn/large/006tNbRwly1fuvijd84vhj30zk0fignz.jpg" width="300"/> 
+<br/>
 
 ### 配置业务 Action
 
