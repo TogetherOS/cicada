@@ -22,7 +22,7 @@ Fast, lightweight Web framework based on Netty; without too much dependency, and
 
 If you are interested, please click [star](https://github.com/crossoverJie/cicada/stargazers).
 
-## features
+## Features
 
 - [x] clean code, without too much dependency.
 - [x] One line of code to start the HTTP service.
