@@ -1,7 +1,7 @@
 
 <div align="center">  
 
-<img src="https://ws3.sinaimg.cn/large/006tNbRwly1fuvfxbc7y1j30go0e9aay.jpg)" width=""/> 
+<img src="https://ws3.sinaimg.cn/large/006tNbRwly1fuvfxbc7y1j30go0e9aay.jpg" width=""/> 
 <br/>
 
 [![Build Status](https://travis-ci.org/crossoverJie/cicada.svg?branch=master)](https://travis-ci.org/crossoverJie/cicada)
