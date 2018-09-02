@@ -58,7 +58,6 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
             Param paramMap = buildParamMap(queryStringDecoder);
 
 
-
             //interceptor before
             interceptorBefore(interceptors, appConfig, paramMap);
 
@@ -73,6 +72,9 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
             // Response
             responseMsg(ctx, execute);
 
+        }else {
+            LOGGER.error("only support http request!");
+            ctx.close() ;
         }
 
     }
