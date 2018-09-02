@@ -48,9 +48,14 @@ Lightweight HTTP service framework.
 
 启动类：
 
+```java
+public class MainStart {
 
-<img src="https://ws4.sinaimg.cn/large/006tNbRwly1fuvijd84vhj30zk0fignz.jpg" width="300"/> 
-<br/>
+    public static void main(String[] args) throws InterruptedException {
+        CicadaServer.start(MainStart.class,"/cicada-example") ;
+    }
+}
+```
 
 ### 配置业务 Action
 
@@ -90,14 +95,55 @@ public class DemoAction implements WorkAction {
 
 ## 自定义拦截器
 
-实现 `top.crossoverjie.cicada.example.intercept.CicadaInterceptor` 
+实现 `top.crossoverjie.cicada.example.intercept.CicadaInterceptor` 接口。
 
+```java
+@Interceptor(value = "executeTimeInterceptor")
+public class ExecuteTimeInterceptor implements CicadaInterceptor {
+
+    private static final Logger LOGGER = LoggerBuilder.getLogger(ExecuteTimeInterceptor.class);
+
+    private Long start;
+
+    private Long end;
+
+    @Override
+    public void before(Param param) {
+        start = System.currentTimeMillis();
+    }
+
+    @Override
+    public void after(Param param) {
+        end = System.currentTimeMillis();
+
+        LOGGER.info("cast [{}] times", end - start);
+    }
+}
+```
 
 ### 拦截适配器
 
+同样也可以只实现其中一个方法，只需要继承 `top.crossoverjie.cicada.server.intercept.AbstractCicadaInterceptorAdapter` 抽象类。
+
+```java
+@Interceptor(value = "loggerInterceptor")
+public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter {
+
+    private static final Logger LOGGER = LoggerBuilder.getLogger(LoggerInterceptorAbstract.class) ;
+
+    @Override
+    public void before(Param param) {
+        LOGGER.info("logger param=[{}]",param.toString());
+    }
+
+}
+```
 
 
 ## 联系作者
 
 
+> crossoverJie#gmail.com
+
+<img src="https://ws2.sinaimg.cn/large/006tKfTcly1fsa01u7ro1j30gs0howfq.jpg" width="300"/> 
 
