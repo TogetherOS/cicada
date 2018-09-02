@@ -1,2 +1,3 @@
 # cicada
-cicada: a fast HTTP server
+
+Fast HTTP server framework.
