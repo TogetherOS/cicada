@@ -32,6 +32,7 @@ Lightweight HTTP service framework.
 - [x] `json` 响应格式。
 - [x] 基于 `jar` 启动。
 - [ ] 多种路由风格。
+- [ ] `HTTP` 支持。
 - [ ] `Cookie` 支持。
 - [ ] 文件上传。
 
