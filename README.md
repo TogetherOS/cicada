@@ -37,7 +37,7 @@ If you are interested, please click [Star](https://github.com/crossoverJie/cicad
 - [ ] Multiple routing ways.
 - [ ] Support `HTTPS`.
 - [ ] Support `Cookie`.
-- [ ] File Upload。
+- [ ] File Upload.
 
 
 ## Quick Start
