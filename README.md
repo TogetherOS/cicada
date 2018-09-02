@@ -21,7 +21,7 @@ Lightweight HTTP service framework.
 
 ## 简介
 
-基于 Netty4 实现的快速、轻量级 WEB 框架；没有过多的依赖，核心 jar 包仅仅 30KB。
+基于 Netty4 实现的快速、轻量级 WEB 框架；没有过多的依赖，核心 jar 包仅 `30KB`。
 
 ## 特性
 
@@ -36,10 +36,66 @@ Lightweight HTTP service framework.
 
 ## 快速启动
 
+创建一个 maven 项目，引入核心依赖。
 
+```java
+<dependency>
+    <groupId>top.crossoverjie.opensource</groupId>
+    <artifactId>cicada-core</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+创建启动类：
+
+```java
+public class MainStart {
+
+    public static void main(String[] args) throws InterruptedException {
+        CicadaServer.start(MainStart.class,"/cicada-example") ;
+    }
+}
+```
+
+### 配置业务 Action
+
+创建业务 Action 实现 `top.crossoverjie.cicada.server.action.WorkAction` 接口。
+
+```java
+@CicadaAction(value = "demoAction")
+public class DemoAction implements WorkAction {
+
+
+    private static final Logger LOGGER = LoggerBuilder.getLogger(DemoAction.class) ;
+
+    private static AtomicLong index = new AtomicLong() ;
+
+    @Override
+    public WorkRes<DemoResVO> execute(Param paramMap) throws Exception {
+        String name = paramMap.getString("name");
+        Integer id = paramMap.getInteger("id");
+        LOGGER.info("name=[{}],id=[{}]" , name,id);
+
+        DemoResVO demoResVO = new DemoResVO() ;
+        demoResVO.setIndex(index.incrementAndGet());
+        WorkRes<DemoResVO> res = new WorkRes();
+        res.setCode(StatusEnum.SUCCESS.getCode());
+        res.setMessage(StatusEnum.SUCCESS.getMessage());
+        res.setDataBody(demoResVO) ;
+        return res;
+    }
+
+}
+```
+
+启动应用访问 [http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10](http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10)：
+
+![](https://ws1.sinaimg.cn/large/006tNbRwly1fuvibn4xavj31ei074dgj.jpg)
 
 
 ## 自定义拦截器
+
+实现 `top.crossoverjie.cicada.example.intercept.CicadaInterceptor` 
 
 
 ### 拦截适配器

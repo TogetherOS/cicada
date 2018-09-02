@@ -1,4 +1,4 @@
-package top.crossoverjie.cicada.example.Intercept;
+package top.crossoverjie.cicada.example.intercept;
 
 import org.slf4j.Logger;
 import top.crossoverjie.cicada.server.action.param.Param;

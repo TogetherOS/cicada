@@ -16,6 +16,7 @@ public interface WorkAction {
      * abstract execute method
      * @param param
      * @return
+     * @throws Exception
      */
     WorkRes execute(Param param) throws Exception;
 }

@@ -11,7 +11,7 @@ import top.crossoverjie.cicada.server.CicadaServer;
  */
 public class MainStart {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws Exception {
         CicadaServer.start(MainStart.class,"/cicada-example") ;
     }
 }
