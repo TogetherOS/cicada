@@ -13,6 +13,9 @@
 
 </div><br>
 
+[中文文档](https://github.com/crossoverJie/cicada/blob/master/README-ZH.md)
+
+---
 
 ## Introduction
 
