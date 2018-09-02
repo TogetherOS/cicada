@@ -1,3 +1,3 @@
 # cicada
 
-Fast HTTP server framework.
+Lightweight HTTP service framework.

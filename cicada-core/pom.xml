@@ -12,17 +12,6 @@
     <artifactId>cicada-core</artifactId>
     <packaging>jar</packaging>
 
-    <developers>
-        <developer>
-            <name>jie.chen</name>
-            <id>crossoverJie</id>
-            <email>crossoverjie@gmail.com</email>
-            <roles>
-                <role>Project Lead</role>
-            </roles>
-        </developer>
-    </developers>
-
     <dependencies>
         <dependency>
             <groupId>io.netty</groupId>
