@@ -41,6 +41,7 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
         if (msg instanceof DefaultHttpRequest) {
             DefaultHttpRequest request = (DefaultHttpRequest) msg;
 
+            //interceptor cache
             List<CicadaInterceptor> interceptors = new ArrayList<>() ;
 
             String uri = request.uri();
@@ -59,15 +60,7 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
 
 
             //interceptor before
-            Map<String, Class<?>> cicadaInterceptor = ClassScanner.getCicadaInterceptor(appConfig.getRootPackageName());
-            for (Map.Entry<String, Class<?>> classEntry : cicadaInterceptor.entrySet()) {
-                Class<?> interceptorClass = classEntry.getValue();
-                CicadaInterceptor interceptor = (CicadaInterceptor) interceptorClass.newInstance();
-                interceptor.before(paramMap) ;
-
-                //add cache
-                interceptors.add(interceptor);
-            }
+            interceptorBefore(interceptors, appConfig, paramMap);
 
             // execute Method
             WorkAction action = (WorkAction) actionClazz.newInstance();
@@ -75,15 +68,43 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
 
 
             //interceptor after
-            for (CicadaInterceptor interceptor : interceptors) {
-                interceptor.after(paramMap);
-            }
+            interceptorAfter(interceptors, paramMap);
 
             // Response
             responseMsg(ctx, execute);
 
         }
 
+    }
+
+    /**
+     * interceptor after
+     * @param interceptors
+     * @param paramMap
+     */
+    private void interceptorAfter(List<CicadaInterceptor> interceptors, Param paramMap) {
+        for (CicadaInterceptor interceptor : interceptors) {
+            interceptor.after(paramMap);
+        }
+    }
+
+    /**
+     * interceptor before
+     * @param interceptors
+     * @param appConfig
+     * @param paramMap
+     * @throws Exception
+     */
+    private void interceptorBefore(List<CicadaInterceptor> interceptors, AppConfig appConfig, Param paramMap) throws Exception {
+        Map<String, Class<?>> cicadaInterceptor = ClassScanner.getCicadaInterceptor(appConfig.getRootPackageName());
+        for (Map.Entry<String, Class<?>> classEntry : cicadaInterceptor.entrySet()) {
+            Class<?> interceptorClass = classEntry.getValue();
+            CicadaInterceptor interceptor = (CicadaInterceptor) interceptorClass.newInstance();
+            interceptor.before(paramMap) ;
+
+            //add cache
+            interceptors.add(interceptor);
+        }
     }
 
     /**
