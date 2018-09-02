@@ -17,5 +17,5 @@ public interface WorkAction {
      * @param param
      * @return
      */
-    WorkRes execute(Param param) ;
+    WorkRes execute(Param param) throws Exception;
 }

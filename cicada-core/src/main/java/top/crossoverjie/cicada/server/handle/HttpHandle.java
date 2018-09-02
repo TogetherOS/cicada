@@ -14,11 +14,13 @@ import top.crossoverjie.cicada.server.action.res.WorkRes;
 import top.crossoverjie.cicada.server.config.AppConfig;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
+import top.crossoverjie.cicada.server.intercept.CicadaInterceptor;
+import top.crossoverjie.cicada.server.util.ClassScanner;
 import top.crossoverjie.cicada.server.util.LoggerBuilder;
 import top.crossoverjie.cicada.server.util.PathUtil;
-import top.crossoverjie.cicada.server.util.Scanner;
 
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +41,8 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
         if (msg instanceof DefaultHttpRequest) {
             DefaultHttpRequest request = (DefaultHttpRequest) msg;
 
+            List<CicadaInterceptor> interceptors = new ArrayList<>() ;
+
             String uri = request.uri();
             LOGGER.info("uri=[{}]", uri);
             QueryStringDecoder queryStringDecoder = new QueryStringDecoder(URLDecoder.decode(request.uri(), "utf-8"));
@@ -46,18 +50,34 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
             // check Root Path
             AppConfig appConfig = checkRootPath(uri, queryStringDecoder);
 
-            // check Action
-            Class<?> actionClazz = checkAction(queryStringDecoder, appConfig);
+            // route Action
+            Class<?> actionClazz = routeAction(queryStringDecoder, appConfig);
 
             //build paramMap
             Param paramMap = buildParamMap(queryStringDecoder);
 
 
 
+            //interceptor before
+            Map<String, Class<?>> cicadaInterceptor = ClassScanner.getCicadaInterceptor(appConfig.getRootPackageName());
+            for (Map.Entry<String, Class<?>> classEntry : cicadaInterceptor.entrySet()) {
+                Class<?> interceptorClass = classEntry.getValue();
+                CicadaInterceptor interceptor = (CicadaInterceptor) interceptorClass.newInstance();
+                interceptor.before(paramMap) ;
+
+                //add cache
+                interceptors.add(interceptor);
+            }
 
             // execute Method
             WorkAction action = (WorkAction) actionClazz.newInstance();
             WorkRes execute = action.execute(paramMap);
+
+
+            //interceptor after
+            for (CicadaInterceptor interceptor : interceptors) {
+                interceptor.after(paramMap);
+            }
 
             // Response
             responseMsg(ctx, execute);
@@ -94,15 +114,20 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
     }
 
     /**
-     * check Action
+     * route Action
      * @param queryStringDecoder
      * @param appConfig
      * @return
      * @throws Exception
      */
-    private Class<?> checkAction(QueryStringDecoder queryStringDecoder, AppConfig appConfig) throws Exception {
+    private Class<?> routeAction(QueryStringDecoder queryStringDecoder, AppConfig appConfig) throws Exception {
         String actionPath = PathUtil.getActionPath(queryStringDecoder.path());
-        Map<String, Class<?>> cicadaAction = Scanner.getCicadaAction(appConfig.getRootPackageName());
+        Map<String, Class<?>> cicadaAction = ClassScanner.getCicadaAction(appConfig.getRootPackageName());
+
+        if (cicadaAction == null){
+            throw new CicadaException("Must be configured WorkAction Object") ;
+        }
+
         Class<?> actionClazz = cicadaAction.get(actionPath);
         if (actionClazz == null){
             throw new CicadaException(StatusEnum.REQUEST_ERROR,actionPath + " Not Fount") ;

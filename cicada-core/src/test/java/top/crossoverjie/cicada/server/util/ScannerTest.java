@@ -14,7 +14,7 @@ public class ScannerTest {
 
     @Test
     public void getClasses() throws Exception {
-        Set<Class<?>> classes = Scanner.getClasses("top.crossoverjie.cicada.server");
+        Set<Class<?>> classes = ClassScanner.getClasses("top.crossoverjie.cicada.server");
 
         LOGGER.info("classes=[{}]", JSON.toJSONString(classes));
     }
@@ -22,7 +22,7 @@ public class ScannerTest {
 
     @Test
     public void getActionAction() throws Exception{
-        Map<String, Class<?>> cicadaAction = Scanner.getCicadaAction("top.crossoverjie.cicada.server");
+        Map<String, Class<?>> cicadaAction = ClassScanner.getCicadaAction("top.crossoverjie.cicada.server");
         LOGGER.info("classes=[{}]", JSON.toJSONString(cicadaAction));
     }
 

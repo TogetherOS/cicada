@@ -2,6 +2,7 @@ package top.crossoverjie.cicada.server.util;
 
 import org.slf4j.Logger;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
+import top.crossoverjie.cicada.server.annotation.Interceptor;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -21,12 +22,13 @@ import java.util.jar.JarFile;
  *         Date: 2018/9/1 11:36
  * @since JDK 1.8
  */
-public class Scanner {
+public class ClassScanner {
 
-    private final static Logger LOGGER = LoggerBuilder.getLogger(Scanner.class);
+    private final static Logger LOGGER = LoggerBuilder.getLogger(ClassScanner.class);
 
 
     private static Map<String, Class<?>> actionMap = null;
+    private static Map<String, Class<?>> interceptorMap = null;
 
     /**
      * get @CicadaAction
@@ -38,13 +40,13 @@ public class Scanner {
     public static Map<String, Class<?>> getCicadaAction(String packageName) throws Exception {
 
         if (actionMap == null) {
-            actionMap = new HashMap<>(16);
             Set<Class<?>> clsList = getClasses(packageName);
 
             if (clsList == null || clsList.isEmpty()) {
                 return actionMap;
             }
 
+            actionMap = new HashMap<>(16);
             for (Class<?> cls : clsList) {
 
                 if (cls.getAnnotation(CicadaAction.class) == null) {
@@ -57,12 +59,52 @@ public class Scanner {
                         continue;
                     }
                     CicadaAction cicadaAction = (CicadaAction) annotation;
-                    actionMap.put(cicadaAction.value(), cls);
+                    actionMap.put(cicadaAction.value() == null ? cls.getName() : cicadaAction.value(), cls);
                 }
 
             }
         }
         return actionMap;
+    }
+
+    /**
+     * get @CicadaAction
+     *
+     * @param packageName
+     * @return
+     * @throws Exception
+     */
+    public static Map<String, Class<?>> getCicadaInterceptor(String packageName) throws Exception {
+
+        if (interceptorMap == null) {
+            Set<Class<?>> clsList = getClasses(packageName);
+
+            if (clsList == null || clsList.isEmpty()) {
+                return interceptorMap;
+            }
+
+            interceptorMap = new HashMap<>(16);
+            for (Class<?> cls : clsList) {
+
+                if (cls.getAnnotation(Interceptor.class) == null) {
+                    continue;
+                }
+
+                Annotation[] annotations = cls.getAnnotations();
+                for (Annotation annotation : annotations) {
+                    if (!(annotation instanceof Interceptor)) {
+                        continue;
+                    }
+                    Interceptor interceptor = (Interceptor) annotation;
+                    interceptorMap.put(interceptor.value() == null ? cls.getName() : interceptor.value(), cls);
+                }
+
+            }
+        }
+        if (interceptorMap != null){
+            LOGGER.info("there are [{}] before" , interceptorMap.toString());
+        }
+        return interceptorMap;
     }
 
     /**
