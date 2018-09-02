@@ -14,32 +14,29 @@
 </div><br>
 
 
-## Introduction
+## 简介
 
-Lightweight HTTP service framework.
+基于 Netty4 实现的快速、轻量级 WEB 框架；没有过多的依赖，核心 jar 包仅 `30KB`。
 
-Fast, lightweight Web framework based on Netty; without too much dependency, and the core jar package is only `30KB`.
+如果你感兴趣，请点 [star](https://github.com/crossoverJie/cicada/stargazers)。
 
-If you are interested, please click [star](https://github.com/crossoverJie/cicada/stargazers).
+## 特性
 
-## features
-
-- [x] clean code, without too much dependency.
-- [x] One line of code to start the HTTP service.
-- [x] Custom interceptor.
-- [x] flexible parameters way.
-- [x] response `json`.
-- [x] start whith `jar`.
-- [ ] Multiple routing ways.
-- [ ] support `HTTPS`.
-- [ ] support `Cookie`.
-- [ ] File Upload。
+- [x] 代码简洁，没有过多依赖。
+- [x] 一行代码即可启动 HTTP 服务。
+- [x] 自定义拦截器。
+- [x] 灵活的传参方式。
+- [x] `json` 响应格式。
+- [x] 基于 `jar` 启动。
+- [ ] 多种路由风格。
+- [ ] `HTTPS` 支持。
+- [ ] `Cookie` 支持。
+- [ ] 文件上传。
 
 
-## Quick Start
+## 快速启动
 
-Create a project with `Maven`, import core dependency.
-
+创建一个 maven 项目，引入核心依赖。
 
 ```java
 <dependency>
@@ -49,7 +46,7 @@ Create a project with `Maven`, import core dependency.
 </dependency>
 ```
 
-start class:
+启动类：
 
 ```java
 public class MainStart {
@@ -60,10 +57,9 @@ public class MainStart {
 }
 ```
 
-### Configuring business Action
+### 配置业务 Action
 
-
-Create business Action implement `top.crossoverjie.cicada.server.action.WorkAction` interface:
+创建业务 Action 实现 `top.crossoverjie.cicada.server.action.WorkAction` 接口。
 
 ```java
 @CicadaAction(value = "demoAction")
@@ -92,14 +88,14 @@ public class DemoAction implements WorkAction {
 }
 ```
 
-Launch and apply access: [http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10](http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10)
+启动应用访问 [http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10](http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10)
 
 ![](https://ws1.sinaimg.cn/large/006tNbRwly1fuvibn4xavj31ei074dgj.jpg)
 
 
-## Custom interceptor
+## 自定义拦截器
 
-Implement `top.crossoverjie.cicada.example.intercept.CicadaInterceptor` interface.
+实现 `top.crossoverjie.cicada.example.intercept.CicadaInterceptor` 接口。
 
 ```java
 @Interceptor(value = "executeTimeInterceptor")
@@ -125,9 +121,9 @@ public class ExecuteTimeInterceptor implements CicadaInterceptor {
 }
 ```
 
-### Interceptor Adapter
+### 拦截适配器
 
-If you only want to implement one of the methods ,only extends `top.crossoverjie.cicada.server.intercept.AbstractCicadaInterceptorAdapter` abstract class.
+同样也可以只实现其中一个方法，只需要继承 `top.crossoverjie.cicada.server.intercept.AbstractCicadaInterceptorAdapter` 抽象类。
 
 ```java
 @Interceptor(value = "loggerInterceptor")
@@ -143,13 +139,13 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 }
 ```
 
-## Performance Test
+## 性能测试
 
 ![](https://ws3.sinaimg.cn/large/006tNbRwly1fuvheff4smj317m0mgdhs.jpg)
 
-> Test Conditions: 300 concurrency for twice ;1G RAM/one CPU/1Mbps.
+> 测试条件：300 并发连续压测两轮；1G 内存、单核 CPU、1Mbps。
 
-## Contact author
+## 联系作者
 
 
 > crossoverJie#gmail.com
