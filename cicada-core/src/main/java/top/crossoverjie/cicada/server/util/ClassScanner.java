@@ -101,9 +101,7 @@ public class ClassScanner {
 
             }
         }
-        if (interceptorMap != null){
-            LOGGER.info("there are [{}] before" , interceptorMap.toString());
-        }
+
         return interceptorMap;
     }
 
@@ -200,7 +198,6 @@ public class ClassScanner {
         File dir = new File(packagePath);
         // 如果不存在或者 也不是目录就直接返回
         if (!dir.exists() || !dir.isDirectory()) {
-            // log.warn("用户定义包名 " + packageName + " 下没有任何文件");
             return;
         }
         // 如果存在 就获取包下的所有文件 包括目录
@@ -224,9 +221,6 @@ public class ClassScanner {
                 String className = file.getName().substring(0,
                         file.getName().length() - 6);
                 try {
-                    // 添加到集合中去
-                    //classes.add(Class.forName(packageName + '.' + className));
-                    //经过回复同学的提醒，这里用forName有一些不好，会触发static方法，没有使用classLoader的load干净
                     classes.add(Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
                 } catch (ClassNotFoundException e) {
                     LOGGER.error("ClassNotFoundException", e);
