@@ -41,11 +41,11 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
         if (msg instanceof DefaultHttpRequest) {
             DefaultHttpRequest request = (DefaultHttpRequest) msg;
 
-            //interceptor cache
+            // interceptor cache
             List<CicadaInterceptor> interceptors = new ArrayList<>() ;
 
+            // request uri
             String uri = request.uri();
-            LOGGER.info("uri=[{}]", uri);
             QueryStringDecoder queryStringDecoder = new QueryStringDecoder(URLDecoder.decode(request.uri(), "utf-8"));
 
             // check Root Path
@@ -66,7 +66,7 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
             WorkRes execute = action.execute(paramMap);
 
 
-            //interceptor after
+            // interceptor after
             interceptorAfter(interceptors, paramMap);
 
             // Response
