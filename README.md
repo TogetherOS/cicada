@@ -32,7 +32,7 @@ If you are interested, please click [Star](https://github.com/crossoverJie/cicad
 - [x] Custom interceptor.
 - [x] Flexible parameters way.
 - [x] Response `json`.
-- [x] Start whith `jar`.
+- [x] Start with `jar`.
 - [ ] Custom configuration.
 - [ ] Multiple routing ways.
 - [ ] Support `HTTPS`.
