@@ -8,6 +8,11 @@
     <artifactId>cicada</artifactId>
     <packaging>pom</packaging>
     <version>1.0.1</version>
+
+    <name>cicada</name>
+    <description>Fast, lightweight Web framework based on Netty</description>
+    <url>https://crossoverjie.top/categories/cicada/</url>
+
     <modules>
         <module>cicada-core</module>
         <module>cicada-example</module>
