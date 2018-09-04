@@ -7,11 +7,17 @@
     <groupId>top.crossoverjie.opensource</groupId>
     <artifactId>cicada</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <name>cicada</name>
     <description>Fast, lightweight Web framework based on Netty</description>
     <url>https://crossoverjie.top/categories/cicada/</url>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
     <modules>
         <module>cicada-core</module>
