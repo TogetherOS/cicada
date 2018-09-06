@@ -2,6 +2,7 @@ package top.crossoverjie.cicada.server.util;
 
 import org.slf4j.Logger;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
+import top.crossoverjie.cicada.server.annotation.Configuration;
 import top.crossoverjie.cicada.server.annotation.Interceptor;
 
 import java.io.File;
@@ -28,6 +29,7 @@ public class ClassScanner {
 
     private static Map<String, Class<?>> actionMap = null;
     private static Map<String, Class<?>> interceptorMap = null;
+    private static Map<String, Class<?>> configureationMap = null;
 
     /**
      * get @CicadaAction
@@ -96,6 +98,42 @@ public class ClassScanner {
                     }
                     Interceptor interceptor = (Interceptor) annotation;
                     interceptorMap.put(interceptor.value() == null ? cls.getName() : interceptor.value(), cls);
+                }
+
+            }
+        }
+
+        return interceptorMap;
+    }
+
+    /**
+     * @Author liwenguang
+     * @Date 2018/9/7 上午2:39
+     * @Description 获取配置注解
+     */
+    public static Map<String, Class<?>> getCicadaConfig(String packageName) throws Exception {
+
+        if (configureationMap == null) {
+            Set<Class<?>> clsList = getClasses(packageName);
+
+            if (clsList == null || clsList.isEmpty()) {
+                return configureationMap;
+            }
+
+            configureationMap = new HashMap<>(8);
+            for (Class<?> cls : clsList) {
+
+                if (cls.getAnnotation(Configuration.class) == null) {
+                    continue;
+                }
+
+                Annotation[] annotations = cls.getAnnotations();
+                for (Annotation annotation : annotations) {
+                    if (!(annotation instanceof Configuration)) {
+                        continue;
+                    }
+                    Configuration configuration= (Configuration) annotation;
+                    interceptorMap.put(configuration.prefix() == null ? cls.getName() : configuration.prefix(), cls);
                 }
 
             }

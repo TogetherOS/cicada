@@ -1,5 +1,7 @@
 package top.crossoverjie.cicada.server.config;
 
+import top.crossoverjie.cicada.server.annotation.Configuration;
+
 /**
  * Function:
  *
@@ -7,6 +9,7 @@ package top.crossoverjie.cicada.server.config;
  *         Date: 2018/9/1 14:00
  * @since JDK 1.8
  */
+@Configuration(prefix = "cicada")
 public class AppConfig {
 
 
