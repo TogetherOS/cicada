@@ -11,6 +11,6 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Configuration {
+public @interface CicadaConfig {
     String prefix() default "" ;
 }

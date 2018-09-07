@@ -1,10 +1,3 @@
-ciacda:
+cicada:
   port: 8080
   path: /name
-  name:
-    a: 1
-    b: 1
-liwen:
-  name:
-    xx: z
-    dd: 4

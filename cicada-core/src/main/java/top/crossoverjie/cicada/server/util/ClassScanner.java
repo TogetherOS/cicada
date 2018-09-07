@@ -2,7 +2,7 @@ package top.crossoverjie.cicada.server.util;
 
 import org.slf4j.Logger;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
-import top.crossoverjie.cicada.server.annotation.Configuration;
+import top.crossoverjie.cicada.server.annotation.CicadaConfig;
 import top.crossoverjie.cicada.server.annotation.Interceptor;
 
 import java.io.File;
@@ -29,7 +29,7 @@ public class ClassScanner {
 
     private static Map<String, Class<?>> actionMap = null;
     private static Map<String, Class<?>> interceptorMap = null;
-    private static Map<String, Class<?>> configureationMap = null;
+    private static Map<String, Class<?>> configurationMap = null;
 
     /**
      * get @CicadaAction
@@ -113,33 +113,33 @@ public class ClassScanner {
      */
     public static Map<String, Class<?>> getCicadaConfig(String packageName) throws Exception {
 
-        if (configureationMap == null) {
+        if (configurationMap == null) {
             Set<Class<?>> clsList = getClasses(packageName);
 
             if (clsList == null || clsList.isEmpty()) {
-                return configureationMap;
+                return configurationMap;
             }
 
-            configureationMap = new HashMap<>(8);
+            configurationMap = new HashMap<>(8);
             for (Class<?> cls : clsList) {
 
-                if (cls.getAnnotation(Configuration.class) == null) {
+                if (cls.getAnnotation(CicadaConfig.class) == null) {
                     continue;
                 }
 
                 Annotation[] annotations = cls.getAnnotations();
                 for (Annotation annotation : annotations) {
-                    if (!(annotation instanceof Configuration)) {
+                    if (!(annotation instanceof CicadaConfig)) {
                         continue;
                     }
-                    Configuration configuration= (Configuration) annotation;
-                    interceptorMap.put(configuration.prefix() == null ? cls.getName() : configuration.prefix(), cls);
+                    CicadaConfig configuration= (CicadaConfig) annotation;
+                    configurationMap.put(configuration.prefix() == null ? cls.getName() : configuration.prefix(), cls);
                 }
 
             }
         }
 
-        return interceptorMap;
+        return configurationMap;
     }
 
     /**
