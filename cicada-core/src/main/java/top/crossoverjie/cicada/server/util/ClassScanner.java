@@ -2,6 +2,7 @@ package top.crossoverjie.cicada.server.util;
 
 import org.slf4j.Logger;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
+import top.crossoverjie.cicada.server.annotation.CicadaConfig;
 import top.crossoverjie.cicada.server.annotation.Interceptor;
 
 import java.io.File;
@@ -28,6 +29,7 @@ public class ClassScanner {
 
     private static Map<String, Class<?>> actionMap = null;
     private static Map<String, Class<?>> interceptorMap = null;
+    private static Map<String, Class<?>> configurationMap = null;
 
     /**
      * get @CicadaAction
@@ -102,6 +104,42 @@ public class ClassScanner {
         }
 
         return interceptorMap;
+    }
+
+    /**
+     * @Author liwenguang
+     * @Date 2018/9/7 上午2:39
+     * @Description 获取配置注解
+     */
+    public static Map<String, Class<?>> getCicadaConfig(String packageName) throws Exception {
+
+        if (configurationMap == null) {
+            Set<Class<?>> clsList = getClasses(packageName);
+
+            if (clsList == null || clsList.isEmpty()) {
+                return configurationMap;
+            }
+
+            configurationMap = new HashMap<>(8);
+            for (Class<?> cls : clsList) {
+
+                if (cls.getAnnotation(CicadaConfig.class) == null) {
+                    continue;
+                }
+
+                Annotation[] annotations = cls.getAnnotations();
+                for (Annotation annotation : annotations) {
+                    if (!(annotation instanceof CicadaConfig)) {
+                        continue;
+                    }
+                    CicadaConfig configuration= (CicadaConfig) annotation;
+                    configurationMap.put(configuration.prefix() == null ? cls.getName() : configuration.prefix(), cls);
+                }
+
+            }
+        }
+
+        return configurationMap;
     }
 
     /**

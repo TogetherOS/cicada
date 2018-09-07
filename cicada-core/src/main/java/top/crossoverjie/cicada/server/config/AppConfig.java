@@ -1,5 +1,7 @@
 package top.crossoverjie.cicada.server.config;
 
+import top.crossoverjie.cicada.server.annotation.CicadaConfig;
+
 /**
  * Function:
  *
@@ -7,6 +9,7 @@ package top.crossoverjie.cicada.server.config;
  *         Date: 2018/9/1 14:00
  * @since JDK 1.8
  */
+@CicadaConfig(prefix = "cicada")
 public class AppConfig {
 
 
@@ -26,7 +29,7 @@ public class AppConfig {
 
     private String rootPackageName ;
 
-    private String rootPath ;
+    private String rootPath = "/" ;
 
     private Integer port = 7317 ;
 

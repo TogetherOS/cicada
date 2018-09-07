@@ -30,5 +30,10 @@ public class PathUtil {
         return path.split("/")[2];
     }
 
-
+    public static String addStartSplit(String path) {
+        if (!path.startsWith("/")) {
+            path = "/" + path;
+        }
+        return path;
+    }
 }

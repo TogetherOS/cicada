@@ -1,0 +1,3 @@
+cicada:
+  port: 8080
+  path: /name
