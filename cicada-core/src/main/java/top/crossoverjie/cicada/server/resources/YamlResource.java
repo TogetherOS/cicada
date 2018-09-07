@@ -1,8 +1,11 @@
 package top.crossoverjie.cicada.server.resources;
 
+import org.slf4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.reader.UnicodeReader;
+import top.crossoverjie.cicada.server.CicadaServer;
 import top.crossoverjie.cicada.server.exception.GenericException;
+import top.crossoverjie.cicada.server.util.LoggerBuilder;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,6 +21,8 @@ import java.util.*;
  */
 public class YamlResource<T> implements Resource<T>{
 
+    private final static Logger LOGGER = LoggerBuilder.getLogger(YamlResource.class);
+
     private static Yaml yaml = new Yaml();
 
     private static Resource yamlResource;
@@ -31,12 +36,16 @@ public class YamlResource<T> implements Resource<T>{
 
     @Override
     public Properties file2Properties(String url) {
-        if (!url.endsWith(".yml") && !url.endsWith(".yaml")) {
+        Properties properties = new Properties();
+        if (!url.endsWith(".yml") && !url.endsWith(".yaml") ) {
             throw new GenericException(new FileNotFoundException(), "文件没找着");
         }
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(url);
+        if (inputStream == null) {
+            LOGGER.warn("not found application configuration file");
+            return properties;
+        }
         Reader reader = new UnicodeReader(inputStream);
-        Properties properties = new Properties();
         for (Object object :  yaml.loadAll(reader)) {
             properties.putAll(getFlattenedMap(asMap(object)));
         }

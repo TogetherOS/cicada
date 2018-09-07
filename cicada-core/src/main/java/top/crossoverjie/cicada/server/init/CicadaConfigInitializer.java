@@ -21,7 +21,7 @@ public class CicadaConfigInitializer {
 
     private static final String APPLICATION_URL = "application";
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         init(CicadaConfigInitializer.class, args);
     }
 
@@ -34,16 +34,19 @@ public class CicadaConfigInitializer {
                 String name = classEntry.getValue().getName();
                 if (name.equals(AppConfig.class.getName())) {
                     Properties properties = YamlResource.getInstance().file2Properties(APPLICATION_URL + ".yml");
+                    if (properties.isEmpty()) {
+                        continue;
+                    }
                     // TODO 使用反射 field 赋值，或者反射执行 set 方法赋值，这样可以批量设置
                     AppConfig.getInstance().setPort(PropertiesUtil.getInteger(properties, classEntry.getKey() + ".port"));
                     AppConfig.getInstance().setRootPath(
-                            PathUtil.addStartSplit(PropertiesUtil.getString(properties, classEntry.getKey() + ".path")));
+                            PathUtil.addStartSplit(PropertiesUtil.getString(properties, classEntry.getKey() + ".path", "")));
                 } else {
                     // 用户自定义配置
                     String path = clazz.getPackage().getName();
                 }
             }
-            // TODO args 命令参数解析
+            // TODO args 命令参数解析，port，path
         } catch (Exception e) {
             e.printStackTrace();
             throw new CicadaException(e, "103", "配置文件读取错误");

@@ -29,7 +29,7 @@ public class AppConfig {
 
     private String rootPackageName ;
 
-    private String rootPath ;
+    private String rootPath = "/" ;
 
     private Integer port = 7317 ;
 
