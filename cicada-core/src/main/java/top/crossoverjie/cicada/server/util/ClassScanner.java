@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
 import top.crossoverjie.cicada.server.annotation.Interceptor;
 import top.crossoverjie.cicada.server.configuration.AbstractCicadaConfiguration;
+import top.crossoverjie.cicada.server.configuration.ApplicationConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,6 +47,9 @@ public class ClassScanner {
 
         if (configurationList == null) {
             Set<Class<?>> clsList = getClasses(packageName);
+
+            // Manually add ApplicationConfiguration
+            clsList.add(ApplicationConfiguration.class) ;
 
             if (clsList == null || clsList.isEmpty()) {
                 return configurationList;

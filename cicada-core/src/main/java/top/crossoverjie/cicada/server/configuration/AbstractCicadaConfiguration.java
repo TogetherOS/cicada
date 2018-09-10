@@ -11,9 +11,12 @@ import java.util.Properties;
  */
 public abstract class AbstractCicadaConfiguration {
 
-    private String propertiesName ;
+    /**
+     * file name
+     */
+    private String propertiesName;
 
-    private Properties properties ;
+    private Properties properties;
 
 
     public void setPropertiesName(String propertiesName) {
@@ -28,8 +31,8 @@ public abstract class AbstractCicadaConfiguration {
         this.properties = properties;
     }
 
-    public String get(String key){
-        return properties.get(key).toString() ;
+    public String get(String key) {
+        return properties.get(key) == null ? null : properties.get(key).toString();
     }
 
     @Override
