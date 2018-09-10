@@ -159,7 +159,7 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 
 > Test Conditions: 100 threads and 100 connections ;1G RAM/4 CPU
 
-**Nearly 10W requests per second**
+**Nearly 10W requests per second.**
 
 ## Contact author
 
