@@ -8,8 +8,16 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
 import top.crossoverjie.cicada.server.config.AppConfig;
+import top.crossoverjie.cicada.server.configuration.AbstractCicadaConfiguration;
+import top.crossoverjie.cicada.server.configuration.ConfigurationHolder;
+import top.crossoverjie.cicada.server.constant.CicadaConstant;
 import top.crossoverjie.cicada.server.init.CicadaInitializer;
+import top.crossoverjie.cicada.server.util.ClassScanner;
 import top.crossoverjie.cicada.server.util.LoggerBuilder;
+
+import java.io.InputStream;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * Function:
@@ -27,7 +35,7 @@ public class CicadaServer {
     private static EventLoopGroup boss = new NioEventLoopGroup(BOSS_SIZE);
     private static EventLoopGroup work = new NioEventLoopGroup();
 
-    public static void start(Class<?> clazz,String path) throws InterruptedException {
+    public static void start(Class<?> clazz,String path) throws Exception {
 
         long start = System.currentTimeMillis();
 
@@ -36,7 +44,24 @@ public class CicadaServer {
         AppConfig.getInstance().setRootPackageName(clazz.getPackage().getName());
         AppConfig.getInstance().setRootPath(path);
 
-        int port = AppConfig.getInstance().getPort();
+        InputStream resourceAsStream = CicadaServer.class.getClassLoader().getResourceAsStream("application.properties");
+        Properties prop = new Properties();
+        prop.load(resourceAsStream);
+        int port = Integer.parseInt(prop.get(CicadaConstant.CICADA_PORT).toString());
+
+        AppConfig.getInstance().setPort(port);
+
+        List<Class<?>> configuration = ClassScanner.getConfiguration(AppConfig.getInstance().getRootPackageName());
+        for (Class<?> aClass : configuration) {
+            AbstractCicadaConfiguration conf = (AbstractCicadaConfiguration) aClass.newInstance() ;
+            InputStream stream = CicadaServer.class.getClassLoader().getResourceAsStream(conf.getPropertiesName());
+            Properties properties = new Properties();
+            properties.load(stream);
+            conf.setProperties(properties) ;
+
+            ConfigurationHolder.addConfiguration(aClass.getName(),conf) ;
+        }
+
         try {
             ServerBootstrap bootstrap = new ServerBootstrap()
                     .group(boss, work)
@@ -55,5 +80,10 @@ public class CicadaServer {
             boss.shutdownGracefully();
             work.shutdownGracefully();
         }
+    }
+
+
+    private void initConfig(){
+
     }
 }

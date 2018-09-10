@@ -10,25 +10,27 @@ package top.crossoverjie.cicada.server.config;
 public class AppConfig {
 
 
-    private AppConfig(){}
+    private AppConfig() {
+    }
 
 
     /**
      * simple singleton Object
      */
-    private static AppConfig config ;
-    public static AppConfig getInstance(){
-        if (config == null){
-            config = new AppConfig() ;
+    private static AppConfig config;
+
+    public static AppConfig getInstance() {
+        if (config == null) {
+            config = new AppConfig();
         }
-        return config ;
+        return config;
     }
 
-    private String rootPackageName ;
+    private String rootPackageName;
 
-    private String rootPath ;
+    private String rootPath;
 
-    private Integer port = 7317 ;
+    private Integer port = 7317;
 
     public String getRootPackageName() {
         return rootPackageName;
