@@ -35,8 +35,9 @@ public class DemoAction implements WorkAction {
     public WorkRes<DemoResVO> execute(Param paramMap) throws Exception {
 
         KafkaConfiguration configuration = (KafkaConfiguration) getConfiguration(KafkaConfiguration.class);
-        String brokerList = configuration.get("kafka.broker.list");
         RedisConfiguration redisConfiguration = (RedisConfiguration) ConfigurationHolder.getConfiguration(RedisConfiguration.class);
+
+        String brokerList = configuration.get("kafka.broker.list");
         String redisHost = redisConfiguration.get("redis.host");
 
         LOGGER.info("Configuration brokerList=[{}],redisHost=[{}]",brokerList,redisHost);
