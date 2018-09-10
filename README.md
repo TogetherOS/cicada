@@ -155,9 +155,11 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 
 ## Performance Test
 
-![](https://ws3.sinaimg.cn/large/006tNbRwly1fuvheff4smj317m0mgdhs.jpg)
+![](https://ws4.sinaimg.cn/large/006tNbRwly1fv4luap7w0j31kw0iwdnu.jpg)
 
-> Test Conditions: 300 concurrency for twice ;1G RAM/one CPU/1Mbps.
+> Test Conditions: 100 threads and 100 connections ;1G RAM/4 CPU
+
+**Nearly 10W requests per second.**
 
 ## Contact author
 
