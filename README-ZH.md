@@ -149,9 +149,11 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 
 ## 性能测试
 
-![](https://ws3.sinaimg.cn/large/006tNbRwly1fuvheff4smj317m0mgdhs.jpg)
+![](https://ws4.sinaimg.cn/large/006tNbRwly1fv4luap7w0j31kw0iwdnu.jpg)
 
-> 测试条件：300 并发连续压测两轮；1G 内存、单核 CPU、1Mbps。
+> 测试条件：100 threads and 100 connections ;1G RAM/4 CPU。
+
+**每秒将近 10W 请求。**
 
 ## 联系作者
 
