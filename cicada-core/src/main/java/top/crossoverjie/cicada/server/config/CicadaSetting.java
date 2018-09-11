@@ -24,7 +24,7 @@ import static top.crossoverjie.cicada.server.configuration.ConfigurationHolder.g
  *         Date: 2018/9/10 20:29
  * @since JDK 1.8
  */
-public class InitSetting {
+public class CicadaSetting {
 
     /**
      * @param clazz
