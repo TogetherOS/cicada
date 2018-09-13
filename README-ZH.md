@@ -11,6 +11,9 @@
 [qq0groupsvg]: https://img.shields.io/badge/QQ%E7%BE%A4-787381170-yellowgreen.svg
 [qq0group]: https://jq.qq.com/?_wv=1027&k=5HPYvQk
 
+
+📘[特性](#features) |🌁[快速启动](#quick-start) | 🏖[性能测试](#performance-test) | 🌈[更新记录](#changelog) | 💡 [联系作者](#contact-author)|🇨🇳[中文文档](https://github.com/crossoverJie/cicada/blob/master/README-ZH.md)
+
 </div><br>
 
 
