@@ -14,7 +14,7 @@
 
 | 📊 |⚔️ | 🖥 | 🚏 | 🏖 
 | :--------: | :---------: | :---------: | :---------: | :---------: 
-| [Features](#features) | [Quick Start](#quick-start)|[Configuring Business Action](#configuring-business-action) [Performance Test](#performance-test)| [ChangeLog](#changelog) |[Contact-author](#contact-author) |
+| [Features](#features) | [Quick Start](#quick-start)|[Performance Test](#performance-test)| [ChangeLog](#changelog) |[Contact-author](#contact-author) |
 
 </div><br>
 
