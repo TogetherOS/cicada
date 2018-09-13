@@ -61,6 +61,5 @@ public class NettyBootStrap {
         ApplicationConfiguration applicationConfiguration = (ApplicationConfiguration) getConfiguration(ApplicationConfiguration.class);
         long end = System.currentTimeMillis();
         LOGGER.info("Cicada started on port: {}.cost {}ms", applicationConfiguration.get(CicadaConstant.CICADA_PORT), end - start);
-        ThreadLocalHolder.clearTime();
     }
 }

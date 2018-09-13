@@ -19,14 +19,14 @@ public class ThreadLocalHolder {
         LOCAL_TIME.set(time) ;
     }
 
+    /**
+     * Get time and remove value
+     * @return
+     */
     public static Long getLocalTime(){
-        return LOCAL_TIME.get() ;
+        Long time = LOCAL_TIME.get();
+        LOCAL_TIME.remove();
+        return time;
     }
 
-    /**
-     * Clear time
-     */
-    public static void clearTime(){
-        LOCAL_TIME.remove();
-    }
 }
