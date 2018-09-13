@@ -133,7 +133,7 @@ public class KafkaConfiguration extends AbstractCicadaConfiguration {
 
 ### 获取配置
 
-同时按照如下方式即可获取自定义配置：
+按照如下方式即可获取自定义配置：
 
 ```java
 KafkaConfiguration configuration = (KafkaConfiguration) getConfiguration(KafkaConfiguration.class);
