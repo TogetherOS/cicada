@@ -131,6 +131,8 @@ public class KafkaConfiguration extends AbstractCicadaConfiguration {
 }
 ```
 
+### 获取配置
+
 同时按照如下方式即可获取自定义配置：
 
 ```java
@@ -144,6 +146,8 @@ String port = applicationConfiguration.get("cicada.port");
 
 LOGGER.info("Configuration brokerList=[{}],redisHost=[{}] port=[{}]",brokerList,redisHost,port);
 ```
+
+### 外置配置文件
 
 当然在特殊环境中(dev/test/pro)也可以读取外置配置文件。只需要加上启动参数，保证参数名称和文件一致即可。
 
