@@ -139,6 +139,8 @@ public class KafkaConfiguration extends AbstractCicadaConfiguration {
 }
 ```
 
+![](https://ws3.sinaimg.cn/large/0069RVTdgy1fv5mw7p5nvj31by0fo76t.jpg)
+
 
 
 ### Get configuration information

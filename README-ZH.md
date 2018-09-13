@@ -131,6 +131,8 @@ public class KafkaConfiguration extends AbstractCicadaConfiguration {
 }
 ```
 
+![](https://ws3.sinaimg.cn/large/0069RVTdgy1fv5mw7p5nvj31by0fo76t.jpg)
+
 ### 获取配置
 
 按照如下方式即可获取自定义配置：
