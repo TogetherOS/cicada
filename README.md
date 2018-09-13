@@ -12,13 +12,13 @@
 [qq0group]: https://jq.qq.com/?_wv=1027&k=5HPYvQk
 
 
-📊[Features](#features) |⚔️[Quick Start](#quick-start) | 🖥[Performance Test](#performance-test) | 🚏[ChangeLog](#changelog) | 🏖 [Contact-author](#contact-author)
+📘[Features](#features) |🌁[Quick Start](#quick-start) | 🏖[Performance Test](#performance-test) | 🌈[ChangeLog](#changelog) | 💡 [Contact-author](#contact-author)|🇨🇳[中文文档](https://github.com/crossoverJie/cicada/blob/master/README-ZH.md)
 
 
 
 </div><br>
 
-[中文文档](https://github.com/crossoverJie/cicada/blob/master/README-ZH.md)
+
 
 ---
 
