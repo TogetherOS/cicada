@@ -34,11 +34,11 @@
 
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/crossoverJie/cicada/issues</url>
+        <url>https://github.com/TogetherOS/cicadaissues</url>
     </issueManagement>
 
     <scm>
-        <url>https://github.com/crossoverJie/cicada/</url>
+        <url>https://github.com/TogetherOS/cicada</url>
         <connection>scm:git:git@github.com:crossoverJie/cicada.git</connection>
         <developerConnection>scm:git:git@github.com:crossoverJie/cicada.git</developerConnection>
     </scm>
