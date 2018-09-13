@@ -149,7 +149,7 @@ LOGGER.info("Configuration brokerList=[{}],redisHost=[{}] port=[{}]",brokerList,
 
 ### 外置配置文件
 
-当然在特殊环境中(dev/test/pro)也可以读取外置配置文件。只需要加上启动参数，保证参数名称和文件一致即可。
+当然在特殊环境中(`dev/test/pro`)也可以读取外置配置文件。只需要加上启动参数，保证参数名称和文件名一致即可。
 
 ```shell
 -Dapplication.properties=/xx/application.properties
