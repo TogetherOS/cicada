@@ -31,7 +31,7 @@ If you are interested, please click [Star](https://github.com/crossoverJie/cicad
 - [x] Flexible parameters way.
 - [x] Response `json`.
 - [x] Start with `jar`.
-- [ ] Custom configuration.
+- [x] Custom configuration.
 - [ ] Multiple routing ways.
 - [ ] Support `HTTPS`.
 - [ ] Support `Cookie`.
@@ -47,7 +47,7 @@ Create a project with `Maven`, import core dependency.
 <dependency>
     <groupId>top.crossoverjie.opensource</groupId>
     <artifactId>cicada-core</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -160,6 +160,17 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 > Test Conditions: 100 threads and 100 connections ;1G RAM/4 CPU
 
 **Nearly 10W requests per second.**
+
+
+## ChangeLog
+
+### v1.0.2
+
+- fixed [#6](https://github.com/TogetherOS/cicada/issues/6)
+- Customize the configuration file.
+- Using flexible.
+- Refactor the code.
+
 
 ## Contact author
 

@@ -27,7 +27,7 @@
 - [x] 自定义拦截器。
 - [x] 灵活的传参方式。
 - [x] `json` 响应格式。
-- [ ] 自定义配置。
+- [x] 自定义配置。
 - [ ] 多种路由风格。
 - [ ] `HTTPS` 支持。
 - [ ] `Cookie` 支持。
@@ -42,7 +42,7 @@
 <dependency>
     <groupId>top.crossoverjie.opensource</groupId>
     <artifactId>cicada-core</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -100,6 +100,11 @@ public class DemoAction implements WorkAction {
 }
 ```
 
+## 自定义配置
+
+`cicada` 默认会读取 classpath 下的 `application.properties` 配置文件。
+
+同时也可以自定义配置文件。
 
 ## 自定义拦截器
 
@@ -154,6 +159,15 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 > 测试条件：100 threads and 100 connections ;1G RAM/4 CPU。
 
 **每秒将近 10W 请求。**
+
+## 更新记录
+
+### v1.0.2
+
+- 修复 [#6](https://github.com/TogetherOS/cicada/issues/6)
+- 自定义配置文件。
+- 灵活使用配置。
+- 重构代码。
 
 ## 联系作者
 

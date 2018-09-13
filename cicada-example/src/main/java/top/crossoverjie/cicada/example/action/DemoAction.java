@@ -9,6 +9,7 @@ import top.crossoverjie.cicada.server.action.WorkAction;
 import top.crossoverjie.cicada.server.action.param.Param;
 import top.crossoverjie.cicada.server.action.res.WorkRes;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
+import top.crossoverjie.cicada.server.configuration.ApplicationConfiguration;
 import top.crossoverjie.cicada.server.configuration.ConfigurationHolder;
 import top.crossoverjie.cicada.server.util.LoggerBuilder;
 
@@ -36,11 +37,13 @@ public class DemoAction implements WorkAction {
 
         KafkaConfiguration configuration = (KafkaConfiguration) getConfiguration(KafkaConfiguration.class);
         RedisConfiguration redisConfiguration = (RedisConfiguration) ConfigurationHolder.getConfiguration(RedisConfiguration.class);
+        ApplicationConfiguration applicationConfiguration = (ApplicationConfiguration) ConfigurationHolder.getConfiguration(ApplicationConfiguration.class);
 
         String brokerList = configuration.get("kafka.broker.list");
         String redisHost = redisConfiguration.get("redis.host");
+        String port = applicationConfiguration.get("cicada.port");
 
-        LOGGER.info("Configuration brokerList=[{}],redisHost=[{}]",brokerList,redisHost);
+        LOGGER.info("Configuration brokerList=[{}],redisHost=[{}] port=[{}]",brokerList,redisHost,port);
 
         String name = paramMap.getString("name");
         Integer id = paramMap.getInteger("id");
