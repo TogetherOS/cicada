@@ -29,7 +29,7 @@ public class ConfigurationHolder {
      * @param clazz
      * @return
      */
-    public static AbstractCicadaConfiguration getConfiguration(Class<?> clazz){
+    public static AbstractCicadaConfiguration getConfiguration(Class<? extends AbstractCicadaConfiguration> clazz){
         return config.get(clazz.getName()) ;
     }
 }
