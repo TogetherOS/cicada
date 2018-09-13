@@ -106,6 +106,53 @@ public class DemoAction implements WorkAction {
 
 同时也可以自定义配置文件。
 
+只需要继承 `top.crossoverjie.cicada.server.configuration.AbstractCicadaConfiguration`
+
+并传入配置文件名称即可。比如：
+
+
+```java
+public class RedisConfiguration extends AbstractCicadaConfiguration {
+
+
+    public RedisConfiguration() {
+        super.setPropertiesName("redis.properties");
+    }
+
+}
+
+public class KafkaConfiguration extends AbstractCicadaConfiguration {
+
+    public KafkaConfiguration() {
+        super.setPropertiesName("kafka.properties");
+    }
+
+
+}
+```
+
+同时按照如下方式即可获取自定义配置：
+
+```java
+KafkaConfiguration configuration = (KafkaConfiguration) getConfiguration(KafkaConfiguration.class);
+RedisConfiguration redisConfiguration = (RedisConfiguration) ConfigurationHolder.getConfiguration(RedisConfiguration.class);
+ApplicationConfiguration applicationConfiguration = (ApplicationConfiguration) ConfigurationHolder.getConfiguration(ApplicationConfiguration.class);
+
+String brokerList = configuration.get("kafka.broker.list");
+String redisHost = redisConfiguration.get("redis.host");
+String port = applicationConfiguration.get("cicada.port");
+
+LOGGER.info("Configuration brokerList=[{}],redisHost=[{}] port=[{}]",brokerList,redisHost,port);
+```
+
+当然在特殊环境中(dev/test/pro)也可以读取外置配置文件。只需要加上启动参数，保证参数名称和文件一致即可。
+
+```shell
+-Dapplication.properties=/xx/application.properties
+-Dkafka.properties=/xx/kakfa.properties
+-Dredis.properties=/xx/redis.properties
+```
+
 ## 自定义拦截器
 
 实现 `top.crossoverjie.cicada.example.intercept.CicadaInterceptor` 接口。
