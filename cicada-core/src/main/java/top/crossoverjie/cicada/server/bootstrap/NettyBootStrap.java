@@ -27,8 +27,7 @@ public class NettyBootStrap {
 
     private final static Logger LOGGER = LoggerBuilder.getLogger(NettyBootStrap.class);
 
-    private static final int BOSS_SIZE = Runtime.getRuntime().availableProcessors() * 2;
-    private static EventLoopGroup boss = new NioEventLoopGroup(BOSS_SIZE);
+    private static EventLoopGroup boss = new NioEventLoopGroup(1);
     private static EventLoopGroup work = new NioEventLoopGroup();
 
     /**
