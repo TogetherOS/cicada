@@ -37,7 +37,7 @@ If you are interested, please click [Star](https://github.com/crossoverJie/cicad
 - [x] Response `json`.
 - [x] Start with `jar`.
 - [x] Custom configuration.
-- [ ] Multiple routing ways.
+- [ ] Multiple response ways.
 - [ ] Support `HTTPS`.
 - [ ] Support `Cookie`.
 - [ ] File Upload.
