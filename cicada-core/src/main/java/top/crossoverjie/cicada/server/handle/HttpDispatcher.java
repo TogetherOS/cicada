@@ -31,9 +31,9 @@ import java.util.Map;
  *         Date: 2018/8/30 18:47
  * @since JDK 1.8
  */
-public class HttpHandle extends ChannelInboundHandlerAdapter {
+public class HttpDispatcher extends ChannelInboundHandlerAdapter {
 
-    private final static Logger LOGGER = LoggerBuilder.getLogger(HttpHandle.class);
+    private final static Logger LOGGER = LoggerBuilder.getLogger(HttpDispatcher.class);
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
