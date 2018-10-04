@@ -16,6 +16,8 @@ import top.crossoverjie.cicada.server.context.CicadaContext;
 public class TextAction implements WorkAction {
     @Override
     public void execute(CicadaContext context, Param param) throws Exception {
-        context.text("hello world");
+        String url = context.request().getUrl();
+        String method = context.request().getMethod();
+        context.text("hello world url=" + url + " method=" + method);
     }
 }

@@ -29,9 +29,9 @@ import static top.crossoverjie.cicada.server.configuration.ConfigurationHolder.g
 public class DemoAction implements WorkAction {
 
 
-    private static final Logger LOGGER = LoggerBuilder.getLogger(DemoAction.class) ;
+    private static final Logger LOGGER = LoggerBuilder.getLogger(DemoAction.class);
 
-    private static AtomicLong index = new AtomicLong() ;
+    private static AtomicLong index = new AtomicLong();
 
     @Override
     public void execute(CicadaContext context, Param paramMap) throws Exception {
@@ -44,18 +44,23 @@ public class DemoAction implements WorkAction {
         String redisHost = redisConfiguration.get("redis.host");
         String port = applicationConfiguration.get("cicada.port");
 
-        LOGGER.info("Configuration brokerList=[{}],redisHost=[{}] port=[{}]",brokerList,redisHost,port);
+        LOGGER.info("Configuration brokerList=[{}],redisHost=[{}] port=[{}]", brokerList, redisHost, port);
 
         String name = paramMap.getString("name");
         Integer id = paramMap.getInteger("id");
-        LOGGER.info("name=[{}],id=[{}]" , name,id);
+        LOGGER.info("name=[{}],id=[{}]", name, id);
 
-        DemoResVO demoResVO = new DemoResVO() ;
+
+        String url = context.request().getUrl();
+        String method = context.request().getMethod();
+
+        DemoResVO demoResVO = new DemoResVO();
         demoResVO.setIndex(index.incrementAndGet());
+        demoResVO.setMsg(url + " " + method);
         WorkRes<DemoResVO> res = new WorkRes();
         res.setCode(StatusEnum.SUCCESS.getCode());
         res.setMessage(StatusEnum.SUCCESS.getMessage());
-        res.setDataBody(demoResVO) ;
+        res.setDataBody(demoResVO);
 
         context.json(res);
     }

@@ -33,17 +33,29 @@ public class CicadaContext {
     }
 
 
+    /**
+     * response json message
+     * @param workRes
+     */
     public void json(WorkRes workRes){
         CicadaContext.getResponse().setContentType(CicadaConstant.ContentType.JSON);
         CicadaContext.getResponse().setHttpContent(JSON.toJSONString(workRes));
     }
 
+    /**
+     * response text message
+     * @param text
+     */
     public void text(String text){
         CicadaContext.getResponse().setContentType(CicadaConstant.ContentType.TEXT);
         CicadaContext.getResponse().setHttpContent(text);
     }
 
     public static CicadaRequest getRequest(){
+        return CicadaContext.getContext().request ;
+    }
+
+    public CicadaRequest request(){
         return CicadaContext.getContext().request ;
     }
 

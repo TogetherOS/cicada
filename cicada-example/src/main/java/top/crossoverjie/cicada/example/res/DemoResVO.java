@@ -9,6 +9,15 @@ package top.crossoverjie.cicada.example.res;
  */
 public class DemoResVO {
     private Long index ;
+    private String msg ;
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
     public Long getIndex() {
         return index;
