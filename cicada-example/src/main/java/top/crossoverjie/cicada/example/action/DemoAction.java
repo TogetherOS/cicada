@@ -11,6 +11,7 @@ import top.crossoverjie.cicada.server.action.res.WorkRes;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
 import top.crossoverjie.cicada.server.configuration.ApplicationConfiguration;
 import top.crossoverjie.cicada.server.configuration.ConfigurationHolder;
+import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.util.LoggerBuilder;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -33,7 +34,7 @@ public class DemoAction implements WorkAction {
     private static AtomicLong index = new AtomicLong() ;
 
     @Override
-    public WorkRes<DemoResVO> execute(Param paramMap) throws Exception {
+    public void execute(CicadaContext context, Param paramMap) throws Exception {
 
         KafkaConfiguration configuration = (KafkaConfiguration) getConfiguration(KafkaConfiguration.class);
         RedisConfiguration redisConfiguration = (RedisConfiguration) ConfigurationHolder.getConfiguration(RedisConfiguration.class);
@@ -55,7 +56,8 @@ public class DemoAction implements WorkAction {
         res.setCode(StatusEnum.SUCCESS.getCode());
         res.setMessage(StatusEnum.SUCCESS.getMessage());
         res.setDataBody(demoResVO) ;
-        return res;
+
+        context.json(res);
     }
 
 }

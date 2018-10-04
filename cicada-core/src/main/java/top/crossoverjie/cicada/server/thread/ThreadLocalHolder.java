@@ -1,5 +1,7 @@
 package top.crossoverjie.cicada.server.thread;
 
+import top.crossoverjie.cicada.server.context.CicadaContext;
+
 /**
  * Function:
  *
@@ -10,6 +12,32 @@ package top.crossoverjie.cicada.server.thread;
 public class ThreadLocalHolder {
 
     private static final ThreadLocal<Long> LOCAL_TIME= new ThreadLocal() ;
+
+    private static final ThreadLocal<CicadaContext> CICADA_CONTEXT= new ThreadLocal() ;
+
+
+    /**
+     * set cicada context
+     * @param context
+     */
+    public static void setCicadaContext(CicadaContext context){
+        CICADA_CONTEXT.set(context) ;
+    }
+
+    /**
+     * remove cicada context
+     */
+    public static void removeCicadaContext(){
+        CICADA_CONTEXT.remove();
+    }
+
+    /**
+     * get cicada context
+     * @return
+     */
+    public static CicadaContext getCicadaContext(){
+        return CICADA_CONTEXT.get() ;
+    }
 
     /**
      * Set time
