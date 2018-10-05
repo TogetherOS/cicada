@@ -21,7 +21,7 @@ public class CicadaServer {
      */
     public static void start(Class<?> clazz,String path) throws Exception {
         CicadaSetting.setting(clazz,path) ;
-        NettyBootStrap.startServer();
+        NettyBootStrap.startCicada();
     }
 
 

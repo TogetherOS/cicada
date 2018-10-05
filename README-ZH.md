@@ -32,7 +32,6 @@
 - [x] `json` 响应格式。
 - [x] 自定义配置。
 - [ ] 多种响应方式。
-- [ ] `HTTPS` 支持。
 - [ ] `Cookie` 支持。
 - [ ] 文件上传。
 
@@ -217,6 +216,12 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 **每秒将近 10W 请求。**
 
 ## 更新记录
+
+### v1.0.3
+
+- 修复了多种响应方式。
+- 重构了核心代码，新增上下文环境。
+- 优雅停机。
 
 ### v1.0.2
 

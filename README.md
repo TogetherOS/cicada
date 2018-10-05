@@ -38,7 +38,6 @@ If you are interested, please click [Star](https://github.com/crossoverJie/cicad
 - [x] Start with `jar`.
 - [x] Custom configuration.
 - [ ] Multiple response ways.
-- [ ] Support `HTTPS`.
 - [ ] Support `Cookie`.
 - [ ] File Upload.
 
