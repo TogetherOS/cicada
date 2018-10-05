@@ -73,7 +73,7 @@ public class DemoAction implements WorkAction {
     private static AtomicLong index = new AtomicLong() ;
 
     @Override
-    public WorkRes<DemoResVO> execute(Param paramMap) throws Exception {
+    public void execute(CicadaContext context,Param paramMap) throws Exception {
         String name = paramMap.getString("name");
         Integer id = paramMap.getInteger("id");
         LOGGER.info("name=[{}],id=[{}]" , name,id);
@@ -84,7 +84,7 @@ public class DemoAction implements WorkAction {
         res.setCode(StatusEnum.SUCCESS.getCode());
         res.setMessage(StatusEnum.SUCCESS.getMessage());
         res.setDataBody(demoResVO) ;
-        return res;
+        context.json(res);
     }
 
 }
