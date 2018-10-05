@@ -71,7 +71,6 @@ public class HttpDispatcher extends ChannelInboundHandlerAdapter {
                 //build paramMap
                 Param paramMap = buildParamMap(queryStringDecoder);
 
-
                 //interceptor before
                 interceptorBefore(interceptors, appConfig, paramMap);
 

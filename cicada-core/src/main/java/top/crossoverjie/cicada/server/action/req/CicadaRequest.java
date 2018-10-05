@@ -9,8 +9,16 @@ package top.crossoverjie.cicada.server.action.req;
  */
 public interface CicadaRequest {
 
+    /**
+     * get request method
+     * @return
+     */
     String getMethod() ;
 
+    /**
+     * get request url
+     * @return
+     */
     String getUrl() ;
 
 }

@@ -11,15 +11,35 @@ import java.util.Map;
  */
 public interface CicadaResponse {
 
+    /**
+     * get all customer headers
+     * @return
+     */
     Map<String, String> getHeaders();
 
 
+    /**
+     * set content type
+     * @param contentType
+     */
     void setContentType(String contentType);
 
+    /**
+     * get content type
+     * @return
+     */
     String getContentType();
 
+    /**
+     * set http body
+     * @param content
+     */
     void setHttpContent(String content);
 
+    /**
+     * get http body
+     * @return
+     */
     String getHttpContent();
 
 }
