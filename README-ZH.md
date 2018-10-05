@@ -219,7 +219,7 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 
 ### v1.0.3
 
-- 修复了多种响应方式。
+- 修复 [#8](https://github.com/TogetherOS/cicada/issues/8),多种响应方式。
 - 重构了核心代码，新增上下文环境。
 - 优雅停机。
 
