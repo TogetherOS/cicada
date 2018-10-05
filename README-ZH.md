@@ -44,7 +44,7 @@
 <dependency>
     <groupId>top.crossoverjie.opensource</groupId>
     <artifactId>cicada-core</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 
@@ -101,6 +101,28 @@ public class DemoAction implements WorkAction {
     "message": "成功"
 }
 ```
+
+## Cicada 上下文
+
+通过 `json(),text()` 方法可以选择不同的响应方式。
+
+```java
+@CicadaAction("textAction")
+public class TextAction implements WorkAction {
+    @Override
+    public void execute(CicadaContext context, Param param) throws Exception {
+        String url = context.request().getUrl();
+        String method = context.request().getMethod();
+        context.text("hello world url=" + url + " method=" + method);
+    }
+}
+```
+
+![](https://ws1.sinaimg.cn/large/006tNbRwly1fvxvvo8yioj313i0tudij.jpg)
+
+同时也可以根据 `context.request()` 获得请求上下文中的其他信息。
+
+![](https://ws2.sinaimg.cn/large/006tNbRwly1fvxvxmpsjcj30yy0yo77h.jpg)
 
 ## 自定义配置
 
