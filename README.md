@@ -37,8 +37,7 @@ If you are interested, please click [Star](https://github.com/crossoverJie/cicad
 - [x] Response `json`.
 - [x] Start with `jar`.
 - [x] Custom configuration.
-- [ ] Multiple response ways.
-- [ ] Support `HTTPS`.
+- [x] Multiple response ways.
 - [ ] Support `Cookie`.
 - [ ] File Upload.
 
@@ -231,9 +230,15 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 
 ## ChangeLog
 
+### v1.0.3
+
+- Fixed [#8](https://github.com/TogetherOS/cicada/issues/8),Multiple response ways.
+- Refactoring core code and add `Cicada Context`.
+- Elegant closing service.
+
 ### v1.0.2
 
-- fixed [#6](https://github.com/TogetherOS/cicada/issues/6)
+- Fixed [#6](https://github.com/TogetherOS/cicada/issues/6)
 - Customize the configuration file.
 - Using flexible.
 - Refactor the code.

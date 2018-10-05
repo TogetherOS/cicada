@@ -1,6 +1,7 @@
 package top.crossoverjie.cicada.server.handle;
 
 import com.alibaba.fastjson.JSON;
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -10,8 +11,13 @@ import org.slf4j.Logger;
 import top.crossoverjie.cicada.server.action.WorkAction;
 import top.crossoverjie.cicada.server.action.param.Param;
 import top.crossoverjie.cicada.server.action.param.ParamMap;
+import top.crossoverjie.cicada.server.action.req.CicadaHttpRequest;
+import top.crossoverjie.cicada.server.action.req.CicadaRequest;
+import top.crossoverjie.cicada.server.action.res.CicadaHttpResponse;
+import top.crossoverjie.cicada.server.action.res.CicadaResponse;
 import top.crossoverjie.cicada.server.action.res.WorkRes;
 import top.crossoverjie.cicada.server.config.AppConfig;
+import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
 import top.crossoverjie.cicada.server.intercept.CicadaInterceptor;
@@ -20,6 +26,7 @@ import top.crossoverjie.cicada.server.util.LoggerBuilder;
 import top.crossoverjie.cicada.server.util.PathUtil;
 
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,46 +38,57 @@ import java.util.Map;
  *         Date: 2018/8/30 18:47
  * @since JDK 1.8
  */
-public class HttpHandle extends ChannelInboundHandlerAdapter {
+public class HttpDispatcher extends ChannelInboundHandlerAdapter {
 
-    private final static Logger LOGGER = LoggerBuilder.getLogger(HttpHandle.class);
+    private final static Logger LOGGER = LoggerBuilder.getLogger(HttpDispatcher.class);
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         if (msg instanceof DefaultHttpRequest) {
-            DefaultHttpRequest request = (DefaultHttpRequest) msg;
+            DefaultHttpRequest defaultHttpRequest = (DefaultHttpRequest) msg;
 
             // interceptor cache
             List<CicadaInterceptor> interceptors = new ArrayList<>() ;
 
-            // request uri
-            String uri = request.uri();
-            QueryStringDecoder queryStringDecoder = new QueryStringDecoder(URLDecoder.decode(request.uri(), "utf-8"));
+            CicadaRequest cicadaRequest = CicadaHttpRequest.init(defaultHttpRequest) ;
+            CicadaResponse cicadaResponse = CicadaHttpResponse.init() ;
 
-            // check Root Path
-            AppConfig appConfig = checkRootPath(uri, queryStringDecoder);
+            // set current thread request and response
+            CicadaContext.setContext(new CicadaContext(cicadaRequest,cicadaResponse));
 
-            // route Action
-            Class<?> actionClazz = routeAction(queryStringDecoder, appConfig);
+            try {
+                // request uri
+                String uri = cicadaRequest.getUrl();
+                QueryStringDecoder queryStringDecoder = new QueryStringDecoder(URLDecoder.decode(defaultHttpRequest.uri(), "utf-8"));
 
-            //build paramMap
-            Param paramMap = buildParamMap(queryStringDecoder);
+                // check Root Path
+                AppConfig appConfig = checkRootPath(uri, queryStringDecoder);
 
+                // route Action
+                Class<?> actionClazz = routeAction(queryStringDecoder, appConfig);
 
-            //interceptor before
-            interceptorBefore(interceptors, appConfig, paramMap);
+                //build paramMap
+                Param paramMap = buildParamMap(queryStringDecoder);
 
-            // execute Method
-            WorkAction action = (WorkAction) actionClazz.newInstance();
-            WorkRes execute = action.execute(paramMap);
+                //interceptor before
+                interceptorBefore(interceptors, appConfig, paramMap);
 
+                // execute Method
+                WorkAction action = (WorkAction) actionClazz.newInstance();
+                action.execute(CicadaContext.getContext(),paramMap);
 
-            // interceptor after
-            interceptorAfter(interceptors, paramMap);
+                // interceptor after
+                interceptorAfter(interceptors, paramMap);
 
-            // Response
-            responseMsg(ctx, execute);
+            }finally {
+                // Response
+                responseContent(ctx,CicadaContext.getResponse().getHttpContent());
+
+                // remove cicada thread context
+                CicadaContext.removeContext();
+            }
+
 
         }
 
@@ -109,10 +127,12 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
     /**
      * Response
      * @param ctx
-     * @param execute
      */
-    private void responseMsg(ChannelHandlerContext ctx, WorkRes execute) {
-        DefaultFullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, Unpooled.copiedBuffer(JSON.toJSONString(execute), CharsetUtil.UTF_8));
+    private void responseContent(ChannelHandlerContext ctx, String context) {
+
+        ByteBuf buf = Unpooled.wrappedBuffer(context.getBytes(StandardCharsets.UTF_8));
+
+        DefaultFullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
         buildHeader(response);
         ctx.writeAndFlush(response);
     }
@@ -188,6 +208,6 @@ public class HttpHandle extends ChannelInboundHandlerAdapter {
     private void buildHeader(DefaultFullHttpResponse response) {
         HttpHeaders headers = response.headers();
         headers.setInt(HttpHeaderNames.CONTENT_LENGTH, response.content().readableBytes());
-        headers.set(HttpHeaderNames.CONTENT_TYPE, "application/json");
+        headers.set(HttpHeaderNames.CONTENT_TYPE, CicadaContext.getResponse().getContentType());
     }
 }

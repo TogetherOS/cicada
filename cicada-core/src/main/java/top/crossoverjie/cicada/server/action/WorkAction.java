@@ -1,7 +1,7 @@
 package top.crossoverjie.cicada.server.action;
 
 import top.crossoverjie.cicada.server.action.param.Param;
-import top.crossoverjie.cicada.server.action.res.WorkRes;
+import top.crossoverjie.cicada.server.context.CicadaContext;
 
 /**
  * Function:
@@ -14,9 +14,9 @@ public interface WorkAction {
 
     /**
      * abstract execute method
-     * @param param
-     * @return
-     * @throws Exception
+     * @param context current context
+     * @param param request params
+     * @throws Exception throw exception
      */
-    WorkRes execute(Param param) throws Exception;
+    void execute(CicadaContext context ,Param param) throws Exception;
 }
