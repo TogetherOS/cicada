@@ -18,7 +18,7 @@ public class ThreadLocalHolder {
 
     /**
      * set cicada context
-     * @param context
+     * @param context current context
      */
     public static void setCicadaContext(CicadaContext context){
         CICADA_CONTEXT.set(context) ;
@@ -32,8 +32,7 @@ public class ThreadLocalHolder {
     }
 
     /**
-     * get cicada context
-     * @return
+     * @return get cicada context
      */
     public static CicadaContext getCicadaContext(){
         return CICADA_CONTEXT.get() ;
@@ -41,7 +40,7 @@ public class ThreadLocalHolder {
 
     /**
      * Set time
-     * @param time
+     * @param time current time
      */
     public static void setLocalTime(long time){
         LOCAL_TIME.set(time) ;
@@ -49,7 +48,7 @@ public class ThreadLocalHolder {
 
     /**
      * Get time and remove value
-     * @return
+     * @return get local time
      */
     public static Long getLocalTime(){
         Long time = LOCAL_TIME.get();

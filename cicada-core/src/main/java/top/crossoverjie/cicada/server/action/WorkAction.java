@@ -14,10 +14,9 @@ public interface WorkAction {
 
     /**
      * abstract execute method
-     * @param context
-     * @param param
-     * @return
-     * @throws Exception
+     * @param context current context
+     * @param param request params
+     * @throws Exception throw exception
      */
     void execute(CicadaContext context ,Param param) throws Exception;
 }
