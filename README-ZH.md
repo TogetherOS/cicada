@@ -247,6 +247,7 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 
 ### v1.0.2
 
+- 修复 [#6](https://github.com/TogetherOS/cicada/issues/9)
 - 修复 [#6](https://github.com/TogetherOS/cicada/issues/6)
 - 自定义配置文件。
 - 灵活使用配置。

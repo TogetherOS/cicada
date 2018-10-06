@@ -255,6 +255,7 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 
 ### v1.0.3
 
+- Fixed [#6](https://github.com/TogetherOS/cicada/issues/9)
 - Fixed [#8](https://github.com/TogetherOS/cicada/issues/8),Multiple response ways.
 - Refactoring core code and add `Cicada Context`.
 - Elegant closing service.
