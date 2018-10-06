@@ -104,7 +104,7 @@ public class DemoAction implements WorkAction {
 
 ## Cicada 上下文
 
-通过 `json(),text()` 方法可以选择不同的响应方式。
+通过 `context.json(),context.text()` 方法可以选择不同的响应方式。
 
 ```java
 @CicadaAction("textAction")

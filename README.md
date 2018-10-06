@@ -113,7 +113,7 @@ Launch and apply access: [http://127.0.0.1:7317/cicada-example/demoAction?name=1
 
 ## Cicada Context
 
-Through `json(),text()`, you can choose different response ways.
+Through `context.json(), context.text()`, you can choose different response ways.
 
 ```java
 @CicadaAction("textAction")
