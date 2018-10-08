@@ -52,16 +52,21 @@ public class CicadaSetting {
         if (rootPath == null) {
             rootPath = applicationConfiguration.get(CicadaConstant.ROOT_PATH);
         }
+
         String port = applicationConfiguration.get(CicadaConstant.CICADA_PORT);
 
         if (rootPath == null) {
             throw new CicadaException("No [cicada.root.path] exists ");
         }
-        if (port == null) {
-            throw new CicadaException("No [cicada.port] exists ");
-        }
+//        if (port == null) {
+//            throw new CicadaException("No [cicada.port] exists ");
+//        }
         AppConfig.getInstance().setRootPath(rootPath);
-        AppConfig.getInstance().setPort(Integer.parseInt(port));
+
+        if(port != null){
+            AppConfig.getInstance().setPort(Integer.parseInt(port));
+        }
+
     }
 
 
@@ -73,6 +78,9 @@ public class CicadaSetting {
      */
     private static void initConfiguration(Class<?> clazz) throws Exception {
         ThreadLocalHolder.setLocalTime(System.currentTimeMillis());
+        if(clazz.getPackage() == null){
+            throw new CicadaException("No [packageName] exists ");
+        }
         AppConfig.getInstance().setRootPackageName(clazz.getPackage().getName());
 
         List<Class<?>> configuration = ClassScanner.getConfiguration(AppConfig.getInstance().getRootPackageName());
