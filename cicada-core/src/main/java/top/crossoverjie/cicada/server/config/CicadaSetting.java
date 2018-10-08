@@ -58,11 +58,15 @@ public class CicadaSetting {
         if (rootPath == null) {
             throw new CicadaException("No [cicada.root.path] exists ");
         }
-        if (port == null) {
-            port = "7317";
-        }
+//        if (port == null) {
+//            throw new CicadaException("No [cicada.port] exists ");
+//        }
         AppConfig.getInstance().setRootPath(rootPath);
-        AppConfig.getInstance().setPort(Integer.parseInt(port));
+
+        if(port != null){
+            AppConfig.getInstance().setPort(Integer.parseInt(port));
+        }
+
     }
 
 
