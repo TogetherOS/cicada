@@ -7,7 +7,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
-import org.slf4j.Logger;
 import top.crossoverjie.cicada.server.action.WorkAction;
 import top.crossoverjie.cicada.server.action.param.Param;
 import top.crossoverjie.cicada.server.action.param.ParamMap;
@@ -23,7 +22,6 @@ import top.crossoverjie.cicada.server.exception.CicadaException;
 import top.crossoverjie.cicada.server.intercept.CicadaInterceptor;
 import top.crossoverjie.cicada.server.intercept.InterceptProcess;
 import top.crossoverjie.cicada.server.util.ClassScanner;
-import top.crossoverjie.cicada.server.util.LoggerBuilder;
 import top.crossoverjie.cicada.server.util.PathUtil;
 
 import java.net.URLDecoder;
@@ -40,9 +38,6 @@ import java.util.Map;
  * @since JDK 1.8
  */
 public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpRequest> {
-
-    private final static Logger LOGGER = LoggerBuilder.getLogger(HttpDispatcher.class);
-
 
     private final InterceptProcess interceptProcess = InterceptProcess.getInstance() ;
 
