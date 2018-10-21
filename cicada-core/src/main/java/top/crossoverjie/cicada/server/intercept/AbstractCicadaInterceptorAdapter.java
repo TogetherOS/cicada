@@ -1,6 +1,7 @@
 package top.crossoverjie.cicada.server.intercept;
 
 import top.crossoverjie.cicada.server.action.param.Param;
+import top.crossoverjie.cicada.server.context.CicadaContext;
 
 /**
  * Function:
@@ -9,15 +10,15 @@ import top.crossoverjie.cicada.server.action.param.Param;
  *         Date: 2018/9/2 15:40
  * @since JDK 1.8
  */
-public abstract class AbstractCicadaInterceptorAdapter implements CicadaInterceptor{
+public abstract class AbstractCicadaInterceptorAdapter extends CicadaInterceptor{
 
     @Override
-    public void before(Param param) {
-
+    public boolean before(CicadaContext context, Param param) {
+        return true;
     }
 
     @Override
-    public void after(Param param) {
+    public void after(CicadaContext context,Param param) {
 
     }
 }

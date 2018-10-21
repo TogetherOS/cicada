@@ -1,6 +1,7 @@
 package top.crossoverjie.cicada.server.intercept;
 
 import top.crossoverjie.cicada.server.action.param.Param;
+import top.crossoverjie.cicada.server.context.CicadaContext;
 
 /**
  * Function: common interceptor
@@ -9,18 +10,37 @@ import top.crossoverjie.cicada.server.action.param.Param;
  *         Date: 2018/9/2 14:39
  * @since JDK 1.8
  */
-public interface CicadaInterceptor {
+public abstract class CicadaInterceptor {
+
+
+    private int order ;
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
 
     /**
      * before
+     * @param context
      * @param param
+     * @return
+     * true if the execution chain should proceed with the next interceptor or the handler itself
+     * @throws Exception
      */
-    void before(Param param) ;
+    public boolean before(CicadaContext context,Param param) throws Exception{
+        return true;
+    }
 
 
     /**
      * after
+     * @param context
      * @param param
+     * @throws Exception
      */
-    void after(Param param) ;
+    public void after(CicadaContext context,Param param) throws Exception{}
 }
