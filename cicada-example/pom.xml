@@ -18,7 +18,7 @@
         <dependency>
             <groupId>top.crossoverjie.opensource</groupId>
             <artifactId>cicada-core</artifactId>
-            <version>1.0.3</version>
+            <version>1.0.4</version>
         </dependency>
 
     </dependencies>
