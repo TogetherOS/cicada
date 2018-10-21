@@ -19,14 +19,12 @@ import top.crossoverjie.cicada.server.config.AppConfig;
 import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
-import top.crossoverjie.cicada.server.intercept.CicadaInterceptor;
 import top.crossoverjie.cicada.server.intercept.InterceptProcess;
 import top.crossoverjie.cicada.server.util.ClassScanner;
 import top.crossoverjie.cicada.server.util.PathUtil;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,9 +41,6 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, DefaultHttpRequest httpRequest) {
-
-        // interceptor cache
-        List<CicadaInterceptor> interceptors = new ArrayList<>();
 
         CicadaRequest cicadaRequest = CicadaHttpRequest.init(httpRequest);
         CicadaResponse cicadaResponse = CicadaHttpResponse.init();
