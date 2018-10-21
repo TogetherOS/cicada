@@ -29,7 +29,7 @@ public class ClassScanner {
 
 
     private static Map<String, Class<?>> actionMap = null;
-    private static Map<String, Class<?>> interceptorMap = null;
+    private static Map<Integer, Class<?>> interceptorMap = null;
 
     private static Set<Class<?>> classes = null;
 
@@ -105,13 +105,13 @@ public class ClassScanner {
     }
 
     /**
-     * get @CicadaAction
+     * get @Interceptor
      *
      * @param packageName
      * @return
      * @throws Exception
      */
-    public static Map<String, Class<?>> getCicadaInterceptor(String packageName) throws Exception {
+    public static Map<Integer, Class<?>> getCicadaInterceptor(String packageName) throws Exception {
 
         if (interceptorMap == null) {
             Set<Class<?>> clsList = getClasses(packageName);
@@ -133,7 +133,7 @@ public class ClassScanner {
                         continue;
                     }
                     Interceptor interceptor = (Interceptor) annotation;
-                    interceptorMap.put(interceptor.value() == null ? cls.getName() : interceptor.value(), cls);
+                    interceptorMap.put(interceptor.order(), cls);
                 }
 
             }

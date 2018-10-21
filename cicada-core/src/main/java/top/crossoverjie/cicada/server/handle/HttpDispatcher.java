@@ -21,6 +21,7 @@ import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
 import top.crossoverjie.cicada.server.intercept.CicadaInterceptor;
+import top.crossoverjie.cicada.server.intercept.InterceptProcess;
 import top.crossoverjie.cicada.server.util.ClassScanner;
 import top.crossoverjie.cicada.server.util.LoggerBuilder;
 import top.crossoverjie.cicada.server.util.PathUtil;
@@ -41,6 +42,9 @@ import java.util.Map;
 public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpRequest> {
 
     private final static Logger LOGGER = LoggerBuilder.getLogger(HttpDispatcher.class);
+
+
+    private final InterceptProcess interceptProcess = InterceptProcess.getInstance() ;
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, DefaultHttpRequest httpRequest) {
@@ -68,15 +72,20 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
             //build paramMap
             Param paramMap = buildParamMap(queryStringDecoder);
 
+            //load interceptors
+            interceptProcess.loadInterceptors(appConfig);
+
             //interceptor before
-            interceptorBefore(interceptors, appConfig, paramMap);
+            interceptProcess.processBefore(paramMap) ;
+            //interceptorBefore(interceptors, appConfig, paramMap);
 
             // execute Method
             WorkAction action = (WorkAction) actionClazz.newInstance();
             action.execute(CicadaContext.getContext(), paramMap);
 
             // interceptor after
-            interceptorAfter(interceptors, paramMap);
+            interceptProcess.processAfter(paramMap);
+            //interceptorAfter(interceptors, paramMap);
 
         }catch (Exception e){
             exceptionCaught(ctx,e.getCause());
@@ -97,9 +106,9 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
      * @param interceptors
      * @param paramMap
      */
-    private void interceptorAfter(List<CicadaInterceptor> interceptors, Param paramMap) {
+    private void interceptorAfter(List<CicadaInterceptor> interceptors, Param paramMap) throws Exception {
         for (CicadaInterceptor interceptor : interceptors) {
-            interceptor.after(paramMap);
+            interceptor.after(CicadaContext.getContext(),paramMap);
         }
     }
 
@@ -112,11 +121,11 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
      * @throws Exception
      */
     private void interceptorBefore(List<CicadaInterceptor> interceptors, AppConfig appConfig, Param paramMap) throws Exception {
-        Map<String, Class<?>> cicadaInterceptor = ClassScanner.getCicadaInterceptor(appConfig.getRootPackageName());
-        for (Map.Entry<String, Class<?>> classEntry : cicadaInterceptor.entrySet()) {
+        Map<Integer, Class<?>> cicadaInterceptor = ClassScanner.getCicadaInterceptor(appConfig.getRootPackageName());
+        for (Map.Entry<Integer, Class<?>> classEntry : cicadaInterceptor.entrySet()) {
             Class<?> interceptorClass = classEntry.getValue();
             CicadaInterceptor interceptor = (CicadaInterceptor) interceptorClass.newInstance();
-            interceptor.before(paramMap);
+            interceptor.before(CicadaContext.getContext(),paramMap);
 
             //add cache
             interceptors.add(interceptor);

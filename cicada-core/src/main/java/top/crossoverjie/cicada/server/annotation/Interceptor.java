@@ -6,5 +6,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Interceptor {
-    String value() default "" ;
+    int order() default 0 ;
 }
