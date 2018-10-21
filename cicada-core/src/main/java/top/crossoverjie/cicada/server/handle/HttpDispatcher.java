@@ -76,8 +76,10 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
             interceptProcess.loadInterceptors(appConfig);
 
             //interceptor before
-            interceptProcess.processBefore(paramMap) ;
-            //interceptorBefore(interceptors, appConfig, paramMap);
+            boolean access = interceptProcess.processBefore(paramMap);
+            if (!access){
+                return;
+            }
 
             // execute Method
             WorkAction action = (WorkAction) actionClazz.newInstance();
@@ -85,7 +87,6 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
 
             // interceptor after
             interceptProcess.processAfter(paramMap);
-            //interceptorAfter(interceptors, paramMap);
 
         }catch (Exception e){
             exceptionCaught(ctx,e.getCause());
@@ -100,37 +101,6 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
 
     }
 
-    /**
-     * interceptor after
-     *
-     * @param interceptors
-     * @param paramMap
-     */
-    private void interceptorAfter(List<CicadaInterceptor> interceptors, Param paramMap) throws Exception {
-        for (CicadaInterceptor interceptor : interceptors) {
-            interceptor.after(CicadaContext.getContext(),paramMap);
-        }
-    }
-
-    /**
-     * interceptor before
-     *
-     * @param interceptors
-     * @param appConfig
-     * @param paramMap
-     * @throws Exception
-     */
-    private void interceptorBefore(List<CicadaInterceptor> interceptors, AppConfig appConfig, Param paramMap) throws Exception {
-        Map<Integer, Class<?>> cicadaInterceptor = ClassScanner.getCicadaInterceptor(appConfig.getRootPackageName());
-        for (Map.Entry<Integer, Class<?>> classEntry : cicadaInterceptor.entrySet()) {
-            Class<?> interceptorClass = classEntry.getValue();
-            CicadaInterceptor interceptor = (CicadaInterceptor) interceptorClass.newInstance();
-            interceptor.before(CicadaContext.getContext(),paramMap);
-
-            //add cache
-            interceptors.add(interceptor);
-        }
-    }
 
     /**
      * Response

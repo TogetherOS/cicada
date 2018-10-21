@@ -64,10 +64,14 @@ public class InterceptProcess {
      * @param param
      * @throws Exception
      */
-    public void processBefore(Param param) throws Exception {
+    public boolean processBefore(Param param) throws Exception {
         for (CicadaInterceptor interceptor : interceptors) {
-            interceptor.before(CicadaContext.getContext(),param) ;
+            boolean access = interceptor.before(CicadaContext.getContext(), param);
+            if (!access){
+                return access ;
+            }
         }
+        return true;
     }
 
     /**

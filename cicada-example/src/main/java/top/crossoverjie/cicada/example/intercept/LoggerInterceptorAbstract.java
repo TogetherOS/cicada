@@ -19,6 +19,10 @@ public class LoggerInterceptorAbstract extends CicadaInterceptor {
 
     private static final Logger LOGGER = LoggerBuilder.getLogger(LoggerInterceptorAbstract.class) ;
 
+    @Override
+    public boolean before(CicadaContext context, Param param) throws Exception {
+        return super.before(context, param);
+    }
 
     @Override
     public void after(CicadaContext context, Param param) {
