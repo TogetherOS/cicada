@@ -86,18 +86,13 @@ public class ClassScanner {
             actionMap = new HashMap<>(16);
             for (Class<?> cls : clsList) {
 
-                if (cls.getAnnotation(CicadaAction.class) == null) {
+                Annotation annotation = cls.getAnnotation(CicadaAction.class);
+                if (annotation == null) {
                     continue;
                 }
 
-                Annotation[] annotations = cls.getAnnotations();
-                for (Annotation annotation : annotations) {
-                    if (!(annotation instanceof CicadaAction)) {
-                        continue;
-                    }
-                    CicadaAction cicadaAction = (CicadaAction) annotation;
-                    actionMap.put(cicadaAction.value() == null ? cls.getName() : cicadaAction.value(), cls);
-                }
+                CicadaAction cicadaAction = (CicadaAction) annotation;
+                actionMap.put(cicadaAction.value() == null ? cls.getName() : cicadaAction.value(), cls);
 
             }
         }
@@ -121,20 +116,15 @@ public class ClassScanner {
             }
 
             interceptorMap = new HashMap<>(16);
-            for (Class<?> cls : clsList) {
 
-                if (cls.getAnnotation(Interceptor.class) == null) {
+            for (Class<?> cls : clsList) {
+                Annotation annotation = cls.getAnnotation(Interceptor.class);
+                if (annotation == null) {
                     continue;
                 }
 
-                Annotation[] annotations = cls.getAnnotations();
-                for (Annotation annotation : annotations) {
-                    if (!(annotation instanceof Interceptor)) {
-                        continue;
-                    }
-                    Interceptor interceptor = (Interceptor) annotation;
-                    interceptorMap.put(interceptor.order(), cls);
-                }
+                Interceptor interceptor = (Interceptor) annotation;
+                interceptorMap.put(interceptor.order(), cls);
 
             }
         }
