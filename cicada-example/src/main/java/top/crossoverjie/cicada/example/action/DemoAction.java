@@ -73,24 +73,24 @@ public class DemoAction implements WorkAction {
 
 
     private void selectDB(){
-        LOGGER.info("开始查询数据库");
+        LOGGER.info("begin select DB ");
         try {
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
             LOGGER.error("InterruptedException",e);
         }
 
-        LOGGER.info("查询数据库成功");
+        LOGGER.info("end select DB");
     }
 
     private void insertDB(){
-        LOGGER.info("开始写入数据库");
+        LOGGER.info("begin insert DB");
         try {
             TimeUnit.MILLISECONDS.sleep(200);
         } catch (InterruptedException e) {
             LOGGER.error("InterruptedException",e);
         }
 
-        LOGGER.info("开始写入数据库成功");
+        LOGGER.info("end insert DB");
     }
 }
