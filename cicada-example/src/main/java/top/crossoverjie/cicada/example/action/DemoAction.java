@@ -14,6 +14,7 @@ import top.crossoverjie.cicada.server.configuration.ConfigurationHolder;
 import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.util.LoggerBuilder;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static top.crossoverjie.cicada.server.configuration.ConfigurationHolder.getConfiguration;
@@ -54,6 +55,11 @@ public class DemoAction implements WorkAction {
         String url = context.request().getUrl();
         String method = context.request().getMethod();
 
+
+        //业务操作
+        selectDB();
+        insertDB();
+
         DemoResVO demoResVO = new DemoResVO();
         demoResVO.setIndex(index.incrementAndGet());
         demoResVO.setMsg(url + " " + method);
@@ -65,4 +71,26 @@ public class DemoAction implements WorkAction {
         context.json(res);
     }
 
+
+    private void selectDB(){
+        LOGGER.info("开始查询数据库");
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+            LOGGER.error("InterruptedException",e);
+        }
+
+        LOGGER.info("查询数据库成功");
+    }
+
+    private void insertDB(){
+        LOGGER.info("开始写入数据库");
+        try {
+            TimeUnit.MILLISECONDS.sleep(200);
+        } catch (InterruptedException e) {
+            LOGGER.error("InterruptedException",e);
+        }
+
+        LOGGER.info("开始写入数据库成功");
+    }
 }
