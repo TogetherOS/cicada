@@ -47,11 +47,11 @@ public class InterceptProcess {
             return;
         }else {
             interceptors = new ArrayList<>(10) ;
-            Map<Integer, Class<?>> cicadaInterceptor = ClassScanner.getCicadaInterceptor(appConfig.getRootPackageName());
-            for (Map.Entry<Integer, Class<?>> classEntry : cicadaInterceptor.entrySet()) {
-                Class<?> interceptorClass = classEntry.getValue();
+            Map<Class<?>, Integer> cicadaInterceptor = ClassScanner.getCicadaInterceptor(appConfig.getRootPackageName());
+            for (Map.Entry<Class<?>, Integer> classEntry : cicadaInterceptor.entrySet()) {
+                Class<?> interceptorClass = classEntry.getKey();
                 CicadaInterceptor interceptor = (CicadaInterceptor) interceptorClass.newInstance();
-                interceptor.setOrder(classEntry.getKey());
+                interceptor.setOrder(classEntry.getValue());
                 interceptors.add(interceptor);
             }
             Collections.sort(interceptors,new OrderComparator());
