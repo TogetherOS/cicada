@@ -30,5 +30,15 @@ public class PathUtil {
         return path.split("/")[2];
     }
 
+    /**
+     * Get Action Path
+     * /cicada-example/routeAction/getUser
+     * @param path
+     * @return getUser
+     */
+    public static String getRoutePath(String path) {
+        return path.split("/")[3];
+    }
+
 
 }

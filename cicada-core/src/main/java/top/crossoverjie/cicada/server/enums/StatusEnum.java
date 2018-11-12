@@ -22,6 +22,9 @@ public enum StatusEnum {
 
     /** 请求限流 */
     REQUEST_ERROR("7000", "Request Error"),
+
+    /** 404 */
+    NOT_FOUND("404", "need to declare a method by using @CicadaRoute!"),
     ;
 
 

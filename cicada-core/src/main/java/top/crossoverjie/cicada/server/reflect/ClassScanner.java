@@ -25,7 +25,7 @@ import java.util.jar.JarFile;
  */
 public class ClassScanner {
 
-    private final static Logger LOGGER = LoggerBuilder.getLogger(ClassScanner.class);
+    private final static Logger LOGGER = top.crossoverjie.cicada.server.util.LoggerBuilder.getLogger(ClassScanner.class);
 
 
     private static Map<String, Class<?>> actionMap = null;

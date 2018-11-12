@@ -7,7 +7,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
-import top.crossoverjie.cicada.server.action.WorkAction;
 import top.crossoverjie.cicada.server.action.param.Param;
 import top.crossoverjie.cicada.server.action.param.ParamMap;
 import top.crossoverjie.cicada.server.action.req.CicadaHttpRequest;
@@ -20,9 +19,11 @@ import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
 import top.crossoverjie.cicada.server.intercept.InterceptProcess;
+import top.crossoverjie.cicada.server.reflect.RouterScanner;
 import top.crossoverjie.cicada.server.util.ClassScanner;
 import top.crossoverjie.cicada.server.util.PathUtil;
 
+import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -37,7 +38,8 @@ import java.util.Map;
  */
 public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpRequest> {
 
-    private final InterceptProcess interceptProcess = InterceptProcess.getInstance() ;
+    private final InterceptProcess interceptProcess = InterceptProcess.getInstance();
+    private final RouterScanner routerScanner = RouterScanner.getInstance();
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, DefaultHttpRequest httpRequest) {
@@ -57,7 +59,7 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
             AppConfig appConfig = checkRootPath(uri, queryStringDecoder);
 
             // route Action
-            Class<?> actionClazz = routeAction(queryStringDecoder, appConfig);
+            //Class<?> actionClazz = routeAction(queryStringDecoder, appConfig);
 
             //build paramMap
             Param paramMap = buildParamMap(queryStringDecoder);
@@ -67,20 +69,24 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
 
             //interceptor before
             boolean access = interceptProcess.processBefore(paramMap);
-            if (!access){
+            if (!access) {
                 return;
             }
 
             // execute Method
-            WorkAction action = (WorkAction) actionClazz.newInstance();
-            action.execute(CicadaContext.getContext(), paramMap);
+            Method method = routerScanner.routeMethod(queryStringDecoder, appConfig.getRootPackageName());
+            //需要从 IOC 容器中获取
+            method.invoke(method.getDeclaringClass().newInstance());
+
+            //WorkAction action = (WorkAction) actionClazz.newInstance();
+            //action.execute(CicadaContext.getContext(), paramMap);
 
             // interceptor after
             interceptProcess.processAfter(paramMap);
 
-        }catch (Exception e){
-            exceptionCaught(ctx,e.getCause());
-        }finally {
+        } catch (Exception e) {
+            exceptionCaught(ctx, e);
+        } finally {
             // Response
             responseContent(ctx, CicadaContext.getResponse().getHttpContent());
 
@@ -163,6 +169,10 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+
+        if (CicadaException.isResetByPeer(cause.getMessage())){
+            return;
+        }
 
         WorkRes workRes = new WorkRes();
         workRes.setCode(String.valueOf(HttpResponseStatus.NOT_FOUND.code()));

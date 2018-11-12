@@ -31,7 +31,7 @@ public abstract class CicadaInterceptor {
      * true if the execution chain should proceed with the next interceptor or the handler itself
      * @throws Exception
      */
-    public boolean before(CicadaContext context,Param param) throws Exception{
+    protected boolean before(CicadaContext context,Param param) throws Exception{
         return true;
     }
 
@@ -42,5 +42,5 @@ public abstract class CicadaInterceptor {
      * @param param
      * @throws Exception
      */
-    public void after(CicadaContext context,Param param) throws Exception{}
+    protected void after(CicadaContext context,Param param) throws Exception{}
 }
