@@ -48,7 +48,7 @@ public class DemoAction implements WorkAction {
 
         String name = paramMap.getString("name");
         Integer id = paramMap.getInteger("id");
-        LOGGER.info("name=[{}],id=[{}]", name, id);
+        LOGGER.info("name=[{}];id=[{}]", name, id);
 
 
         String url = context.request().getUrl();
