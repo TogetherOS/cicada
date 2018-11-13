@@ -4,7 +4,7 @@ import io.netty.handler.codec.http.QueryStringDecoder;
 import top.crossoverjie.cicada.server.annotation.CicadaRoute;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
-import top.crossoverjie.cicada.server.util.ClassScanner;
+import top.crossoverjie.cicada.server.reflect.ClassScanner;
 import top.crossoverjie.cicada.server.util.PathUtil;
 
 import java.lang.reflect.Method;

@@ -41,8 +41,19 @@ public class RouteActionTest {
     @Test
     public void reflect2() throws Exception{
         Class<?> aClass = Class.forName("top.crossoverjie.cicada.example.action.DemoAction");
+        String name = aClass.getName();
         Class<?>[] interfaces = aClass.getInterfaces() ;
         LOGGER.info((interfaces[0].getName() == WorkAction.class.getName()) + "");
+    }
+
+    @Test
+    public void reflect3(){
+        try {
+            Class<?> aClass = Class.forName("top.crossoverjie.cicada.bean.ioc.CicadaIoc");
+            LOGGER.info(aClass.getName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

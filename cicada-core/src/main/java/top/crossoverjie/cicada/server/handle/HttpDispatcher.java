@@ -19,9 +19,9 @@ import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
 import top.crossoverjie.cicada.server.intercept.InterceptProcess;
+import top.crossoverjie.cicada.server.reflect.ClassScanner;
 import top.crossoverjie.cicada.server.route.RouteProcess;
 import top.crossoverjie.cicada.server.route.RouterScanner;
-import top.crossoverjie.cicada.server.util.ClassScanner;
 import top.crossoverjie.cicada.server.util.PathUtil;
 
 import java.lang.reflect.Method;
@@ -78,11 +78,10 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
             // execute Method
             Method method = routerScanner.routeMethod(queryStringDecoder, appConfig.getRootPackageName());
             routeProcess.invoke(method,queryStringDecoder) ;
-            //需要从 IOC 容器中获取
-            //method.invoke(method.getDeclaringClass().newInstance());
 
             //WorkAction action = (WorkAction) actionClazz.newInstance();
             //action.execute(CicadaContext.getContext(), paramMap);
+
 
             // interceptor after
             interceptProcess.processAfter(paramMap);

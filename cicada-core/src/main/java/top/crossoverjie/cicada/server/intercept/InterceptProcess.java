@@ -3,7 +3,7 @@ package top.crossoverjie.cicada.server.intercept;
 import top.crossoverjie.cicada.server.action.param.Param;
 import top.crossoverjie.cicada.server.config.AppConfig;
 import top.crossoverjie.cicada.server.context.CicadaContext;
-import top.crossoverjie.cicada.server.util.ClassScanner;
+import top.crossoverjie.cicada.server.reflect.ClassScanner;
 
 import java.util.ArrayList;
 import java.util.Collections;

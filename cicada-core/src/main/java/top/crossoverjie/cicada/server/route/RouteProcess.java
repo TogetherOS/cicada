@@ -1,11 +1,11 @@
 package top.crossoverjie.cicada.server.route;
 
 import io.netty.handler.codec.http.QueryStringDecoder;
+import top.crossoverjie.cicada.server.bean.CicadaBeanManager;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,6 +22,8 @@ public class RouteProcess {
 
     private volatile static RouteProcess routeProcess;
 
+    private final CicadaBeanManager cicadaBeanManager = CicadaBeanManager.getInstance() ;
+
     public static RouteProcess getInstance() {
         if (routeProcess == null) {
             synchronized (RouteProcess.class) {
@@ -33,9 +35,10 @@ public class RouteProcess {
         return routeProcess;
     }
 
-    public void invoke(Method method, QueryStringDecoder queryStringDecoder) throws IllegalAccessException, NoSuchFieldException, InstantiationException, InvocationTargetException {
+    public void invoke(Method method, QueryStringDecoder queryStringDecoder) throws Exception {
         Object object = parseRouteParameter(method, queryStringDecoder);
-        method.invoke(method.getDeclaringClass().newInstance(), object);
+        Object bean = cicadaBeanManager.getBean(method.getDeclaringClass().getName());
+        method.invoke(bean, object);
     }
 
     /**

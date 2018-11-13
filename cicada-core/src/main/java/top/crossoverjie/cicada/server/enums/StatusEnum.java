@@ -12,10 +12,13 @@ public enum StatusEnum {
     /** request Error */
     REQUEST_ERROR("7000", "Request Error"),
 
-    /** 404 */
-    NOT_FOUND("404", "need to declare a method by using @CicadaRoute!"),
+    /** duplicate ioc impl*/
+    DUPLICATE_IOC("7000", "Duplicate ioc impl error"),
 
     /** 404 */
+    NOT_FOUND("404", "Need to declare a method by using @CicadaRoute!"),
+
+    /** IllegalArgumentException */
     ILLEGAL_PARAMETER("404", "IllegalArgumentException: You can only have one parameter by using @CicadaRoute!"),
     ;
 

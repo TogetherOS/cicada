@@ -1,13 +1,14 @@
 package top.crossoverjie.cicada.server.config;
 
 import top.crossoverjie.cicada.server.CicadaServer;
+import top.crossoverjie.cicada.server.bean.CicadaBeanManager;
 import top.crossoverjie.cicada.server.configuration.AbstractCicadaConfiguration;
 import top.crossoverjie.cicada.server.configuration.ApplicationConfiguration;
 import top.crossoverjie.cicada.server.configuration.ConfigurationHolder;
 import top.crossoverjie.cicada.server.constant.CicadaConstant;
 import top.crossoverjie.cicada.server.exception.CicadaException;
+import top.crossoverjie.cicada.server.reflect.ClassScanner;
 import top.crossoverjie.cicada.server.thread.ThreadLocalHolder;
-import top.crossoverjie.cicada.server.util.ClassScanner;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,6 +39,8 @@ public class CicadaSetting {
 
         //Set application configuration
         setAppConfig(rootPath);
+
+        CicadaBeanManager.getInstance().init(rootPath);
     }
 
 

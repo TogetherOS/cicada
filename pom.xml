@@ -22,6 +22,8 @@
     <modules>
         <module>cicada-core</module>
         <module>cicada-example</module>
+        <module>cicada-ioc</module>
+        <module>cicada-base</module>
     </modules>
 
     <properties>
@@ -94,6 +96,12 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>19.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>top.crossoverjie.opensource</groupId>
+                <artifactId>cicada-base</artifactId>
+                <version>2.0.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
