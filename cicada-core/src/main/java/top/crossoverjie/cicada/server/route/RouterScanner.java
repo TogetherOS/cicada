@@ -1,4 +1,4 @@
-package top.crossoverjie.cicada.server.reflect;
+package top.crossoverjie.cicada.server.route;
 
 import io.netty.handler.codec.http.QueryStringDecoder;
 import top.crossoverjie.cicada.server.annotation.CicadaRoute;
@@ -42,6 +42,13 @@ public class RouterScanner {
 
     private RouterScanner(){}
 
+    /**
+     * get route method
+     * @param queryStringDecoder
+     * @param packageName
+     * @return
+     * @throws Exception
+     */
     public Method routeMethod(QueryStringDecoder queryStringDecoder, String packageName) throws Exception {
         if (routes == null){
             routes = new HashMap<>(16) ;

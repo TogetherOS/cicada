@@ -22,13 +22,12 @@ public class RouteAction {
 
 
     @CicadaRoute("getUser")
-    public void getUser(){
+    public void getUser(DemoReq req){
+
+        LOGGER.info(req.toString());
         WorkRes<DemoReq> reqWorkRes = new WorkRes<>() ;
-        reqWorkRes.setMessage("hello");
+        reqWorkRes.setMessage("hello =" + req.getName());
         CicadaContext.getContext().json(reqWorkRes) ;
     }
 
-    private void test(){
-        LOGGER.info("test");
-    }
 }

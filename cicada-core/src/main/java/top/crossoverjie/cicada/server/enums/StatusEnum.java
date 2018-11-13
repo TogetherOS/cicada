@@ -5,26 +5,18 @@ import java.util.List;
 
 public enum StatusEnum {
 
-    /** 成功 */
-    SUCCESS("9000", "成功"),
-    /** 成功 */
-    FALLBACK("8000", "FALL_BACK"),
-    /** 参数校验失败**/
-    VALIDATION_FAIL("3000", "参数校验失败"),
-    /** 失败 */
-    FAIL("4000", "失败"),
+    /** success */
+    SUCCESS("9000", "success"),
 
-    /** 重复请求 */
-    REPEAT_REQUEST("5000", "重复请求"),
 
-    /** 请求限流 */
-    REQUEST_LIMIT("6000", "请求限流"),
-
-    /** 请求限流 */
+    /** request Error */
     REQUEST_ERROR("7000", "Request Error"),
 
     /** 404 */
     NOT_FOUND("404", "need to declare a method by using @CicadaRoute!"),
+
+    /** 404 */
+    ILLEGAL_PARAMETER("404", "IllegalArgumentException: You can only have one parameter by using @CicadaRoute!"),
     ;
 
 
