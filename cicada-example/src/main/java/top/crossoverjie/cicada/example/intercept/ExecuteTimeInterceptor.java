@@ -28,7 +28,7 @@ public class ExecuteTimeInterceptor extends CicadaInterceptor {
         start = System.currentTimeMillis();
         LOGGER.info("拦截请求");
         context.text("拦截请求");
-        return false;
+        return true;
     }
 
     @Override

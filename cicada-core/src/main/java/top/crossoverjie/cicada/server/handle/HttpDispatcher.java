@@ -7,7 +7,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
-import top.crossoverjie.cicada.server.action.WorkAction;
+import org.slf4j.Logger;
 import top.crossoverjie.cicada.server.action.param.Param;
 import top.crossoverjie.cicada.server.action.param.ParamMap;
 import top.crossoverjie.cicada.server.action.req.CicadaHttpRequest;
@@ -20,9 +20,13 @@ import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
 import top.crossoverjie.cicada.server.intercept.InterceptProcess;
-import top.crossoverjie.cicada.server.util.ClassScanner;
+import top.crossoverjie.cicada.server.reflect.ClassScanner;
+import top.crossoverjie.cicada.server.route.RouteProcess;
+import top.crossoverjie.cicada.server.route.RouterScanner;
+import top.crossoverjie.cicada.server.util.LoggerBuilder;
 import top.crossoverjie.cicada.server.util.PathUtil;
 
+import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -37,7 +41,12 @@ import java.util.Map;
  */
 public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpRequest> {
 
-    private final InterceptProcess interceptProcess = InterceptProcess.getInstance() ;
+    private static final Logger LOGGER = LoggerBuilder.getLogger(HttpDispatcher.class);
+
+    private final AppConfig appConfig = AppConfig.getInstance();
+    private final InterceptProcess interceptProcess = InterceptProcess.getInstance();
+    private final RouterScanner routerScanner = RouterScanner.getInstance();
+    private final RouteProcess routeProcess = RouteProcess.getInstance() ;
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, DefaultHttpRequest httpRequest) {
@@ -54,33 +63,37 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
             QueryStringDecoder queryStringDecoder = new QueryStringDecoder(URLDecoder.decode(httpRequest.uri(), "utf-8"));
 
             // check Root Path
-            AppConfig appConfig = checkRootPath(uri, queryStringDecoder);
+            appConfig.checkRootPath(uri, queryStringDecoder);
 
             // route Action
-            Class<?> actionClazz = routeAction(queryStringDecoder, appConfig);
+            //Class<?> actionClazz = routeAction(queryStringDecoder, appConfig);
 
             //build paramMap
             Param paramMap = buildParamMap(queryStringDecoder);
 
             //load interceptors
-            interceptProcess.loadInterceptors(appConfig);
+            interceptProcess.loadInterceptors();
 
             //interceptor before
             boolean access = interceptProcess.processBefore(paramMap);
-            if (!access){
+            if (!access) {
                 return;
             }
 
             // execute Method
-            WorkAction action = (WorkAction) actionClazz.newInstance();
-            action.execute(CicadaContext.getContext(), paramMap);
+            Method method = routerScanner.routeMethod(queryStringDecoder);
+            routeProcess.invoke(method,queryStringDecoder) ;
+
+            //WorkAction action = (WorkAction) actionClazz.newInstance();
+            //action.execute(CicadaContext.getContext(), paramMap);
+
 
             // interceptor after
             interceptProcess.processAfter(paramMap);
 
-        }catch (Exception e){
-            exceptionCaught(ctx,e.getCause());
-        }finally {
+        } catch (Exception e) {
+            exceptionCaught(ctx, e);
+        } finally {
             // Response
             responseContent(ctx, CicadaContext.getResponse().getHttpContent());
 
@@ -146,23 +159,16 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
         return actionClazz;
     }
 
-    /**
-     * check Root Path
-     *
-     * @param uri
-     * @param queryStringDecoder
-     * @return
-     */
-    private AppConfig checkRootPath(String uri, QueryStringDecoder queryStringDecoder) {
-        AppConfig appConfig = AppConfig.getInstance();
-        if (!PathUtil.getRootPath(queryStringDecoder.path()).equals(appConfig.getRootPath())) {
-            throw new CicadaException(StatusEnum.REQUEST_ERROR, uri);
-        }
-        return appConfig;
-    }
+
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+
+        if (CicadaException.isResetByPeer(cause.getMessage())){
+            return;
+        }
+
+        LOGGER.error(cause.getMessage(), cause);
 
         WorkRes workRes = new WorkRes();
         workRes.setCode(String.valueOf(HttpResponseStatus.NOT_FOUND.code()));

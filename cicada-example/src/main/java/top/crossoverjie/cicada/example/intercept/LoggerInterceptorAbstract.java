@@ -14,7 +14,7 @@ import top.crossoverjie.cicada.server.util.LoggerBuilder;
  *         Date: 2018/9/2 14:39
  * @since JDK 1.8
  */
-@Interceptor
+@Interceptor(order = 1)
 public class LoggerInterceptorAbstract extends CicadaInterceptor {
 
     private static final Logger LOGGER = LoggerBuilder.getLogger(LoggerInterceptorAbstract.class) ;

@@ -5,23 +5,24 @@ import java.util.List;
 
 public enum StatusEnum {
 
-    /** 成功 */
-    SUCCESS("9000", "成功"),
-    /** 成功 */
-    FALLBACK("8000", "FALL_BACK"),
-    /** 参数校验失败**/
-    VALIDATION_FAIL("3000", "参数校验失败"),
-    /** 失败 */
-    FAIL("4000", "失败"),
+    /** success */
+    SUCCESS("9000", "success"),
 
-    /** 重复请求 */
-    REPEAT_REQUEST("5000", "重复请求"),
 
-    /** 请求限流 */
-    REQUEST_LIMIT("6000", "请求限流"),
-
-    /** 请求限流 */
+    /** request Error */
     REQUEST_ERROR("7000", "Request Error"),
+
+    /** duplicate ioc impl*/
+    DUPLICATE_IOC("8000", "Duplicate ioc impl error"),
+
+    /** empty of package */
+    NULL_PACKAGE("8000", "Your main class is empty of package"),
+
+    /** 404 */
+    NOT_FOUND("404", "Need to declare a method by using @CicadaRoute!"),
+
+    /** IllegalArgumentException */
+    ILLEGAL_PARAMETER("404", "IllegalArgumentException: You can only have two parameters at most by using @CicadaRoute!"),
     ;
 
 

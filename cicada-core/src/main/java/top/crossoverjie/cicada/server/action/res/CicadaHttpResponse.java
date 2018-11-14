@@ -14,23 +14,24 @@ import java.util.Map;
  */
 public class CicadaHttpResponse implements CicadaResponse {
 
-    private Map<String,String> headers = new HashMap<>(8) ;
+    private Map<String, String> headers = new HashMap<>(8);
 
-    private String contentType ;
+    private String contentType;
 
-    private String httpContent ;
+    private String httpContent;
 
-    private CicadaHttpResponse(){}
+    private CicadaHttpResponse() {
+    }
 
-    public static CicadaHttpResponse init(){
-        CicadaHttpResponse response = new CicadaHttpResponse() ;
+    public static CicadaHttpResponse init() {
+        CicadaHttpResponse response = new CicadaHttpResponse();
         response.contentType = CicadaConstant.ContentType.TEXT;
-        return response ;
+        return response;
     }
 
     @Override
-    public void setContentType(String contentType){
-        this.contentType = contentType ;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     @Override
@@ -40,15 +41,15 @@ public class CicadaHttpResponse implements CicadaResponse {
 
     @Override
     public void setHttpContent(String content) {
-        httpContent = content ;
+        httpContent = content;
     }
 
     @Override
     public String getHttpContent() {
-        return this.httpContent;
+        return this.httpContent == null ? "" : this.httpContent;
     }
 
-    public void setHeaders(String key, String value){
+    public void setHeaders(String key, String value) {
         this.headers.put(key, value);
     }
 

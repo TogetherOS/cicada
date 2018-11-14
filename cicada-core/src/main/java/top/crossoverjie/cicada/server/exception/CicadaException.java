@@ -60,4 +60,12 @@ public class CicadaException extends GenericException {
         this.errorMessage = message;
     }
 
+
+    public static boolean isResetByPeer(String msg) {
+        if ("Connection reset by peer".equals(msg)) {
+            return true;
+        }
+        return false;
+    }
+
 }

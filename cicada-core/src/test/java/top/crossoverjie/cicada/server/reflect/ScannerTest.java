@@ -1,8 +1,9 @@
-package top.crossoverjie.cicada.server.util;
+package top.crossoverjie.cicada.server.reflect;
 
 import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.slf4j.Logger;
+import top.crossoverjie.cicada.server.util.LoggerBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -33,5 +34,15 @@ public class ScannerTest {
         List<Class<?>> configuration = ClassScanner.getConfiguration("top.crossoverjie.cicada.server");
         LOGGER.info("configuration=[{}]",configuration.toString());
     }
+
+
+    @Test
+    public void stringTest(){
+        String text = "/cicada-example/routeAction/getUser" ;
+        text = text.replace("/cicada-example","");
+        LOGGER.info(text);
+    }
+
+
 
 }

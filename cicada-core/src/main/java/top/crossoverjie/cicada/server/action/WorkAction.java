@@ -10,6 +10,7 @@ import top.crossoverjie.cicada.server.context.CicadaContext;
  *         Date: 2018/8/31 15:58
  * @since JDK 1.8
  */
+@Deprecated
 public interface WorkAction {
 
     /**
