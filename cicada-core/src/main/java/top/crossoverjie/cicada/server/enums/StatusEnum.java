@@ -19,7 +19,7 @@ public enum StatusEnum {
     NOT_FOUND("404", "Need to declare a method by using @CicadaRoute!"),
 
     /** IllegalArgumentException */
-    ILLEGAL_PARAMETER("404", "IllegalArgumentException: You can only have one parameter by using @CicadaRoute!"),
+    ILLEGAL_PARAMETER("404", "IllegalArgumentException: You can only have two parameters at most by using @CicadaRoute!"),
     ;
 
 

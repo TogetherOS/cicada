@@ -1,11 +1,12 @@
 package top.crossoverjie.cicada.server.route;
 
 import io.netty.handler.codec.http.QueryStringDecoder;
+import top.crossoverjie.cicada.server.annotation.CicadaAction;
 import top.crossoverjie.cicada.server.annotation.CicadaRoute;
+import top.crossoverjie.cicada.server.config.AppConfig;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
 import top.crossoverjie.cicada.server.reflect.ClassScanner;
-import top.crossoverjie.cicada.server.util.PathUtil;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -24,6 +25,8 @@ public class RouterScanner {
     private static Map<String,Method> routes = null ;
 
     private volatile static RouterScanner routerScanner ;
+
+    private AppConfig instance = AppConfig.getInstance();
 
     /**
      * get single Instance
@@ -55,9 +58,7 @@ public class RouterScanner {
             loadRouteMethods(packageName) ;
         }
 
-        String url = PathUtil.getRoutePath(queryStringDecoder.path());
-
-        Method method = routes.get(url);
+        Method method = routes.get(queryStringDecoder.path());
 
         if (method == null){
             throw new CicadaException(StatusEnum.NOT_FOUND) ;
@@ -79,7 +80,9 @@ public class RouterScanner {
                 if (annotation == null){
                     continue;
                 }
-                routes.put(annotation.value(),method) ;
+
+                CicadaAction cicadaAction = aClass.getAnnotation(CicadaAction.class);
+                routes.put(instance.getRootPath() + "/" + cicadaAction.value() + "/" + annotation.value(),method) ;
             }
         }
     }

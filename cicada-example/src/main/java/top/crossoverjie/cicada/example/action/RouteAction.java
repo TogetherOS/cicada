@@ -38,6 +38,14 @@ public class RouteAction {
         CicadaContext.getContext().json(reqWorkRes) ;
     }
 
+    @CicadaRoute("getReq")
+    public void getReq(CicadaContext context,DemoReq req){
+
+        WorkRes<DemoReq> reqWorkRes = new WorkRes<>() ;
+        reqWorkRes.setMessage("getReq =" + req.toString());
+        context.json(reqWorkRes) ;
+    }
+
 
 
 }

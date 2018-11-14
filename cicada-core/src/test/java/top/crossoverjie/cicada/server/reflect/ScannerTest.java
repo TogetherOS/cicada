@@ -36,5 +36,13 @@ public class ScannerTest {
     }
 
 
+    @Test
+    public void stringTest(){
+        String text = "/cicada-example/routeAction/getUser" ;
+        text = text.replace("/cicada-example","");
+        LOGGER.info(text);
+    }
+
+
 
 }

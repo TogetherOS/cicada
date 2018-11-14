@@ -7,6 +7,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
+import org.slf4j.Logger;
 import top.crossoverjie.cicada.server.action.param.Param;
 import top.crossoverjie.cicada.server.action.param.ParamMap;
 import top.crossoverjie.cicada.server.action.req.CicadaHttpRequest;
@@ -22,6 +23,7 @@ import top.crossoverjie.cicada.server.intercept.InterceptProcess;
 import top.crossoverjie.cicada.server.reflect.ClassScanner;
 import top.crossoverjie.cicada.server.route.RouteProcess;
 import top.crossoverjie.cicada.server.route.RouterScanner;
+import top.crossoverjie.cicada.server.util.LoggerBuilder;
 import top.crossoverjie.cicada.server.util.PathUtil;
 
 import java.lang.reflect.Method;
@@ -39,6 +41,7 @@ import java.util.Map;
  */
 public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpRequest> {
 
+    private static final Logger LOGGER = LoggerBuilder.getLogger(HttpDispatcher.class);
     private final InterceptProcess interceptProcess = InterceptProcess.getInstance();
     private final RouterScanner routerScanner = RouterScanner.getInstance();
     private final RouteProcess routeProcess = RouteProcess.getInstance() ;
@@ -175,6 +178,8 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
         if (CicadaException.isResetByPeer(cause.getMessage())){
             return;
         }
+
+        LOGGER.error(cause.getMessage(), cause);
 
         WorkRes workRes = new WorkRes();
         workRes.setCode(String.valueOf(HttpResponseStatus.NOT_FOUND.code()));

@@ -2,6 +2,7 @@ package top.crossoverjie.cicada.server.route;
 
 import io.netty.handler.codec.http.QueryStringDecoder;
 import top.crossoverjie.cicada.server.bean.CicadaBeanManager;
+import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
 
@@ -35,10 +36,20 @@ public class RouteProcess {
         return routeProcess;
     }
 
+    /**
+     * invoke route method
+     * @param method
+     * @param queryStringDecoder
+     * @throws Exception
+     */
     public void invoke(Method method, QueryStringDecoder queryStringDecoder) throws Exception {
-        Object object = parseRouteParameter(method, queryStringDecoder);
+        Object[] object = parseRouteParameter(method, queryStringDecoder);
         Object bean = cicadaBeanManager.getBean(method.getDeclaringClass().getName());
-        method.invoke(bean, object);
+        if (object == null){
+            method.invoke(bean) ;
+        }else {
+            method.invoke(bean, object);
+        }
     }
 
     /**
@@ -51,23 +62,39 @@ public class RouteProcess {
      * @throws InstantiationException
      * @throws NoSuchFieldException
      */
-    private Object parseRouteParameter(Method method, QueryStringDecoder queryStringDecoder) throws IllegalAccessException, InstantiationException, NoSuchFieldException {
+    private Object[] parseRouteParameter(Method method, QueryStringDecoder queryStringDecoder) throws IllegalAccessException, InstantiationException, NoSuchFieldException {
         Class<?>[] parameterTypes = method.getParameterTypes();
-        if (parameterTypes.length != 1) {
+
+        if (parameterTypes.length == 0){
+            return null;
+        }
+
+        if (parameterTypes.length > 2) {
             throw new CicadaException(StatusEnum.ILLEGAL_PARAMETER);
         }
 
-        Class<?> parameterType = parameterTypes[0];
-        Object instance = parameterType.newInstance();
+        Object[] instances = new Object[parameterTypes.length] ;
 
-        Map<String, List<String>> parameters = queryStringDecoder.parameters();
-        for (Map.Entry<String, List<String>> param : parameters.entrySet()) {
-            Field field = parameterType.getDeclaredField(param.getKey());
-            field.setAccessible(true);
-            field.set(instance, parseFieldValue(field, param.getValue().get(0)));
+        for (int i = 0; i < instances.length; i++) {
+            //inject cicada context instance
+            if (parameterTypes[i] == CicadaContext.class){
+                instances[i] = CicadaContext.getContext() ;
+            }else {
+                //inject custom pojo
+                Class<?> parameterType = parameterTypes[i];
+                Object instance = parameterType.newInstance();
+
+                Map<String, List<String>> parameters = queryStringDecoder.parameters();
+                for (Map.Entry<String, List<String>> param : parameters.entrySet()) {
+                    Field field = parameterType.getDeclaredField(param.getKey());
+                    field.setAccessible(true);
+                    field.set(instance, parseFieldValue(field, param.getValue().get(0)));
+                }
+                instances[i] = instance ;
+            }
         }
 
-        return instance;
+        return instances;
     }
 
 
