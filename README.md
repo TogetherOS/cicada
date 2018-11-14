@@ -38,7 +38,7 @@ If you are interested, please click [Star](https://github.com/crossoverJie/cicad
 - [x] Start with `jar`.
 - [x] Custom configuration.
 - [x] Multiple response ways.
-- [x] pluggable `IOC` beanFactory。
+- [x] Pluggable `IOC` beanFactory。
 - [ ] Support `Cookie`.
 - [ ] File Upload.
 
@@ -260,7 +260,7 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 ### v2.0.0
 - Fixed [#12](https://github.com/TogetherOS/cicada/issues/12) [#22](https://github.com/TogetherOS/cicada/issues/22) [#28](28)
 - Flexible routing ways.
-- pluggable `IOC` beanFactory.
+- Pluggable `IOC` beanFactory.
 
 ### v1.0.3
 
