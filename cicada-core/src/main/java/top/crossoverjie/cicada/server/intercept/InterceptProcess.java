@@ -25,6 +25,8 @@ public class InterceptProcess {
 
     private static List<CicadaInterceptor> interceptors ;
 
+    private AppConfig appConfig = AppConfig.getInstance();
+
     /**
      * get single Instance
      * @return
@@ -41,7 +43,7 @@ public class InterceptProcess {
     }
 
 
-    public void loadInterceptors(AppConfig appConfig) throws Exception {
+    public void loadInterceptors() throws Exception {
 
         if (interceptors != null){
             return;

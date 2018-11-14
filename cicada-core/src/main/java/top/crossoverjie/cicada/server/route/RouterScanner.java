@@ -26,7 +26,7 @@ public class RouterScanner {
 
     private volatile static RouterScanner routerScanner ;
 
-    private AppConfig instance = AppConfig.getInstance();
+    private AppConfig appConfig = AppConfig.getInstance();
 
     /**
      * get single Instance
@@ -48,14 +48,13 @@ public class RouterScanner {
     /**
      * get route method
      * @param queryStringDecoder
-     * @param packageName
      * @return
      * @throws Exception
      */
-    public Method routeMethod(QueryStringDecoder queryStringDecoder, String packageName) throws Exception {
+    public Method routeMethod(QueryStringDecoder queryStringDecoder) throws Exception {
         if (routes == null){
             routes = new HashMap<>(16) ;
-            loadRouteMethods(packageName) ;
+            loadRouteMethods(appConfig.getRootPackageName()) ;
         }
 
         Method method = routes.get(queryStringDecoder.path());
@@ -82,7 +81,7 @@ public class RouterScanner {
                 }
 
                 CicadaAction cicadaAction = aClass.getAnnotation(CicadaAction.class);
-                routes.put(instance.getRootPath() + "/" + cicadaAction.value() + "/" + annotation.value(),method) ;
+                routes.put(appConfig.getRootPath() + "/" + cicadaAction.value() + "/" + annotation.value(),method) ;
             }
         }
     }

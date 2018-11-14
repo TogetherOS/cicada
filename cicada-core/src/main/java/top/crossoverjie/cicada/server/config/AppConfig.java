@@ -1,5 +1,10 @@
 package top.crossoverjie.cicada.server.config;
 
+import io.netty.handler.codec.http.QueryStringDecoder;
+import top.crossoverjie.cicada.server.enums.StatusEnum;
+import top.crossoverjie.cicada.server.exception.CicadaException;
+import top.crossoverjie.cicada.server.util.PathUtil;
+
 /**
  * Function:
  *
@@ -54,5 +59,19 @@ public class AppConfig {
 
     public void setPort(Integer port) {
         this.port = port;
+    }
+
+
+    /**
+     * check Root Path
+     *
+     * @param uri
+     * @param queryStringDecoder
+     * @return
+     */
+    public void checkRootPath(String uri, QueryStringDecoder queryStringDecoder) {
+        if (!PathUtil.getRootPath(queryStringDecoder.path()).equals(this.getRootPath())) {
+            throw new CicadaException(StatusEnum.REQUEST_ERROR, uri);
+        }
     }
 }

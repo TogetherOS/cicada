@@ -42,6 +42,8 @@ import java.util.Map;
 public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpRequest> {
 
     private static final Logger LOGGER = LoggerBuilder.getLogger(HttpDispatcher.class);
+
+    private final AppConfig appConfig = AppConfig.getInstance();
     private final InterceptProcess interceptProcess = InterceptProcess.getInstance();
     private final RouterScanner routerScanner = RouterScanner.getInstance();
     private final RouteProcess routeProcess = RouteProcess.getInstance() ;
@@ -61,7 +63,7 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
             QueryStringDecoder queryStringDecoder = new QueryStringDecoder(URLDecoder.decode(httpRequest.uri(), "utf-8"));
 
             // check Root Path
-            AppConfig appConfig = checkRootPath(uri, queryStringDecoder);
+            appConfig.checkRootPath(uri, queryStringDecoder);
 
             // route Action
             //Class<?> actionClazz = routeAction(queryStringDecoder, appConfig);
@@ -70,7 +72,7 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
             Param paramMap = buildParamMap(queryStringDecoder);
 
             //load interceptors
-            interceptProcess.loadInterceptors(appConfig);
+            interceptProcess.loadInterceptors();
 
             //interceptor before
             boolean access = interceptProcess.processBefore(paramMap);
@@ -79,7 +81,7 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
             }
 
             // execute Method
-            Method method = routerScanner.routeMethod(queryStringDecoder, appConfig.getRootPackageName());
+            Method method = routerScanner.routeMethod(queryStringDecoder);
             routeProcess.invoke(method,queryStringDecoder) ;
 
             //WorkAction action = (WorkAction) actionClazz.newInstance();
@@ -157,20 +159,7 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
         return actionClazz;
     }
 
-    /**
-     * check Root Path
-     *
-     * @param uri
-     * @param queryStringDecoder
-     * @return
-     */
-    private AppConfig checkRootPath(String uri, QueryStringDecoder queryStringDecoder) {
-        AppConfig appConfig = AppConfig.getInstance();
-        if (!PathUtil.getRootPath(queryStringDecoder.path()).equals(appConfig.getRootPath())) {
-            throw new CicadaException(StatusEnum.REQUEST_ERROR, uri);
-        }
-        return appConfig;
-    }
+
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {

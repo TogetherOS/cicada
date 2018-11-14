@@ -246,11 +246,16 @@ public class ClassScanner {
 
     private static final String BASE_PACKAGE = "top.crossoverjie.cicada";
 
-    public static Class<?> getCustomBean() throws Exception {
+    /**
+     * get custom route bean
+     * @return
+     * @throws Exception
+     */
+    public static Class<?> getCustomRouteBean() throws Exception {
         List<Class<?>> classList = new ArrayList<>();
 
 
-        Set<Class<?>> classes = getCicadaClasses(BASE_PACKAGE) ;
+        Set<Class<?>> classes = getCustomRouteBeanClasses(BASE_PACKAGE) ;
         for (Class<?> aClass : classes) {
 
             if (aClass.getInterfaces().length == 0){
@@ -279,7 +284,7 @@ public class ClassScanner {
     }
 
 
-    public static Set<Class<?>> getCicadaClasses(String packageName) throws Exception {
+    public static Set<Class<?>> getCustomRouteBeanClasses(String packageName) throws Exception {
 
         if (cicada_classes == null){
             cicada_classes = new HashSet<>(32) ;

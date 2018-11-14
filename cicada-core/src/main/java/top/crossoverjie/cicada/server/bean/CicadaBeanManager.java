@@ -34,11 +34,15 @@ public class CicadaBeanManager {
         return cicadaBeanManager;
     }
 
-
+    /**
+     * init route bean factory
+     * @param packageName
+     * @throws Exception
+     */
     public void init(String packageName) throws Exception {
         Map<String, Class<?>> cicadaAction = ClassScanner.getCicadaAction(packageName);
 
-        Class<?> bean = ClassScanner.getCustomBean();
+        Class<?> bean = ClassScanner.getCustomRouteBean();
         cicadaBeanFactory = (CicadaBeanFactory) bean.newInstance() ;
 
         for (Map.Entry<String, Class<?>> classEntry : cicadaAction.entrySet()) {
@@ -49,6 +53,12 @@ public class CicadaBeanManager {
     }
 
 
+    /**
+     * get route bean
+     * @param name
+     * @return
+     * @throws Exception
+     */
     public Object getBean(String name) throws Exception {
         return cicadaBeanFactory.getBean(name) ;
     }
