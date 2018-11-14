@@ -13,7 +13,10 @@ public enum StatusEnum {
     REQUEST_ERROR("7000", "Request Error"),
 
     /** duplicate ioc impl*/
-    DUPLICATE_IOC("7000", "Duplicate ioc impl error"),
+    DUPLICATE_IOC("8000", "Duplicate ioc impl error"),
+
+    /** empty of package */
+    NULL_PACKAGE("8000", "Your main class is empty of package"),
 
     /** 404 */
     NOT_FOUND("404", "Need to declare a method by using @CicadaRoute!"),

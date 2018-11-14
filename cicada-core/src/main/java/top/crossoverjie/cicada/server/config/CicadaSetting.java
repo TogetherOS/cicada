@@ -77,7 +77,7 @@ public class CicadaSetting {
      */
     private static void initConfiguration(Class<?> clazz) throws Exception {
         ThreadLocalHolder.setLocalTime(System.currentTimeMillis());
-        AppConfig.getInstance().setRootPackageName(clazz.getPackage().getName());
+        AppConfig.getInstance().setRootPackageName(clazz);
 
         List<Class<?>> configuration = ClassScanner.getConfiguration(AppConfig.getInstance().getRootPackageName());
         for (Class<?> aClass : configuration) {

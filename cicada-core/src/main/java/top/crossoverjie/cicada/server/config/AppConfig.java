@@ -41,8 +41,11 @@ public class AppConfig {
         return rootPackageName;
     }
 
-    public void setRootPackageName(String rootPackageName) {
-        this.rootPackageName = rootPackageName;
+    public void setRootPackageName(Class<?> clazz) {
+        if (clazz.getPackage() == null) {
+            throw new CicadaException(StatusEnum.NULL_PACKAGE, "[" + clazz.getName() + ".java]:" + StatusEnum.NULL_PACKAGE.getMessage());
+        }
+        this.rootPackageName = clazz.getPackage().getName();
     }
 
     public String getRootPath() {
