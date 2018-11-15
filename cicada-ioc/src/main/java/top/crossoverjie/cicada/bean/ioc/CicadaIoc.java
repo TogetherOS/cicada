@@ -2,8 +2,8 @@ package top.crossoverjie.cicada.bean.ioc;
 
 import top.crossoverjie.cicada.base.bean.CicadaBeanFactory;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Function:
@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class CicadaIoc implements CicadaBeanFactory {
 
-    private static Map<String,Object> beans = new HashMap<>(16) ;
+    private static Map<String,Object> beans = new ConcurrentHashMap<>(16) ;
 
     @Override
     public void register(Object object) {
