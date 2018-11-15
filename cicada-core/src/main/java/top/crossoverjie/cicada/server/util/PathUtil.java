@@ -1,5 +1,7 @@
 package top.crossoverjie.cicada.server.util;
 
+import top.crossoverjie.cicada.server.config.AppConfig;
+
 /**
  * Function:
  *
@@ -28,6 +30,17 @@ public class PathUtil {
      */
     public static String getActionPath(String path) {
         return path.split("/")[2];
+    }
+
+    /**
+     * Get Action Path
+     * /cicada-example/routeAction/getUser
+     * @param path
+     * @return getUser
+     */
+    public static String getRoutePath(String path) {
+        AppConfig instance = AppConfig.getInstance();
+        return path.replace(instance.getRootPackageName(),"") ;
     }
 
 

@@ -3,7 +3,7 @@ package top.crossoverjie.cicada.server.intercept;
 import top.crossoverjie.cicada.server.action.param.Param;
 import top.crossoverjie.cicada.server.config.AppConfig;
 import top.crossoverjie.cicada.server.context.CicadaContext;
-import top.crossoverjie.cicada.server.util.ClassScanner;
+import top.crossoverjie.cicada.server.reflect.ClassScanner;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +25,8 @@ public class InterceptProcess {
 
     private static List<CicadaInterceptor> interceptors ;
 
+    private AppConfig appConfig = AppConfig.getInstance();
+
     /**
      * get single Instance
      * @return
@@ -41,17 +43,17 @@ public class InterceptProcess {
     }
 
 
-    public void loadInterceptors(AppConfig appConfig) throws Exception {
+    public void loadInterceptors() throws Exception {
 
         if (interceptors != null){
             return;
         }else {
             interceptors = new ArrayList<>(10) ;
-            Map<Integer, Class<?>> cicadaInterceptor = ClassScanner.getCicadaInterceptor(appConfig.getRootPackageName());
-            for (Map.Entry<Integer, Class<?>> classEntry : cicadaInterceptor.entrySet()) {
-                Class<?> interceptorClass = classEntry.getValue();
+            Map<Class<?>, Integer> cicadaInterceptor = ClassScanner.getCicadaInterceptor(appConfig.getRootPackageName());
+            for (Map.Entry<Class<?>, Integer> classEntry : cicadaInterceptor.entrySet()) {
+                Class<?> interceptorClass = classEntry.getKey();
                 CicadaInterceptor interceptor = (CicadaInterceptor) interceptorClass.newInstance();
-                interceptor.setOrder(classEntry.getKey());
+                interceptor.setOrder(classEntry.getValue());
                 interceptors.add(interceptor);
             }
             Collections.sort(interceptors,new OrderComparator());

@@ -38,6 +38,7 @@ If you are interested, please click [Star](https://github.com/crossoverJie/cicad
 - [x] Start with `jar`.
 - [x] Custom configuration.
 - [x] Multiple response ways.
+- [x] Pluggable `IOC` beanFactory。
 - [ ] Support `Cookie`.
 - [ ] File Upload.
 
@@ -51,7 +52,7 @@ Create a project with `Maven`, import core dependency.
 <dependency>
     <groupId>top.crossoverjie.opensource</groupId>
     <artifactId>cicada-core</artifactId>
-    <version>1.0.3</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -69,46 +70,49 @@ public class MainStart {
 ### Configuring Business Action
 
 
-Create business Action implement `top.crossoverjie.cicada.server.action.WorkAction` interface:
-
 ```java
-@CicadaAction(value = "demoAction")
-public class DemoAction implements WorkAction {
+@CicadaAction("routeAction")
+public class RouteAction {
+
+    private static final Logger LOGGER = LoggerBuilder.getLogger(RouteAction.class);
 
 
-    private static final Logger LOGGER = LoggerBuilder.getLogger(DemoAction.class) ;
+    @CicadaRoute("getUser")
+    public void getUser(DemoReq req){
 
-    private static AtomicLong index = new AtomicLong() ;
-
-    @Override
-    public void execute(CicadaContext context,Param paramMap) throws Exception {
-        String name = paramMap.getString("name");
-        Integer id = paramMap.getInteger("id");
-        LOGGER.info("name=[{}],id=[{}]" , name,id);
-
-        DemoResVO demoResVO = new DemoResVO() ;
-        demoResVO.setIndex(index.incrementAndGet());
-        WorkRes<DemoResVO> res = new WorkRes();
-        res.setCode(StatusEnum.SUCCESS.getCode());
-        res.setMessage(StatusEnum.SUCCESS.getMessage());
-        res.setDataBody(demoResVO) ;
-        context.json(res);
+        LOGGER.info(req.toString());
+        WorkRes<DemoReq> reqWorkRes = new WorkRes<>() ;
+        reqWorkRes.setMessage("hello =" + req.getName());
+        CicadaContext.getContext().json(reqWorkRes) ;
     }
 
+    @CicadaRoute("getInfo")
+    public void getInfo(DemoReq req){
+
+        WorkRes<DemoReq> reqWorkRes = new WorkRes<>() ;
+        reqWorkRes.setMessage("getInfo =" + req.toString());
+        CicadaContext.getContext().json(reqWorkRes) ;
+    }
+
+    @CicadaRoute("getReq")
+    public void getReq(CicadaContext context,DemoReq req){
+
+        WorkRes<DemoReq> reqWorkRes = new WorkRes<>() ;
+        reqWorkRes.setMessage("getReq =" + req.toString());
+        context.json(reqWorkRes) ;
+    }
+
+
+
 }
 ```
 
-Launch and apply access: [http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10](http://127.0.0.1:7317/cicada-example/demoAction?name=12345&id=10)
+Launch and apply access: [http://127.0.0.1:5688/cicada-example/routeAction/getUser?id=1234&name=zhangsan](http://127.0.0.1:5688/cicada-example/routeAction/getUser?id=1234&name=zhangsan)
 
 ```json
-{
-    "code": "9000",
-    "dataBody": {
-        "index": 1
-    },
-    "message": "成功"
-}
+{"message":"hello =zhangsan"}
 ```
+
 
 
 ## Cicada Context
@@ -252,6 +256,11 @@ public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter 
 
 
 ## ChangeLog
+
+### v2.0.0
+- Fixed [#12](https://github.com/TogetherOS/cicada/issues/12) [#22](https://github.com/TogetherOS/cicada/issues/22) [#28](28)
+- Flexible routing ways.
+- Pluggable `IOC` beanFactory.
 
 ### v1.0.3
 
