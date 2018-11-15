@@ -9,6 +9,7 @@ import top.crossoverjie.cicada.server.util.LoggerBuilder;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class RouteActionTest {
 
@@ -56,4 +57,26 @@ public class RouteActionTest {
         }
     }
 
+
+    @Test
+    public void costTest(){
+        Map<Integer,Integer> hashmap = new HashMap<>(16);
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1000000; i++) {
+            hashmap.put(i,i) ;
+        }
+        long end = System.currentTimeMillis();
+        LOGGER.info("hashmap cost time=[{}] size=[{}]",(end -start),hashmap.size());
+
+        hashmap=null;
+
+
+        Map<Integer,Integer> concurrentHashMap = new ConcurrentHashMap<>(16);
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 1000000; i++) {
+            concurrentHashMap.put(i,i) ;
+        }
+        end = System.currentTimeMillis();
+        LOGGER.info("hashmap cost time=[{}] size=[{}]",(end -start),concurrentHashMap.size());
+    }
 }
