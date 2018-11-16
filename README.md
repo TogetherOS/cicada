@@ -120,14 +120,30 @@ Launch and apply access: [http://127.0.0.1:5688/cicada-example/routeAction/getUs
 Through `context.json(), context.text()`, you can choose different response ways.
 
 ```java
-@CicadaAction("textAction")
-public class TextAction implements WorkAction {
-    @Override
-    public void execute(CicadaContext context, Param param) throws Exception {
+@CicadaAction("routeAction")
+public class RouteAction {
+
+    private static final Logger LOGGER = LoggerBuilder.getLogger(RouteAction.class);
+
+    @CicadaRoute("getUser")
+    public void getUser(DemoReq req){
+
+        LOGGER.info(req.toString());
+        WorkRes<DemoReq> reqWorkRes = new WorkRes<>() ;
+        reqWorkRes.setMessage("hello =" + req.getName());
+        CicadaContext.getContext().json(reqWorkRes) ;
+    }
+    
+    @CicadaRoute("hello")
+    public void hello() throws Exception {
+        CicadaContext context = CicadaContext.getContext();
+
         String url = context.request().getUrl();
         String method = context.request().getMethod();
         context.text("hello world url=" + url + " method=" + method);
-    }
+    }    
+
+
 }
 ```
 

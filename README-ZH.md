@@ -110,14 +110,30 @@ public class RouteAction {
 通过 `context.json(),context.text()` 方法可以选择不同的响应方式。
 
 ```java
-@CicadaAction("textAction")
-public class TextAction implements WorkAction {
-    @Override
-    public void execute(CicadaContext context, Param param) throws Exception {
+@CicadaAction("routeAction")
+public class RouteAction {
+
+    private static final Logger LOGGER = LoggerBuilder.getLogger(RouteAction.class);
+
+    @CicadaRoute("getUser")
+    public void getUser(DemoReq req){
+
+        LOGGER.info(req.toString());
+        WorkRes<DemoReq> reqWorkRes = new WorkRes<>() ;
+        reqWorkRes.setMessage("hello =" + req.getName());
+        CicadaContext.getContext().json(reqWorkRes) ;
+    }
+    
+    @CicadaRoute("hello")
+    public void hello() throws Exception {
+        CicadaContext context = CicadaContext.getContext();
+
         String url = context.request().getUrl();
         String method = context.request().getMethod();
         context.text("hello world url=" + url + " method=" + method);
-    }
+    }    
+
+
 }
 ```
 
