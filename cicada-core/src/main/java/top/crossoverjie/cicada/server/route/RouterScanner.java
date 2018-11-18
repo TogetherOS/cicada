@@ -23,82 +23,86 @@ import java.util.Set;
  */
 public class RouterScanner {
 
-    private static Map<String,Method> routes = null ;
+    private static Map<String, Method> routes = null;
 
-    private volatile static RouterScanner routerScanner ;
+    private volatile static RouterScanner routerScanner;
 
     private AppConfig appConfig = AppConfig.getInstance();
 
     /**
      * get single Instance
+     *
      * @return
      */
-    public static RouterScanner getInstance(){
-        if (routerScanner == null){
-            synchronized (RouterScanner.class){
-                if (routerScanner == null){
-                    routerScanner = new RouterScanner() ;
+    public static RouterScanner getInstance() {
+        if (routerScanner == null) {
+            synchronized (RouterScanner.class) {
+                if (routerScanner == null) {
+                    routerScanner = new RouterScanner();
                 }
             }
         }
-        return routerScanner ;
+        return routerScanner;
     }
 
-    private RouterScanner(){}
+    private RouterScanner() {
+    }
 
     /**
      * get route method
+     *
      * @param queryStringDecoder
      * @return
      * @throws Exception
      */
     public Method routeMethod(QueryStringDecoder queryStringDecoder) throws Exception {
-        if (routes == null){
-            routes = new HashMap<>(16) ;
-            loadRouteMethods(appConfig.getRootPackageName()) ;
+        if (routes == null) {
+            routes = new HashMap<>(16);
+            loadRouteMethods(appConfig.getRootPackageName());
         }
 
         //default response
-        boolean defaultResponse = defaultResponse(queryStringDecoder.path()) ;
-        if (!defaultResponse){
-            Method method = routes.get(queryStringDecoder.path());
+        boolean defaultResponse = defaultResponse(queryStringDecoder.path());
 
-            if (method == null){
-                throw new CicadaException(StatusEnum.NOT_FOUND) ;
-            }
-
-            return method;
-        }else {
-            return null ;
+        if (defaultResponse) {
+            return null;
         }
+
+        Method method = routes.get(queryStringDecoder.path());
+
+        if (method == null) {
+            throw new CicadaException(StatusEnum.NOT_FOUND);
+        }
+
+        return method;
 
 
     }
 
     private boolean defaultResponse(String path) {
-        if (appConfig.getRootPath().equals(path)){
+        if (appConfig.getRootPath().equals(path)) {
             CicadaContext.getContext().html("<center> hello Cicada <br/><br/>" +
                     "Power by <a href='https://github.com/TogetherOS/cicada'>@Cicada</a> </center>");
             return true;
         }
-        return false ;
+        return false;
     }
 
 
     private void loadRouteMethods(String packageName) throws Exception {
-        Set<Class<?>> classes = ClassScanner.getClasses(packageName) ;
+        Set<Class<?>> classes = ClassScanner.getClasses(packageName);
 
         for (Class<?> aClass : classes) {
             Method[] declaredMethods = aClass.getMethods();
 
             for (Method method : declaredMethods) {
-                CicadaRoute annotation = method.getAnnotation(CicadaRoute.class) ;
-                if (annotation == null){
+                CicadaRoute annotation = method.getAnnotation(CicadaRoute.class);
+                if (annotation == null) {
                     continue;
                 }
 
                 CicadaAction cicadaAction = aClass.getAnnotation(CicadaAction.class);
-                routes.put(appConfig.getRootPath() + "/" + cicadaAction.value() + "/" + annotation.value(),method) ;
+                routes.put(appConfig.getRootPath() + "/" + cicadaAction.value() + "/" + annotation.value(), method);
             }
         }
     }

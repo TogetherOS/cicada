@@ -79,7 +79,7 @@ public class NettyBootStrap {
         ApplicationConfiguration applicationConfiguration = (ApplicationConfiguration) getConfiguration(ApplicationConfiguration.class);
         long end = System.currentTimeMillis();
         LOGGER.info("Cicada started on port: {}.cost {}ms", applicationConfiguration.get(CicadaConstant.CICADA_PORT), end - start);
-        LOGGER.info(">> http://{}:{}{} <<","127.0.0.1",appConfig.getPort(),appConfig.getRootPath());
+        LOGGER.info(">> access http://{}:{}{} <<","127.0.0.1",appConfig.getPort(),appConfig.getRootPath());
     }
 
     /**
