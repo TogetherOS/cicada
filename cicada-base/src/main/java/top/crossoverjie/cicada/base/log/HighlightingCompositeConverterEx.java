@@ -22,8 +22,6 @@ public class HighlightingCompositeConverterEx extends ForegroundCompositeConvert
                 return ANSIConstants.BOLD + ANSIConstants.RED_FG;
             case Level.WARN_INT:
                 return ANSIConstants.RED_FG;
-            case Level.DEBUG_INT:
-                return ANSIConstants.BLUE_FG;
             case Level.INFO_INT:
                 return ANSIConstants.BOLD + ANSIConstants.GREEN_FG;
             default:
