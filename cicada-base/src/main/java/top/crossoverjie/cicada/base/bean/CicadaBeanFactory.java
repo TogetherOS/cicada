@@ -22,4 +22,9 @@ public interface CicadaBeanFactory {
      * @throws Exception
      */
     Object getBean(String name) throws Exception;
+
+    /**
+     * release all beans
+     */
+    void releaseBean() ;
 }

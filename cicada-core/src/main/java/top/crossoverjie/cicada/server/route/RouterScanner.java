@@ -4,6 +4,7 @@ import io.netty.handler.codec.http.QueryStringDecoder;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
 import top.crossoverjie.cicada.server.annotation.CicadaRoute;
 import top.crossoverjie.cicada.server.config.AppConfig;
+import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
 import top.crossoverjie.cicada.server.reflect.ClassScanner;
@@ -57,14 +58,30 @@ public class RouterScanner {
             loadRouteMethods(appConfig.getRootPackageName()) ;
         }
 
-        Method method = routes.get(queryStringDecoder.path());
+        //default response
+        boolean defaultResponse = defaultResponse(queryStringDecoder.path()) ;
+        if (!defaultResponse){
+            Method method = routes.get(queryStringDecoder.path());
 
-        if (method == null){
-            throw new CicadaException(StatusEnum.NOT_FOUND) ;
+            if (method == null){
+                throw new CicadaException(StatusEnum.NOT_FOUND) ;
+            }
+
+            return method;
+        }else {
+            return null ;
         }
 
-        return method;
 
+    }
+
+    private boolean defaultResponse(String path) {
+        if (appConfig.getRootPath().equals(path)){
+            CicadaContext.getContext().html("<center> hello Cicada <br/><br/>" +
+                    "Power by <a href='https://github.com/TogetherOS/cicada'>@Cicada</a> </center>");
+            return true;
+        }
+        return false ;
     }
 
 

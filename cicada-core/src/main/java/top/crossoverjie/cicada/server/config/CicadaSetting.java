@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Properties;
 
 import static top.crossoverjie.cicada.server.configuration.ConfigurationHolder.getConfiguration;
+import static top.crossoverjie.cicada.server.constant.CicadaConstant.SystemProperties.APPLICATION_THREAD_MAIN_NAME;
+import static top.crossoverjie.cicada.server.constant.CicadaConstant.SystemProperties.LOGO;
 
 /**
  * Function:
@@ -25,7 +27,7 @@ import static top.crossoverjie.cicada.server.configuration.ConfigurationHolder.g
  *         Date: 2018/9/10 20:29
  * @since JDK 1.8
  */
-public class CicadaSetting {
+public final class CicadaSetting {
 
     /**
      * @param clazz
@@ -33,6 +35,9 @@ public class CicadaSetting {
      * @throws Exception
      */
     public static void setting(Class<?> clazz, String rootPath) throws Exception {
+
+        // Cicada logo
+        logo();
 
         //Initialize the application configuration
         initConfiguration(clazz);
@@ -42,6 +47,12 @@ public class CicadaSetting {
 
         //init route bean factory
         CicadaBeanManager.getInstance().init(rootPath);
+    }
+
+
+    private static void logo() {
+        System.out.println(LOGO);
+        Thread.currentThread().setName(APPLICATION_THREAD_MAIN_NAME) ;
     }
 
 

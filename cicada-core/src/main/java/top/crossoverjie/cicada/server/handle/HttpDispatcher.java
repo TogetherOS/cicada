@@ -8,6 +8,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
+import top.crossoverjie.cicada.base.log.LoggerBuilder;
 import top.crossoverjie.cicada.server.action.param.Param;
 import top.crossoverjie.cicada.server.action.param.ParamMap;
 import top.crossoverjie.cicada.server.action.req.CicadaHttpRequest;
@@ -23,7 +24,6 @@ import top.crossoverjie.cicada.server.intercept.InterceptProcess;
 import top.crossoverjie.cicada.server.reflect.ClassScanner;
 import top.crossoverjie.cicada.server.route.RouteProcess;
 import top.crossoverjie.cicada.server.route.RouterScanner;
-import top.crossoverjie.cicada.server.util.LoggerBuilder;
 import top.crossoverjie.cicada.server.util.PathUtil;
 
 import java.lang.reflect.Method;
@@ -39,7 +39,7 @@ import java.util.Map;
  *         Date: 2018/8/30 18:47
  * @since JDK 1.8
  */
-public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpRequest> {
+public final class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpRequest> {
 
     private static final Logger LOGGER = LoggerBuilder.getLogger(HttpDispatcher.class);
 
@@ -83,6 +83,7 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
             // execute Method
             Method method = routerScanner.routeMethod(queryStringDecoder);
             routeProcess.invoke(method,queryStringDecoder) ;
+
 
             //WorkAction action = (WorkAction) actionClazz.newInstance();
             //action.execute(CicadaContext.getContext(), paramMap);

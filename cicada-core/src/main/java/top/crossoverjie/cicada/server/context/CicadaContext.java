@@ -14,7 +14,7 @@ import top.crossoverjie.cicada.server.thread.ThreadLocalHolder;
  *         Date: 2018/10/5 00:23
  * @since JDK 1.8
  */
-public class CicadaContext {
+public final class CicadaContext {
 
 
     /**
@@ -44,11 +44,20 @@ public class CicadaContext {
 
     /**
      * response text message
-     * @param text
+     * @param text response body
      */
     public void text(String text){
         CicadaContext.getResponse().setContentType(CicadaConstant.ContentType.TEXT);
         CicadaContext.getResponse().setHttpContent(text);
+    }
+
+    /**
+     * response html
+     * @param html response body
+     */
+    public void html(String html){
+        CicadaContext.getResponse().setContentType(CicadaConstant.ContentType.HTML);
+        CicadaContext.getResponse().setHttpContent(html);
     }
 
     public static CicadaRequest getRequest(){

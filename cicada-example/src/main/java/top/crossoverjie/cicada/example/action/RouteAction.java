@@ -1,12 +1,12 @@
 package top.crossoverjie.cicada.example.action;
 
 import org.slf4j.Logger;
+import top.crossoverjie.cicada.base.log.LoggerBuilder;
 import top.crossoverjie.cicada.example.req.DemoReq;
 import top.crossoverjie.cicada.server.action.res.WorkRes;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
 import top.crossoverjie.cicada.server.annotation.CicadaRoute;
 import top.crossoverjie.cicada.server.context.CicadaContext;
-import top.crossoverjie.cicada.server.util.LoggerBuilder;
 
 /**
  * Function:

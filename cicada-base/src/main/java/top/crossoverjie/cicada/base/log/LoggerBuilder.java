@@ -1,4 +1,4 @@
-package top.crossoverjie.cicada.server.util;
+package top.crossoverjie.cicada.base.log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

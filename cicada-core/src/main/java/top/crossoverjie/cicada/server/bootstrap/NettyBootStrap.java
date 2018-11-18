@@ -6,16 +6,20 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.concurrent.DefaultThreadFactory;
 import org.slf4j.Logger;
+import top.crossoverjie.cicada.base.log.LoggerBuilder;
+import top.crossoverjie.cicada.server.bean.CicadaBeanManager;
 import top.crossoverjie.cicada.server.config.AppConfig;
 import top.crossoverjie.cicada.server.configuration.ApplicationConfiguration;
 import top.crossoverjie.cicada.server.constant.CicadaConstant;
 import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.init.CicadaInitializer;
 import top.crossoverjie.cicada.server.thread.ThreadLocalHolder;
-import top.crossoverjie.cicada.server.util.LoggerBuilder;
 
 import static top.crossoverjie.cicada.server.configuration.ConfigurationHolder.getConfiguration;
+import static top.crossoverjie.cicada.server.constant.CicadaConstant.SystemProperties.APPLICATION_THREAD_SHUTDOWN_NAME;
+import static top.crossoverjie.cicada.server.constant.CicadaConstant.SystemProperties.APPLICATION_THREAD_WORK_NAME;
 
 /**
  * Function:
@@ -28,8 +32,9 @@ public class NettyBootStrap {
 
     private final static Logger LOGGER = LoggerBuilder.getLogger(NettyBootStrap.class);
 
-    private static EventLoopGroup boss = new NioEventLoopGroup(1);
-    private static EventLoopGroup work = new NioEventLoopGroup();
+    private static AppConfig appConfig = AppConfig.getInstance() ;
+    private static EventLoopGroup boss = new NioEventLoopGroup(1,new DefaultThreadFactory("boss"));
+    private static EventLoopGroup work = new NioEventLoopGroup(0,new DefaultThreadFactory(APPLICATION_THREAD_WORK_NAME));
     private static Channel channel ;
 
     /**
@@ -74,6 +79,7 @@ public class NettyBootStrap {
         ApplicationConfiguration applicationConfiguration = (ApplicationConfiguration) getConfiguration(ApplicationConfiguration.class);
         long end = System.currentTimeMillis();
         LOGGER.info("Cicada started on port: {}.cost {}ms", applicationConfiguration.get(CicadaConstant.CICADA_PORT), end - start);
+        LOGGER.info(">> http://{}:{}{} <<","127.0.0.1",appConfig.getPort(),appConfig.getRootPath());
     }
 
     /**
@@ -81,7 +87,7 @@ public class NettyBootStrap {
      */
     private static void shutDownServer() {
         ShutDownThread shutDownThread = new ShutDownThread();
-        shutDownThread.setName("cicada-shutdown");
+        shutDownThread.setName(APPLICATION_THREAD_SHUTDOWN_NAME);
         Runtime.getRuntime().addShutdownHook(shutDownThread);
     }
 
@@ -90,6 +96,8 @@ public class NettyBootStrap {
         public void run() {
             LOGGER.info("Cicada server stop...");
             CicadaContext.removeContext();
+
+            CicadaBeanManager.getInstance().releaseBean();
 
             boss.shutdownGracefully();
             work.shutdownGracefully();

@@ -7,7 +7,7 @@ package top.crossoverjie.cicada.server.constant;
  *         Date: 2018/9/10 14:07
  * @since JDK 1.8
  */
-public class CicadaConstant {
+public final class CicadaConstant {
 
 
     public final static String CICADA_PORT = "cicada.port";
@@ -20,6 +20,24 @@ public class CicadaConstant {
     }
 
     public static final class SystemProperties {
+        public static final String LOGO = "\n" +
+                "\t\t\t ▄████▄   ██▓ ▄████▄   ▄▄▄      ▓█████▄  ▄▄▄      \n" +
+                "\t\t\t▒██▀ ▀█  ▓██▒▒██▀ ▀█  ▒████▄    ▒██▀ ██▌▒████▄    \n" +
+                "\t\t\t▒▓█    ▄ ▒██▒▒▓█    ▄ ▒██  ▀█▄  ░██   █▌▒██  ▀█▄  \n" +
+                "\t\t\t▒▓▓▄ ▄██▒░██░▒▓▓▄ ▄██▒░██▄▄▄▄██ ░▓█▄   ▌░██▄▄▄▄██ \n" +
+                "\t\t\t▒ ▓███▀ ░░██░▒ ▓███▀ ░ ▓█   ▓██▒░▒████▓  ▓█   ▓██▒\n" +
+                "\t\t\t░ ░▒ ▒  ░░▓  ░ ░▒ ▒  ░ ▒▒   ▓▒█░ ▒▒▓  ▒  ▒▒   ▓▒█░\n" +
+                "\t\t\t  ░  ▒    ▒ ░  ░  ▒     ▒   ▒▒ ░ ░ ▒  ▒   ▒   ▒▒ ░\n" +
+                "\t\t\t░         ▒ ░░          ░   ▒    ░ ░  ░   ░   ▒   \n" +
+                "\t\t\t░ ░       ░  ░ ░            ░  ░   ░          ░  ░\n" +
+                "\t\t\t░            ░                   ░                \n" +
+                " \n";
         public final static String APPLICATION_PROPERTIES = "application.properties";
+        public final static String APPLICATION_THREAD_MAIN_NAME = "☝( ◠‿◠ )☝";
+        public final static String APPLICATION_THREAD_WORK_NAME = "(♛‿♛)";
+        public final static String APPLICATION_THREAD_SHUTDOWN_NAME = "(〒︿〒)";
     }
+
+
+
 }

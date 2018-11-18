@@ -13,7 +13,7 @@ import java.util.Map;
  *         Date: 2018/11/14 01:41
  * @since JDK 1.8
  */
-public class CicadaBeanManager {
+public final class CicadaBeanManager {
 
 
     private CicadaBeanManager(){
@@ -61,5 +61,13 @@ public class CicadaBeanManager {
      */
     public Object getBean(String name) throws Exception {
         return cicadaBeanFactory.getBean(name) ;
+    }
+
+
+    /**
+     * release all beans
+     */
+    public void releaseBean(){
+        cicadaBeanFactory.releaseBean();
     }
 }

@@ -12,7 +12,7 @@ import top.crossoverjie.cicada.server.util.PathUtil;
  *         Date: 2018/9/1 14:00
  * @since JDK 1.8
  */
-public class AppConfig {
+public final class AppConfig {
 
 
     private AppConfig() {

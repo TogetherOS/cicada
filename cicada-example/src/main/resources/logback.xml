@@ -3,9 +3,19 @@
     <property name="LOG_PATH" value="/data/work/logs/cicada-example/" />
     <property name="LOG_FILE_NAME" value="cicada-example" />
 
+    <!-- custom coloring conversion -->
+    <conversionRule conversionWord="highlightex" converterClass="top.crossoverjie.cicada.base.log.HighlightingCompositeConverterEx" />
+
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
+        <encoder>
+            <pattern>[%thread] %highlightex(%-5level) %logger{15} - %highlightex(%msg) %n</pattern>
         </encoder>
     </appender>
 
@@ -73,7 +83,7 @@
         <appender-ref ref="LOGFILE-DEBUG" />
         <appender-ref ref="LOGFILE-INFO" />
         <appender-ref ref="LOGFILE-ERROR" />
-        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="STDOUT" />
     </root>
 
 </configuration>

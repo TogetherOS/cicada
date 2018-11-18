@@ -2,9 +2,9 @@ package top.crossoverjie.cicada.example.action;
 
 import org.junit.Test;
 import org.slf4j.Logger;
+import top.crossoverjie.cicada.base.log.LoggerBuilder;
 import top.crossoverjie.cicada.server.action.WorkAction;
 import top.crossoverjie.cicada.server.annotation.CicadaRoute;
-import top.crossoverjie.cicada.server.util.LoggerBuilder;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -78,5 +78,22 @@ public class RouteActionTest {
         }
         end = System.currentTimeMillis();
         LOGGER.info("hashmap cost time=[{}] size=[{}]",(end -start),concurrentHashMap.size());
+    }
+
+    @Test
+    public void exTest(){
+
+            LOGGER.info("===========");
+            me();
+            LOGGER.info("+++++++++++");
+
+           // LOGGER.error("e",e);
+
+    }
+
+
+    private void me(){
+        LOGGER.info("me");
+        return ;
     }
 }
