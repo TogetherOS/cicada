@@ -1,5 +1,6 @@
 package top.crossoverjie.cicada.server.thread;
 
+import io.netty.util.concurrent.FastThreadLocal;
 import top.crossoverjie.cicada.server.context.CicadaContext;
 
 /**
@@ -11,9 +12,9 @@ import top.crossoverjie.cicada.server.context.CicadaContext;
  */
 public class ThreadLocalHolder {
 
-    private static final ThreadLocal<Long> LOCAL_TIME= new ThreadLocal() ;
+    private static final FastThreadLocal<Long> LOCAL_TIME= new FastThreadLocal() ;
 
-    private static final ThreadLocal<CicadaContext> CICADA_CONTEXT= new ThreadLocal() ;
+    private static final FastThreadLocal<CicadaContext> CICADA_CONTEXT= new FastThreadLocal() ;
 
 
     /**
