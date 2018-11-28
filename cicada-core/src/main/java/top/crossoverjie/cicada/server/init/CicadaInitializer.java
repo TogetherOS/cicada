@@ -17,13 +17,15 @@ import top.crossoverjie.cicada.server.handle.HttpDispatcher;
  * @since JDK 1.8
  */
 public class CicadaInitializer extends ChannelInitializer<Channel> {
+    private HttpDispatcher httpDispatcher = new HttpDispatcher() ;
+
     @Override
-    protected void initChannel(Channel ch) throws Exception {
+    public void initChannel(Channel ch) throws Exception {
         ch.pipeline()
                 .addLast(new HttpRequestDecoder())
                 .addLast(new HttpResponseEncoder())
                 .addLast(new ChunkedWriteHandler())
-                .addLast(new HttpDispatcher())
+                .addLast(httpDispatcher)
                 .addLast("logging", new LoggingHandler(LogLevel.INFO));
     }
 }

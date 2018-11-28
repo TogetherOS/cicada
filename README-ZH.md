@@ -217,8 +217,9 @@ public class ExecuteTimeInterceptor implements CicadaInterceptor {
     private Long end;
 
     @Override
-    public void before(Param param) {
+    public boolean before(Param param) {
         start = System.currentTimeMillis();
+        return true;
     }
 
     @Override
@@ -230,23 +231,6 @@ public class ExecuteTimeInterceptor implements CicadaInterceptor {
 }
 ```
 
-### 拦截适配器
-
-同样也可以只实现其中一个方法，只需要继承 `top.crossoverjie.cicada.server.intercept.AbstractCicadaInterceptorAdapter` 抽象类。
-
-```java
-@Interceptor(value = "loggerInterceptor")
-public class LoggerInterceptorAbstract extends AbstractCicadaInterceptorAdapter {
-
-    private static final Logger LOGGER = LoggerBuilder.getLogger(LoggerInterceptorAbstract.class) ;
-
-    @Override
-    public void before(Param param) {
-        LOGGER.info("logger param=[{}]",param.toString());
-    }
-
-}
-```
 
 ## 性能测试
 
