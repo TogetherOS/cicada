@@ -3,6 +3,7 @@ package top.crossoverjie.cicada.server.handle;
 import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
@@ -39,6 +40,7 @@ import java.util.Map;
  *         Date: 2018/8/30 18:47
  * @since JDK 1.8
  */
+@ChannelHandler.Sharable
 public final class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpRequest> {
 
     private static final Logger LOGGER = LoggerBuilder.getLogger(HttpDispatcher.class);
