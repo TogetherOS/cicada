@@ -21,4 +21,12 @@ public interface CicadaRequest {
      */
     String getUrl() ;
 
+    /**
+     * get cookie by key
+     * @param key
+     * @return return cookie by key
+     */
+    Cookie getCookie(String key) ;
+
+
 }

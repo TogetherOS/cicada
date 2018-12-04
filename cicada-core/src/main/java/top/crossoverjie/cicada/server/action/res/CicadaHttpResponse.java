@@ -1,8 +1,13 @@
 package top.crossoverjie.cicada.server.action.res;
 
+import io.netty.handler.codec.http.cookie.DefaultCookie;
+import top.crossoverjie.cicada.server.action.req.Cookie;
 import top.crossoverjie.cicada.server.constant.CicadaConstant;
+import top.crossoverjie.cicada.server.exception.CicadaException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,6 +24,8 @@ public class CicadaHttpResponse implements CicadaResponse {
     private String contentType;
 
     private String httpContent;
+
+    private List<io.netty.handler.codec.http.cookie.Cookie> cookies = new ArrayList<>(6);
 
     private CicadaHttpResponse() {
     }
@@ -57,5 +64,32 @@ public class CicadaHttpResponse implements CicadaResponse {
     public Map<String, String> getHeaders() {
         return this.headers;
     }
+
+
+    @Override
+    public void setCookie(Cookie cicadaCookie) {
+        if (null == cicadaCookie){
+            throw new CicadaException("cookie is null!") ;
+        }
+
+        if (null == cicadaCookie.getName()){
+            throw new CicadaException("cookie.getName() is null!") ;
+        }
+        if (null == cicadaCookie.getValue()){
+            throw new CicadaException("cookie.getValue() is null!") ;
+        }
+
+        DefaultCookie cookie = new DefaultCookie(cicadaCookie.getName(), cicadaCookie.getValue());
+
+        cookie.setPath("/");
+        cookie.setMaxAge(cicadaCookie.getMaxAge());
+        cookies.add(cookie) ;
+    }
+
+    @Override
+    public List<io.netty.handler.codec.http.cookie.Cookie> cookies() {
+        return cookies;
+    }
+
 
 }

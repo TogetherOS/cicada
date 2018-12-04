@@ -10,7 +10,7 @@ import top.crossoverjie.cicada.server.config.CicadaSetting;
  *         Date: 2018/8/30 12:48
  * @since JDK 1.8
  */
-public class CicadaServer {
+public final class CicadaServer {
 
 
     /**

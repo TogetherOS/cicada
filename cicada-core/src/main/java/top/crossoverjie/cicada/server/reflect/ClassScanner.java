@@ -2,6 +2,7 @@ package top.crossoverjie.cicada.server.reflect;
 
 import org.slf4j.Logger;
 import top.crossoverjie.cicada.base.bean.CicadaBeanFactory;
+import top.crossoverjie.cicada.base.log.LoggerBuilder;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
 import top.crossoverjie.cicada.server.annotation.Interceptor;
 import top.crossoverjie.cicada.server.bean.CicadaDefaultBean;
@@ -29,7 +30,7 @@ import java.util.jar.JarFile;
  */
 public class ClassScanner {
 
-    private final static Logger LOGGER = top.crossoverjie.cicada.server.util.LoggerBuilder.getLogger(ClassScanner.class);
+    private final static Logger LOGGER = LoggerBuilder.getLogger(ClassScanner.class);
 
 
     private static Map<String, Class<?>> actionMap = null;

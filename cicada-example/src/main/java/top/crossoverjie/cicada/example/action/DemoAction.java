@@ -1,6 +1,7 @@
 package top.crossoverjie.cicada.example.action;
 
 import org.slf4j.Logger;
+import top.crossoverjie.cicada.base.log.LoggerBuilder;
 import top.crossoverjie.cicada.example.configuration.KafkaConfiguration;
 import top.crossoverjie.cicada.example.configuration.RedisConfiguration;
 import top.crossoverjie.cicada.example.enums.StatusEnum;
@@ -12,7 +13,6 @@ import top.crossoverjie.cicada.server.annotation.CicadaAction;
 import top.crossoverjie.cicada.server.configuration.ApplicationConfiguration;
 import top.crossoverjie.cicada.server.configuration.ConfigurationHolder;
 import top.crossoverjie.cicada.server.context.CicadaContext;
-import top.crossoverjie.cicada.server.util.LoggerBuilder;
 
 import java.util.concurrent.atomic.AtomicLong;
 

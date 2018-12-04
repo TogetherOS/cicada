@@ -3,11 +3,14 @@ package top.crossoverjie.cicada.server.handle;
 import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.cookie.Cookie;
 import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
+import top.crossoverjie.cicada.base.log.LoggerBuilder;
 import top.crossoverjie.cicada.server.action.param.Param;
 import top.crossoverjie.cicada.server.action.param.ParamMap;
 import top.crossoverjie.cicada.server.action.req.CicadaHttpRequest;
@@ -16,15 +19,12 @@ import top.crossoverjie.cicada.server.action.res.CicadaHttpResponse;
 import top.crossoverjie.cicada.server.action.res.CicadaResponse;
 import top.crossoverjie.cicada.server.action.res.WorkRes;
 import top.crossoverjie.cicada.server.config.AppConfig;
+import top.crossoverjie.cicada.server.constant.CicadaConstant;
 import top.crossoverjie.cicada.server.context.CicadaContext;
-import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
 import top.crossoverjie.cicada.server.intercept.InterceptProcess;
-import top.crossoverjie.cicada.server.reflect.ClassScanner;
 import top.crossoverjie.cicada.server.route.RouteProcess;
 import top.crossoverjie.cicada.server.route.RouterScanner;
-import top.crossoverjie.cicada.server.util.LoggerBuilder;
-import top.crossoverjie.cicada.server.util.PathUtil;
 
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
@@ -39,7 +39,8 @@ import java.util.Map;
  *         Date: 2018/8/30 18:47
  * @since JDK 1.8
  */
-public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpRequest> {
+@ChannelHandler.Sharable
+public final class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpRequest> {
 
     private static final Logger LOGGER = LoggerBuilder.getLogger(HttpDispatcher.class);
 
@@ -84,6 +85,7 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
             Method method = routerScanner.routeMethod(queryStringDecoder);
             routeProcess.invoke(method,queryStringDecoder) ;
 
+
             //WorkAction action = (WorkAction) actionClazz.newInstance();
             //action.execute(CicadaContext.getContext(), paramMap);
 
@@ -95,7 +97,7 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
             exceptionCaught(ctx, e);
         } finally {
             // Response
-            responseContent(ctx, CicadaContext.getResponse().getHttpContent());
+            responseContent(ctx);
 
             // remove cicada thread context
             CicadaContext.removeContext();
@@ -110,10 +112,12 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
      *
      * @param ctx
      */
-    private void responseContent(ChannelHandlerContext ctx, String context) {
+    private void responseContent(ChannelHandlerContext ctx) {
+
+        CicadaResponse cicadaResponse = CicadaContext.getResponse();
+        String context = cicadaResponse.getHttpContent() ;
 
         ByteBuf buf = Unpooled.wrappedBuffer(context.getBytes(StandardCharsets.UTF_8));
-
         DefaultFullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
         buildHeader(response);
         ctx.writeAndFlush(response);
@@ -136,28 +140,6 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
         return paramMap;
     }
 
-    /**
-     * route Action
-     *
-     * @param queryStringDecoder
-     * @param appConfig
-     * @return
-     * @throws Exception
-     */
-    private Class<?> routeAction(QueryStringDecoder queryStringDecoder, AppConfig appConfig) throws Exception {
-        String actionPath = PathUtil.getActionPath(queryStringDecoder.path());
-        Map<String, Class<?>> cicadaAction = ClassScanner.getCicadaAction(appConfig.getRootPackageName());
-
-        if (cicadaAction == null) {
-            throw new CicadaException("Must be configured WorkAction Object");
-        }
-
-        Class<?> actionClazz = cicadaAction.get(actionPath);
-        if (actionClazz == null) {
-            throw new CicadaException(StatusEnum.REQUEST_ERROR, actionPath + " Not Fount");
-        }
-        return actionClazz;
-    }
 
 
 
@@ -185,8 +167,16 @@ public class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHttpReque
      * @param response
      */
     private void buildHeader(DefaultFullHttpResponse response) {
+        CicadaResponse cicadaResponse = CicadaContext.getResponse();
+
         HttpHeaders headers = response.headers();
         headers.setInt(HttpHeaderNames.CONTENT_LENGTH, response.content().readableBytes());
-        headers.set(HttpHeaderNames.CONTENT_TYPE, CicadaContext.getResponse().getContentType());
+        headers.set(HttpHeaderNames.CONTENT_TYPE, cicadaResponse.getContentType());
+
+        List<Cookie> cookies = cicadaResponse.cookies();
+        for (Cookie cookie : cookies) {
+            headers.add(CicadaConstant.ContentType.SET_COOKIE, io.netty.handler.codec.http.cookie.ServerCookieEncoder.LAX.encode(cookie));
+        }
+
     }
 }

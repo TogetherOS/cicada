@@ -10,6 +10,7 @@ import top.crossoverjie.cicada.base.bean.CicadaBeanFactory;
  * @since JDK 1.8
  */
 public class CicadaDefaultBean implements CicadaBeanFactory {
+
     @Override
     public void register(Object object) {
 
@@ -19,5 +20,9 @@ public class CicadaDefaultBean implements CicadaBeanFactory {
     public Object getBean(String name) throws Exception {
         Class<?> aClass = Class.forName(name);
         return aClass.newInstance();
+    }
+
+    @Override
+    public void releaseBean() {
     }
 }

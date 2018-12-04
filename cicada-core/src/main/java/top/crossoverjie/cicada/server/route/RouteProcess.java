@@ -19,7 +19,7 @@ import java.util.Map;
  *         Date: 2018/11/13 21:18
  * @since JDK 1.8
  */
-public class RouteProcess {
+public final class RouteProcess {
 
     private volatile static RouteProcess routeProcess;
 
@@ -43,6 +43,10 @@ public class RouteProcess {
      * @throws Exception
      */
     public void invoke(Method method, QueryStringDecoder queryStringDecoder) throws Exception {
+        if (method == null){
+            return;
+        }
+
         Object[] object = parseRouteParameter(method, queryStringDecoder);
         Object bean = cicadaBeanManager.getBean(method.getDeclaringClass().getName());
         if (object == null){
