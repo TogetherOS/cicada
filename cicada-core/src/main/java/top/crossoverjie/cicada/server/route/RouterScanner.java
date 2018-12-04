@@ -81,7 +81,7 @@ public class RouterScanner {
 
     private boolean defaultResponse(String path) {
         if (appConfig.getRootPath().equals(path)) {
-            CicadaContext.getContext().html("<center> hello Cicada <br/><br/>" +
+            CicadaContext.getContext().html("<center> Hello Cicada <br/><br/>" +
                     "Power by <a href='https://github.com/TogetherOS/cicada'>@Cicada</a> </center>");
             return true;
         }
