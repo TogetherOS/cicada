@@ -79,9 +79,10 @@ public class CicadaHttpResponse implements CicadaResponse {
             throw new CicadaException("cookie.getValue() is null!") ;
         }
 
-        io.netty.handler.codec.http.cookie.Cookie cookie
-                = new DefaultCookie(cicadaCookie.getName(),cicadaCookie.getValue());
+        DefaultCookie cookie = new DefaultCookie(cicadaCookie.getName(), cicadaCookie.getValue());
 
+        cookie.setPath("/");
+        cookie.setMaxAge(cicadaCookie.getMaxAge());
         cookies.add(cookie) ;
     }
 

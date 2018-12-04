@@ -13,7 +13,7 @@ public class Cookie {
     private String value ;
     private String path ;
     private String domain ;
-    private long maxAge ;
+    private long maxAge = 1000000L;
 
     public String getName() {
         return name;

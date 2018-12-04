@@ -17,6 +17,7 @@ public final class CicadaConstant {
         public final static String JSON = "application/json; charset=UTF-8";
         public final static String TEXT = "text/plain; charset=UTF-8";
         public final static String HTML = "text/html; charset=UTF-8";
+        public final static String SET_COOKIE = "Set-Cookie";
         public final static String COOKIE = "Cookie";
     }
 

@@ -173,13 +173,9 @@ public final class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHtt
         headers.setInt(HttpHeaderNames.CONTENT_LENGTH, response.content().readableBytes());
         headers.set(HttpHeaderNames.CONTENT_TYPE, cicadaResponse.getContentType());
 
-        if (cicadaResponse.getContentType().equals(CicadaConstant.ContentType.JSON)){
-            return;
-        }
-
         List<Cookie> cookies = cicadaResponse.cookies();
         for (Cookie cookie : cookies) {
-            headers.add(HttpHeaderNames.SET_COOKIE,cookie);
+            headers.add(CicadaConstant.ContentType.SET_COOKIE, io.netty.handler.codec.http.cookie.ServerCookieEncoder.LAX.encode(cookie));
         }
 
     }
