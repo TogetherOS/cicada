@@ -147,11 +147,6 @@ public class RouteAction {
 }
 ```
 
-![](https://ws1.sinaimg.cn/large/006tNbRwly1fvxvvo8yioj313i0tudij.jpg)
-
-At the same time, you can also get other information in the request context through `context.request()`.
-
-![](https://ws2.sinaimg.cn/large/006tNbRwly1fvxvxmpsjcj30yy0yo77h.jpg)
 
 ## Custom configuration
 

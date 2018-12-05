@@ -27,13 +27,13 @@
 
 - [x] 代码简洁，没有过多依赖。
 - [x] 一行代码即可启动 HTTP 服务。
-- [x] 自定义拦截器。
+- [x] [自定义拦截器](#自定义拦截器)。
 - [x] 灵活的传参方式。
 - [x] `json` 响应格式。
 - [x] 自定义配置。
 - [x] 多种响应方式。
 - [x] 内置可插拔 `IOC` 容器。
-- [x] `Cookie` 支持。
+- [x] [`Cookie` 支持](#cookie-支持)。
 - [ ] 文件上传。
 
 
@@ -137,11 +137,6 @@ public class RouteAction {
 }
 ```
 
-![](https://ws1.sinaimg.cn/large/006tNbRwly1fvxvvo8yioj313i0tudij.jpg)
-
-同时也可以根据 `context.request()` 获得请求上下文中的其他信息。
-
-![](https://ws2.sinaimg.cn/large/006tNbRwly1fvxvxmpsjcj30yy0yo77h.jpg)
 
 ## Cookie 支持
 
