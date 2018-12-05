@@ -32,14 +32,14 @@ If you are interested, please click [Star](https://github.com/crossoverJie/cicad
 
 - [x] Clean code, without too much dependency.
 - [x] One line of code to start the HTTP service.
-- [x] Custom interceptor.
+- [x] [Custom interceptor](#custom-interceptor).
 - [x] Flexible parameters way.
 - [x] Response `json`.
 - [x] Start with `jar`.
-- [x] Custom configuration.
+- [x] [Custom configuration](#custom-configuration).
 - [x] Multiple response ways.
 - [x] Pluggable `IOC` beanFactory。
-- [ ] Support `Cookie`.
+- [x] [Support `Cookie`](#cookie).
 - [ ] File Upload.
 
 
@@ -148,6 +148,25 @@ public class RouteAction {
 ```
 
 
+## Cookie Support
+
+### Set Cookie
+
+```java
+Cookie cookie = new Cookie() ;
+cookie.setName("cookie");
+cookie.setValue("value");
+CicadaContext.getResponse().setCookie(cookie);
+```
+
+### Get Cookie
+
+```java
+Cookie cookie = CicadaContext.getRequest().getCookie("cookie");
+logger.info("cookie = " + cookie.toString());
+```
+
+
 ## Custom configuration
 
 By default, the configuration file under the `classpath` is read.
@@ -251,6 +270,11 @@ public class ExecuteTimeInterceptor implements CicadaInterceptor {
 
 
 ## ChangeLog
+
+### v2.0.1
+- Logo.
+- Cookie Support.
+- Beautify the log.
 
 ### v2.0.0
 - Fixed [#12](https://github.com/TogetherOS/cicada/issues/12) [#22](https://github.com/TogetherOS/cicada/issues/22) [#28](28)
