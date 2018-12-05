@@ -33,7 +33,7 @@
 - [x] 自定义配置。
 - [x] 多种响应方式。
 - [x] 内置可插拔 `IOC` 容器。
-- [ ] `Cookie` 支持。
+- [x] `Cookie` 支持。
 - [ ] 文件上传。
 
 
@@ -143,6 +143,24 @@ public class RouteAction {
 
 ![](https://ws2.sinaimg.cn/large/006tNbRwly1fvxvxmpsjcj30yy0yo77h.jpg)
 
+## Cookie 支持
+
+### 设置 Cookie
+
+```java
+Cookie cookie = new Cookie() ;
+cookie.setName("cookie");
+cookie.setValue("value");
+CicadaContext.getResponse().setCookie(cookie);
+```
+
+### 获取 Cookie
+
+```java
+Cookie cookie = CicadaContext.getRequest().getCookie("cookie");
+logger.info("cookie = " + cookie.toString());
+```
+
 ## 自定义配置
 
 `cicada` 默认会读取 classpath 下的 `application.properties` 配置文件。
@@ -241,6 +259,10 @@ public class ExecuteTimeInterceptor implements CicadaInterceptor {
 **每秒将近 10W 请求。**
 
 ## 更新记录
+
+### v2.0.1
+- 更新 Logo ,美化日志。
+- 支持 `Cookie`
 
 ### v2.0.0
 - 修复 [#12](https://github.com/TogetherOS/cicada/issues/12) [#22](https://github.com/TogetherOS/cicada/issues/22) [#28](28)
