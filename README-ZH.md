@@ -283,7 +283,7 @@ public class ExecuteTimeInterceptor implements CicadaInterceptor {
 
 > crossoverJie#gmail.com
 
-<img src="https://ws2.sinaimg.cn/large/006tKfTcly1fsa01u7ro1j30gs0howfq.jpg" width="300"/> 
+![qrcode_for_gh_3a954a025f10_258.jpg](https://i.loli.net/2019/07/09/5d245f3e955ce61699.jpg) 
 
 ## 特别感谢
 
