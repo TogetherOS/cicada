@@ -15,9 +15,9 @@ import top.crossoverjie.cicada.server.intercept.CicadaInterceptor;
  * @since JDK 1.8
  */
 @Interceptor(order = 1)
-public class LoggerInterceptorAbstract extends CicadaInterceptor {
+public class LoggerInterceptor extends CicadaInterceptor {
 
-    private static final Logger LOGGER = LoggerBuilder.getLogger(LoggerInterceptorAbstract.class) ;
+    private static final Logger LOGGER = LoggerBuilder.getLogger(LoggerInterceptor.class) ;
 
     @Override
     public boolean before(CicadaContext context, Param param) throws Exception {
