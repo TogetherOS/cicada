@@ -33,7 +33,7 @@ If you are interested, please click [Star](https://github.com/crossoverJie/cicad
 - [x] Clean code, without too much dependency.
 - [x] One line of code to start the HTTP service.
 - [x] [Custom interceptor](#custom-interceptor).
-- [x] [Custom exception handle](#custom-interceptor).
+- [x] [Custom exception handle](#custom-exception-handle).
 - [x] Flexible parameters way.
 - [x] Response `json`.
 - [x] Start with `jar`.
