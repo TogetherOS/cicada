@@ -23,6 +23,11 @@ public class CicadaDefaultBean implements CicadaBeanFactory {
     }
 
     @Override
+    public <T> T getBean(Class<T> clazz) throws Exception {
+        return clazz.newInstance();
+    }
+
+    @Override
     public void releaseBean() {
     }
 }

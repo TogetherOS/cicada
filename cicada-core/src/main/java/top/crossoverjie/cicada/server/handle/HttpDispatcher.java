@@ -1,6 +1,5 @@
 package top.crossoverjie.cicada.server.handle;
 
-import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
@@ -8,7 +7,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.cookie.Cookie;
-import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import top.crossoverjie.cicada.base.log.LoggerBuilder;
 import top.crossoverjie.cicada.server.action.param.Param;
@@ -17,11 +15,12 @@ import top.crossoverjie.cicada.server.action.req.CicadaHttpRequest;
 import top.crossoverjie.cicada.server.action.req.CicadaRequest;
 import top.crossoverjie.cicada.server.action.res.CicadaHttpResponse;
 import top.crossoverjie.cicada.server.action.res.CicadaResponse;
-import top.crossoverjie.cicada.server.action.res.WorkRes;
+import top.crossoverjie.cicada.server.bean.CicadaBeanManager;
 import top.crossoverjie.cicada.server.config.AppConfig;
 import top.crossoverjie.cicada.server.constant.CicadaConstant;
 import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.exception.CicadaException;
+import top.crossoverjie.cicada.server.exception.GlobalHandelException;
 import top.crossoverjie.cicada.server.intercept.InterceptProcess;
 import top.crossoverjie.cicada.server.route.RouteProcess;
 import top.crossoverjie.cicada.server.route.RouterScanner;
@@ -48,6 +47,9 @@ public final class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHtt
     private final InterceptProcess interceptProcess = InterceptProcess.getInstance();
     private final RouterScanner routerScanner = RouterScanner.getInstance();
     private final RouteProcess routeProcess = RouteProcess.getInstance() ;
+    private final CicadaBeanManager cicadaBeanManager = CicadaBeanManager.getInstance() ;
+    private final GlobalHandelException exceptionHandle = cicadaBeanManager.exceptionHandle() ;
+    private Exception exception ;
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, DefaultHttpRequest httpRequest) {
@@ -113,7 +115,6 @@ public final class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHtt
      * @param ctx
      */
     private void responseContent(ChannelHandlerContext ctx) {
-
         CicadaResponse cicadaResponse = CicadaContext.getResponse();
         String context = cicadaResponse.getHttpContent() ;
 
@@ -145,20 +146,14 @@ public final class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHtt
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-
+        exception = (Exception) cause;
         if (CicadaException.isResetByPeer(cause.getMessage())){
             return;
         }
 
-        LOGGER.error(cause.getMessage(), cause);
-
-        WorkRes workRes = new WorkRes();
-        workRes.setCode(String.valueOf(HttpResponseStatus.NOT_FOUND.code()));
-        workRes.setMessage(cause.getMessage());
-
-        DefaultFullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.NOT_FOUND, Unpooled.copiedBuffer(JSON.toJSONString(workRes), CharsetUtil.UTF_8));
-        buildHeader(response);
-        ctx.writeAndFlush(response);
+        if (exceptionHandle != null){
+            exceptionHandle.resolveException(CicadaContext.getContext(),exception);
+        }
     }
 
     /**

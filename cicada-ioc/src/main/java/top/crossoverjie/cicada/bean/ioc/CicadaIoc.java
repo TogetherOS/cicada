@@ -31,6 +31,11 @@ public class CicadaIoc implements CicadaBeanFactory {
     }
 
     @Override
+    public <T> T getBean(Class<T> clazz) {
+        return (T) beans.get(clazz.getName());
+    }
+
+    @Override
     public void releaseBean() {
         beans = null ;
         LOGGER.info("release all bean success.");

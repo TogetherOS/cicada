@@ -35,7 +35,7 @@ public class CicadaHttpRequest implements CicadaRequest {
         //build headers
         buildHeaders(httpRequest, request);
 
-        //init cookies
+        //initBean cookies
         initCookies(request);
 
         return request ;
@@ -53,7 +53,7 @@ public class CicadaHttpRequest implements CicadaRequest {
     }
 
     /**
-     * init cookies
+     * initBean cookies
      * @param request request
      */
     private static void initCookies(CicadaHttpRequest request) {

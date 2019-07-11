@@ -5,10 +5,10 @@
     <parent>
         <artifactId>cicada</artifactId>
         <groupId>top.crossoverjie.opensource</groupId>
-        <version>2.0.1</version>
+        <version>2.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
 
     <artifactId>cicada-example</artifactId>
     <packaging>jar</packaging>

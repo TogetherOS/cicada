@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import top.crossoverjie.cicada.base.bean.CicadaBeanFactory;
 import top.crossoverjie.cicada.base.log.LoggerBuilder;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
+import top.crossoverjie.cicada.server.annotation.CicadaBean;
 import top.crossoverjie.cicada.server.annotation.Interceptor;
 import top.crossoverjie.cicada.server.bean.CicadaDefaultBean;
 import top.crossoverjie.cicada.server.configuration.AbstractCicadaConfiguration;
@@ -28,7 +29,7 @@ import java.util.jar.JarFile;
  *         Date: 2018/9/1 11:36
  * @since JDK 1.8
  */
-public class ClassScanner {
+public final class ClassScanner {
 
     private final static Logger LOGGER = LoggerBuilder.getLogger(ClassScanner.class);
 
@@ -74,13 +75,13 @@ public class ClassScanner {
         return configurationList;
     }
     /**
-     * get @CicadaAction
+     * get @CicadaAction & @CicadaBean
      *
      * @param packageName
      * @return
      * @throws Exception
      */
-    public static Map<String, Class<?>> getCicadaAction(String packageName) throws Exception {
+    public static Map<String, Class<?>> getCicadaBean(String packageName) throws Exception {
 
         if (actionMap == null) {
             Set<Class<?>> clsList = getClasses(packageName);
@@ -92,17 +93,38 @@ public class ClassScanner {
             actionMap = new HashMap<>(16);
             for (Class<?> cls : clsList) {
 
-                Annotation annotation = cls.getAnnotation(CicadaAction.class);
-                if (annotation == null) {
+                CicadaAction action = cls.getAnnotation(CicadaAction.class);
+                CicadaBean bean = cls.getAnnotation(CicadaBean.class);
+                if (action == null && bean == null) {
                     continue;
                 }
 
-                CicadaAction cicadaAction = (CicadaAction) annotation;
-                actionMap.put(cicadaAction.value() == null ? cls.getName() : cicadaAction.value(), cls);
+                if (action != null){
+                    actionMap.put(action.value() == null ? cls.getName() : action.value(), cls);
+                }
+
+                if (bean != null){
+                    actionMap.put(bean.value() == null ? cls.getName() : bean.value(), cls);
+                }
 
             }
         }
         return actionMap;
+    }
+
+    /**
+     * whether is the target class
+     * @param clazz
+     * @param target
+     * @return
+     */
+    public static boolean isInterface(Class<?> clazz,Class<?> target){
+        for (Class<?> aClass : clazz.getInterfaces()) {
+            if (aClass.getName().equals(target.getName())){
+                return true ;
+            }
+        }
+        return false ;
     }
 
     /**
