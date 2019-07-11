@@ -32,7 +32,7 @@ public class CicadaIoc implements CicadaBeanFactory {
 
     @Override
     public <T> T getBean(Class<T> clazz) {
-        return (T) beans.get(clazz.getName());
+        return (T) getBean(clazz.getName());
     }
 
     @Override

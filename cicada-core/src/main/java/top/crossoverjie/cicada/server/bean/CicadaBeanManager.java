@@ -5,7 +5,6 @@ import top.crossoverjie.cicada.base.bean.CicadaBeanFactory;
 import top.crossoverjie.cicada.base.log.LoggerBuilder;
 import top.crossoverjie.cicada.server.exception.GlobalHandelException;
 import top.crossoverjie.cicada.server.reflect.ClassScanner;
-import top.crossoverjie.cicada.server.route.RouteProcess;
 
 import java.util.Map;
 
@@ -30,7 +29,7 @@ public final class CicadaBeanManager {
 
     public static CicadaBeanManager getInstance() {
         if (cicadaBeanManager == null) {
-            synchronized (RouteProcess.class) {
+            synchronized (CicadaBeanManager.class) {
                 if (cicadaBeanManager == null) {
                     cicadaBeanManager = new CicadaBeanManager();
                 }
