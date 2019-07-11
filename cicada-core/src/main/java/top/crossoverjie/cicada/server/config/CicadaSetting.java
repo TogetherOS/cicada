@@ -45,8 +45,8 @@ public final class CicadaSetting {
         //Set application configuration
         setAppConfig(rootPath);
 
-        //init route bean factory
-        CicadaBeanManager.getInstance().init(rootPath);
+        //initBean route bean factory
+        CicadaBeanManager.getInstance().initBean(rootPath);
     }
 
 

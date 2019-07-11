@@ -2,11 +2,13 @@ package top.crossoverjie.cicada.example.action;
 
 import org.slf4j.Logger;
 import top.crossoverjie.cicada.base.log.LoggerBuilder;
+import top.crossoverjie.cicada.example.exception.ExceptionHandle;
 import top.crossoverjie.cicada.example.req.DemoReq;
 import top.crossoverjie.cicada.server.action.req.Cookie;
 import top.crossoverjie.cicada.server.action.res.WorkRes;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
 import top.crossoverjie.cicada.server.annotation.CicadaRoute;
+import top.crossoverjie.cicada.server.bean.CicadaBeanManager;
 import top.crossoverjie.cicada.server.context.CicadaContext;
 
 /**
@@ -61,5 +63,11 @@ public class RouteAction {
     }
 
 
+    @CicadaRoute("test")
+    public void test(CicadaContext context){
+        ExceptionHandle bean = CicadaBeanManager.getInstance().getBean(ExceptionHandle.class);
+        LOGGER.info("====" +bean.getClass());
+        context.html("<p>12345</p>");
+    }
 
 }

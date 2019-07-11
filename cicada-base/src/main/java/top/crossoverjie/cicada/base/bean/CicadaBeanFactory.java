@@ -24,6 +24,15 @@ public interface CicadaBeanFactory {
     Object getBean(String name) throws Exception;
 
     /**
+     * get bean by class type
+     * @param clazz
+     * @param <T>
+     * @return bean
+     * @throws Exception
+     */
+    <T> T getBean(Class<T> clazz) throws Exception;
+
+    /**
      * release all beans
      */
     void releaseBean() ;
