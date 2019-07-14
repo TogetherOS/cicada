@@ -42,11 +42,21 @@
 
 创建一个 maven 项目，引入核心依赖。
 
-```java
+```xml
 <dependency>
     <groupId>top.crossoverjie.opensource</groupId>
     <artifactId>cicada-core</artifactId>
     <version>x.y.z</version>
+</dependency>
+```
+
+当然也推荐额外再引入一个 `IOC` 容器插件：
+
+```xml
+<dependency>
+    <groupId>top.crossoverjie.opensource</groupId>
+    <artifactId>cicada-ioc</artifactId>
+    <version>2.0.1</version>
 </dependency>
 ```
 

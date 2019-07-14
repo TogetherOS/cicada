@@ -49,7 +49,7 @@ If you are interested, please click [Star](https://github.com/crossoverJie/cicad
 Create a project with `Maven`, import core dependency.
 
 
-```java
+```xml
 <dependency>
     <groupId>top.crossoverjie.opensource</groupId>
     <artifactId>cicada-core</artifactId>
