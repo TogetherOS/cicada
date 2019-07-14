@@ -24,7 +24,7 @@ public class ExceptionHandle implements GlobalHandelException {
         LOGGER.error("Exception", e);
         WorkRes workRes = new WorkRes();
         workRes.setCode("500");
-        workRes.setMessage(e.getClass().getName());
+        workRes.setMessage(e.getClass().getName() + "系统运行出现异常");
         context.json(workRes);
     }
 }

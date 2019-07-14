@@ -263,7 +263,7 @@ public final class ClassScanner {
      * @return
      * @throws Exception
      */
-    public static Class<?> getCustomRouteBean() throws Exception {
+    public static Class<?> getBeanFactory() throws Exception {
         List<Class<?>> classList = new ArrayList<>();
 
 
