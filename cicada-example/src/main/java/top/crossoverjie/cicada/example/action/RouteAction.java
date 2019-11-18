@@ -1,12 +1,15 @@
 package top.crossoverjie.cicada.example.action;
 
 import org.slf4j.Logger;
+
 import top.crossoverjie.cicada.base.log.LoggerBuilder;
 import top.crossoverjie.cicada.example.exception.ExceptionHandle;
+import top.crossoverjie.cicada.example.exception.RouteExceptionHandle;
 import top.crossoverjie.cicada.example.req.DemoReq;
 import top.crossoverjie.cicada.server.action.req.Cookie;
 import top.crossoverjie.cicada.server.action.res.WorkRes;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
+import top.crossoverjie.cicada.server.annotation.CicadaCustomizeExceptionHandle;
 import top.crossoverjie.cicada.server.annotation.CicadaRoute;
 import top.crossoverjie.cicada.server.bean.CicadaBeanManager;
 import top.crossoverjie.cicada.server.context.CicadaContext;
@@ -19,6 +22,7 @@ import top.crossoverjie.cicada.server.context.CicadaContext;
  * @since JDK 1.8
  */
 @CicadaAction("routeAction")
+@CicadaCustomizeExceptionHandle(RouteExceptionHandle.class)
 public class RouteAction {
 
     private static final Logger LOGGER = LoggerBuilder.getLogger(RouteAction.class);

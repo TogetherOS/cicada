@@ -1,5 +1,12 @@
 package top.crossoverjie.cicada.server.route;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.PostConstruct;
+
 import io.netty.handler.codec.http.QueryStringDecoder;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
 import top.crossoverjie.cicada.server.annotation.CicadaRoute;
@@ -8,11 +15,6 @@ import top.crossoverjie.cicada.server.context.CicadaContext;
 import top.crossoverjie.cicada.server.enums.StatusEnum;
 import top.crossoverjie.cicada.server.exception.CicadaException;
 import top.crossoverjie.cicada.server.reflect.ClassScanner;
-
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Function:
@@ -23,7 +25,8 @@ import java.util.Set;
  */
 public class RouterScanner {
 
-    private static Map<String, Method> routes = null;
+    private static Map<String, Method> methodRoutes = null;
+    private static Map<String, Class<?>> classRoutes = null;
 
     private volatile static RouterScanner routerScanner;
 
@@ -48,6 +51,15 @@ public class RouterScanner {
     private RouterScanner() {
     }
 
+    @PostConstruct
+    public void routeMapping() throws Exception {
+        if (classRoutes == null || methodRoutes == null) {
+        	methodRoutes = new HashMap<>(16);
+        	classRoutes = new HashMap<>(16);
+            loadRouteMapping(appConfig.getRootPackageName());
+        }
+    }
+    
     /**
      * get route method
      *
@@ -56,9 +68,8 @@ public class RouterScanner {
      * @throws Exception
      */
     public Method routeMethod(QueryStringDecoder queryStringDecoder) throws Exception {
-        if (routes == null) {
-            routes = new HashMap<>(16);
-            loadRouteMethods(appConfig.getRootPackageName());
+        if (methodRoutes == null) {
+        	routeMapping();
         }
 
         //default response
@@ -68,15 +79,45 @@ public class RouterScanner {
             return null;
         }
 
-        Method method = routes.get(queryStringDecoder.path());
+        Method method = methodRoutes.get(queryStringDecoder.path());
 
         if (method == null) {
             throw new CicadaException(StatusEnum.NOT_FOUND);
         }
 
         return method;
+    }
+    
+    /**
+     * get route class
+     *
+     * @param queryStringDecoder
+     * @return
+     * @throws Exception
+     */
+    public Class<?> routeClass(String url) throws Exception {
+        if (classRoutes == null) {
+        	routeMapping();
+        }
+        
+        //default response
+        boolean defaultResponse = defaultResponse(url);
+        if (defaultResponse) {
+            return null;
+        }
 
+        String[] routePaths = url.split("/");
+        if(routePaths == null || routePaths.length < 3) {
+        	return null;
+        }
 
+        Class<?> clazz = classRoutes.get("/"+routePaths[1]+"/"+routePaths[2]);
+
+        if (clazz == null) {
+            throw new CicadaException(StatusEnum.NOT_FOUND);
+        }
+
+        return clazz;
     }
 
     private boolean defaultResponse(String path) {
@@ -87,22 +128,32 @@ public class RouterScanner {
         }
         return false;
     }
+    
 
-
-    private void loadRouteMethods(String packageName) throws Exception {
-        Set<Class<?>> classes = ClassScanner.getClasses(packageName);
+    /**
+     * load class & method mapping
+     * @param packageName
+     * @throws Exception
+     */
+    public void loadRouteMapping(String packageName) throws Exception {
+    	Set<Class<?>> classes = ClassScanner.getClasses(packageName);
 
         for (Class<?> aClass : classes) {
+            CicadaAction cicadaAction = aClass.getAnnotation(CicadaAction.class);
+            if(cicadaAction == null) {
+            	continue;
+            }
+            
+        	classRoutes.put(appConfig.getRootPath() + "/" + cicadaAction.value(), aClass);
+        	
             Method[] declaredMethods = aClass.getMethods();
-
             for (Method method : declaredMethods) {
-                CicadaRoute annotation = method.getAnnotation(CicadaRoute.class);
-                if (annotation == null) {
+                CicadaRoute routeAnnotation = method.getAnnotation(CicadaRoute.class);
+                if (routeAnnotation == null) {
                     continue;
                 }
 
-                CicadaAction cicadaAction = aClass.getAnnotation(CicadaAction.class);
-                routes.put(appConfig.getRootPath() + "/" + cicadaAction.value() + "/" + annotation.value(), method);
+                methodRoutes.put(appConfig.getRootPath() + "/" + cicadaAction.value() + "/" + routeAnnotation.value(), method);
             }
         }
     }
