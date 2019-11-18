@@ -157,22 +157,21 @@ public final class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHtt
 
 		try {
 			Class<?> actionClazz = routerScanner.routeClass(CicadaContext.getContext().request().getUrl());
-			if (actionClazz == null) {
-				return;
-			}
-			Annotation annotation = actionClazz.getAnnotation(CicadaCustomizeExceptionHandle.class);
-			CicadaCustomizeExceptionHandle cceHandle = null;
-			if (annotation != null) {
-				cceHandle = (CicadaCustomizeExceptionHandle) annotation;
-			}
-
-			if (cceHandle != null) {
-				Object bean = cicadaBeanManager.getBean(cceHandle.value());
-				if (bean != null) {
-					CustomizeHandleException customizeHandleException = (CustomizeHandleException) bean;
-					customizeHandleException.resolveException(CicadaContext.getContext(), exception);
+			if (actionClazz != null) {
+				Annotation annotation = actionClazz.getAnnotation(CicadaCustomizeExceptionHandle.class);
+				CicadaCustomizeExceptionHandle cceHandle = null;
+				if (annotation != null) {
+					cceHandle = (CicadaCustomizeExceptionHandle) annotation;
 				}
-				return;
+
+				if (cceHandle != null) {
+					Object bean = cicadaBeanManager.getBean(cceHandle.value());
+					if (bean != null) {
+						CustomizeHandleException customizeHandleException = (CustomizeHandleException) bean;
+						customizeHandleException.resolveException(CicadaContext.getContext(), exception);
+					}
+					return;
+				}
 			}
 
 			if (exceptionHandle != null) {
