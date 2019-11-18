@@ -1,6 +1,8 @@
 package top.crossoverjie.cicada.example.action;
 
+import top.crossoverjie.cicada.example.exception.TextExceptionHandle;
 import top.crossoverjie.cicada.server.annotation.CicadaAction;
+import top.crossoverjie.cicada.server.annotation.CicadaCustomizeExceptionHandle;
 import top.crossoverjie.cicada.server.annotation.CicadaRoute;
 import top.crossoverjie.cicada.server.context.CicadaContext;
 
@@ -12,6 +14,7 @@ import top.crossoverjie.cicada.server.context.CicadaContext;
  * @since JDK 1.8
  */
 @CicadaAction("textAction")
+@CicadaCustomizeExceptionHandle(TextExceptionHandle.class)
 public class TextAction  {
 
 

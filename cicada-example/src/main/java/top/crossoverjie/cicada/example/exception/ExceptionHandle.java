@@ -15,7 +15,7 @@ import top.crossoverjie.cicada.server.exception.GlobalHandelException;
  * @since JDK 1.8
  */
 
-@CicadaBean
+@CicadaBean("ExceptionHandle")
 public class ExceptionHandle implements GlobalHandelException {
     private final static Logger LOGGER = LoggerBuilder.getLogger(ExceptionHandle.class);
 
