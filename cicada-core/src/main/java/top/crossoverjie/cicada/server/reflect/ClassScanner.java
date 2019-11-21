@@ -230,7 +230,7 @@ public final class ClassScanner {
     }
 
 
-    public static void findAndAddClassesInPackageByFile(String packageName,
+    private static void findAndAddClassesInPackageByFile(String packageName,
                                                         String packagePath, final boolean recursive, Set<Class<?>> classes) {
         File dir = new File(packagePath);
         if (!dir.exists() || !dir.isDirectory()) {
