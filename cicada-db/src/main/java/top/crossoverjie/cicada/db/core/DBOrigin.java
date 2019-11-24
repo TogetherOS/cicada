@@ -1,5 +1,8 @@
 package top.crossoverjie.cicada.db.core;
 
+import com.healthmarketscience.sqlbuilder.dbspec.basic.DbSchema;
+import com.healthmarketscience.sqlbuilder.dbspec.basic.DbSpec;
+import com.healthmarketscience.sqlbuilder.dbspec.basic.DbTable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -26,12 +29,16 @@ public class DBOrigin {
 
     private static DBOrigin origin;
 
+    private static DbSchema schema;
+
     public static DBOrigin getInstance() {
         return origin ;
     }
 
     public static void init(String userName, String pwd, String url) {
         origin = new DBOrigin(userName, pwd, url);
+        String database = getDataBaseName(url);
+        schema = new DbSpec().addSchema(database);
     }
 
 
@@ -53,5 +60,15 @@ public class DBOrigin {
         return connection;
     }
 
+    public DbTable addTable(String tableName){
+        return schema.addTable(tableName) ;
+    }
 
+
+
+    private static String getDataBaseName(String url) {
+        int i1 = url.lastIndexOf("/") ;
+        int i2 = url.indexOf("?") ;
+        return url.substring(i1 +1 , i2);
+    }
 }

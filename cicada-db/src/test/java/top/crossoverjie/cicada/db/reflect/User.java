@@ -21,4 +21,6 @@ public class User extends Model {
     @FieldName(value = "city_id")
     private Integer cityId ;
 
+    private String description ;
+
 }

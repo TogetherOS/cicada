@@ -1,6 +1,9 @@
 package top.crossoverjie.cicada.db.core;
 
 
+import com.healthmarketscience.sqlbuilder.SelectQuery;
+import com.healthmarketscience.sqlbuilder.dbspec.basic.DbColumn;
+import com.healthmarketscience.sqlbuilder.dbspec.basic.DbTable;
 import lombok.extern.slf4j.Slf4j;
 import top.crossoverjie.cicada.db.annotation.FieldName;
 import top.crossoverjie.cicada.db.annotation.OriginName;
@@ -34,9 +37,12 @@ public final class DBQuery<T extends Model> {
 
     private DBOrigin origin;
 
+    private DbTable dbTable ;
+
     public DBQuery query(Class<T> clazz) {
         origin = DBOrigin.getInstance();
         this.targetClass = clazz;
+        dbTable = origin.addTable(targetClass.getAnnotation(OriginName.class).value()) ;
         return this;
     }
 
@@ -58,7 +64,7 @@ public final class DBQuery<T extends Model> {
             Map<String, Object> fields = new HashMap<>(8);
             while (resultSet.next()) {
                 for (Field field : targetClass.getDeclaredFields()) {
-                    String dbField = "";
+                    String dbField;
                     FieldName fieldAnnotation = field.getAnnotation(FieldName.class);
                     if (fieldAnnotation != null) {
                         dbField = fieldAnnotation.value();
@@ -94,21 +100,23 @@ public final class DBQuery<T extends Model> {
     }
 
     private String buildSQL() {
-        StringBuilder sql = new StringBuilder("select * from ");
-        String tableName = targetClass.getAnnotation(OriginName.class).value();
-        sql.append(tableName);
-        if (conditions.size() > 0) {
-            sql.append(" where ");
+        SelectQuery selectQuery = new SelectQuery() ;
+
+        for (Field field : targetClass.getDeclaredFields()) {
+            String dbField;
+            FieldName fieldAnnotation = field.getAnnotation(FieldName.class);
+            if (fieldAnnotation != null) {
+                dbField = fieldAnnotation.value();
+            } else {
+                dbField = field.getName();
+            }
+
+            DbColumn dbColumn = dbTable.addColumn(dbField);
+            selectQuery.addColumns(dbColumn) ;
         }
 
-        for (Map.Entry<String, String> condition : conditions.entrySet()) {
-            sql.append(condition.getKey())
-                    .append(" = ")
-                    .append(condition.getValue())
-            ;
-        }
+        return selectQuery.validate().toString();
 
-        return sql.toString();
     }
 
     public T first() {
