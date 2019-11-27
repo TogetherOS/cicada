@@ -1,6 +1,7 @@
 package top.crossoverjie.cicada.db.core;
 
 
+import com.healthmarketscience.sqlbuilder.BinaryCondition;
 import com.healthmarketscience.sqlbuilder.SelectQuery;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbColumn;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbTable;
@@ -10,6 +11,7 @@ import top.crossoverjie.cicada.db.annotation.OriginName;
 import top.crossoverjie.cicada.db.model.Model;
 import top.crossoverjie.cicada.db.reflect.Instance;
 import top.crossoverjie.cicada.db.reflect.MethodTools;
+import top.crossoverjie.cicada.db.sql.Condition;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -33,11 +35,13 @@ public final class DBQuery<T extends Model> {
 
     private Class<T> targetClass;
 
-    private Map<String, String> conditions = new HashMap<>();
+    private List<Condition> conditions = new ArrayList<>();
 
     private DBOrigin origin;
 
     private DbTable dbTable ;
+
+    private Map<String,DbColumn> columnMap = new HashMap<>() ;
 
     public DBQuery query(Class<T> clazz) {
         origin = DBOrigin.getInstance();
@@ -46,8 +50,8 @@ public final class DBQuery<T extends Model> {
         return this;
     }
 
-    public DBQuery filter(String filed, String condition) {
-        conditions.put(filed, condition);
+    public DBQuery addCondition(Condition condition) {
+        conditions.add(condition);
         return this;
     }
 
@@ -64,13 +68,7 @@ public final class DBQuery<T extends Model> {
             Map<String, Object> fields = new HashMap<>(8);
             while (resultSet.next()) {
                 for (Field field : targetClass.getDeclaredFields()) {
-                    String dbField;
-                    FieldName fieldAnnotation = field.getAnnotation(FieldName.class);
-                    if (fieldAnnotation != null) {
-                        dbField = fieldAnnotation.value();
-                    } else {
-                        dbField = field.getName();
-                    }
+                    String dbField = getDbField(field);
 
                     //get value from db
                     Method method = resultSet.getClass().getMethod(MethodTools.getMethod(field.getType().getName()), String.class);
@@ -99,27 +97,44 @@ public final class DBQuery<T extends Model> {
         return result;
     }
 
+    public T first() {
+        return this.all().get(0);
+    }
+
     private String buildSQL() {
         SelectQuery selectQuery = new SelectQuery() ;
 
         for (Field field : targetClass.getDeclaredFields()) {
-            String dbField;
-            FieldName fieldAnnotation = field.getAnnotation(FieldName.class);
-            if (fieldAnnotation != null) {
-                dbField = fieldAnnotation.value();
-            } else {
-                dbField = field.getName();
-            }
+            String dbField = getDbField(field);
 
             DbColumn dbColumn = dbTable.addColumn(dbField);
             selectQuery.addColumns(dbColumn) ;
+            columnMap.put(dbField,dbColumn) ;
+        }
+
+        for (Condition condition : conditions) {
+            Condition.Filter filter = condition.getCondition();
+            DbColumn dbColumn = columnMap.get(filter.getFiled());
+            selectQuery.addCondition(BinaryCondition.equalTo(dbColumn,filter.getValue())) ;
         }
 
         return selectQuery.validate().toString();
 
     }
 
-    public T first() {
-        return this.all().get(0);
+    /**
+     * Convert model field to DB field
+     * @param field
+     * @return
+     */
+    private String getDbField(Field field) {
+        String dbField;
+        FieldName fieldAnnotation = field.getAnnotation(FieldName.class);
+        if (fieldAnnotation != null) {
+            dbField = fieldAnnotation.value();
+        } else {
+            dbField = field.getName();
+        }
+        return dbField;
     }
 }

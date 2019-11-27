@@ -17,6 +17,7 @@ import top.crossoverjie.cicada.db.model.Model;
 public class User extends Model {
     private Integer id ;
     private String name ;
+    private String password ;
 
     @FieldName(value = "city_id")
     private Integer cityId ;
