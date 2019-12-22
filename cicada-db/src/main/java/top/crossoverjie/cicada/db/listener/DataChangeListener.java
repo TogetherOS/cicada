@@ -9,5 +9,10 @@ package top.crossoverjie.cicada.db.listener;
  */
 public interface DataChangeListener {
 
+    /**
+     * When db changed, we will callback this method to execute custom business,
+     * Warning: be careful blocking thread.
+     * @param obj Model of db declare
+     */
     void listener(Object obj) ;
 }
