@@ -3,6 +3,7 @@ package top.crossoverjie.cicada.db.reflect;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import top.crossoverjie.cicada.db.annotation.FieldName;
+import top.crossoverjie.cicada.db.model.User;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -38,5 +39,14 @@ public class InstanceTest {
 
             log.info(field.getName() + " fieldName="+fieldName );
         }
+    }
+
+    @Test
+    public void getFiledValue() throws NoSuchFieldException {
+        User user = new User() ;
+        user.setId(1);
+        user.setName("abc");
+        Object name = Instance.getFiledValue(user, user.getClass().getDeclaredField("name"));
+        System.out.println(name);
     }
 }

@@ -6,11 +6,10 @@ import com.healthmarketscience.sqlbuilder.SelectQuery;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbColumn;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbTable;
 import lombok.extern.slf4j.Slf4j;
-import top.crossoverjie.cicada.db.annotation.FieldName;
 import top.crossoverjie.cicada.db.annotation.OriginName;
 import top.crossoverjie.cicada.db.model.Model;
 import top.crossoverjie.cicada.db.reflect.Instance;
-import top.crossoverjie.cicada.db.reflect.MethodTools;
+import top.crossoverjie.cicada.db.reflect.ReflectTools;
 import top.crossoverjie.cicada.db.sql.Condition;
 
 import java.lang.reflect.Field;
@@ -68,10 +67,10 @@ public final class DBQuery<T extends Model> {
             Map<String, Object> fields = new HashMap<>(8);
             while (resultSet.next()) {
                 for (Field field : targetClass.getDeclaredFields()) {
-                    String dbField = getDbField(field);
+                    String dbField = ReflectTools.getDbField(field);
 
                     //get value from db
-                    Method method = resultSet.getClass().getMethod(MethodTools.getMethod(field.getType().getName()), String.class);
+                    Method method = resultSet.getClass().getMethod(ReflectTools.getMethod(field.getType().getName()), String.class);
 
                     Object value = method.invoke(resultSet, dbField);
 
@@ -79,6 +78,7 @@ public final class DBQuery<T extends Model> {
 
                 }
 
+                // transfer DB value to custom model
                 T transfer = Instance.transfer(targetClass, fields);
                 result.add(transfer);
             }
@@ -105,7 +105,7 @@ public final class DBQuery<T extends Model> {
         SelectQuery selectQuery = new SelectQuery() ;
 
         for (Field field : targetClass.getDeclaredFields()) {
-            String dbField = getDbField(field);
+            String dbField = ReflectTools.getDbField(field);
 
             DbColumn dbColumn = dbTable.addColumn(dbField);
             selectQuery.addColumns(dbColumn) ;
@@ -122,19 +122,5 @@ public final class DBQuery<T extends Model> {
 
     }
 
-    /**
-     * Convert model field to DB field
-     * @param field
-     * @return
-     */
-    private String getDbField(Field field) {
-        String dbField;
-        FieldName fieldAnnotation = field.getAnnotation(FieldName.class);
-        if (fieldAnnotation != null) {
-            dbField = fieldAnnotation.value();
-        } else {
-            dbField = field.getName();
-        }
-        return dbField;
-    }
+
 }

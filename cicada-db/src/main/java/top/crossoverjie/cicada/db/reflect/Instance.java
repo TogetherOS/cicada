@@ -3,6 +3,7 @@ package top.crossoverjie.cicada.db.reflect;
 import lombok.extern.slf4j.Slf4j;
 import top.crossoverjie.cicada.db.model.Model;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -55,5 +56,21 @@ public class Instance {
         char c = filedName.charAt(0);
         filedName = filedName.replace(c,Character.toUpperCase(c)) ;
         return filedName ;
+    }
+
+
+    /**
+     * @param obj
+     * @param field
+     * @return
+     */
+    public static Object getFiledValue(Object obj, Field field){
+        try {
+            Method method = obj.getClass().getDeclaredMethod("get" + methodName(field.getName()));
+            return method.invoke(obj) ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null ;
     }
 }

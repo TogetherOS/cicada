@@ -2,7 +2,7 @@ package top.crossoverjie.cicada.db.core;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import top.crossoverjie.cicada.db.reflect.User;
+import top.crossoverjie.cicada.db.model.User;
 import top.crossoverjie.cicada.db.sql.EqualToCondition;
 
 import java.util.List;

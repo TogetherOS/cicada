@@ -1,9 +1,10 @@
-package top.crossoverjie.cicada.db.reflect;
+package top.crossoverjie.cicada.db.model;
 
 import lombok.Data;
+import lombok.ToString;
 import top.crossoverjie.cicada.db.annotation.FieldName;
 import top.crossoverjie.cicada.db.annotation.OriginName;
-import top.crossoverjie.cicada.db.model.Model;
+import top.crossoverjie.cicada.db.annotation.PrimaryId;
 
 /**
  * Function:
@@ -14,7 +15,9 @@ import top.crossoverjie.cicada.db.model.Model;
  */
 @Data
 @OriginName("user")
+@ToString
 public class User extends Model {
+    @PrimaryId
     private Integer id ;
     private String name ;
     private String password ;
