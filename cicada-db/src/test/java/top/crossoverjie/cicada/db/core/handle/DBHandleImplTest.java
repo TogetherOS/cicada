@@ -2,7 +2,7 @@ package top.crossoverjie.cicada.db.core.handle;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import top.crossoverjie.cicada.db.core.DBOrigin;
+import top.crossoverjie.cicada.db.core.SqlSession;
 import top.crossoverjie.cicada.db.listener.DataChangeListener;
 import top.crossoverjie.cicada.db.model.User;
 
@@ -11,9 +11,9 @@ public class DBHandleImplTest {
 
     @Test
     public void update2(){
-        DBOrigin.init("root","root","jdbc:mysql://localhost:3306/ssm?charset=utf8mb4&useUnicode=true&characterEncoding=utf-8");
+        SqlSession.init("root","root","jdbc:mysql://localhost:3306/ssm?charset=utf8mb4&useUnicode=true&characterEncoding=utf-8");
         User user = new User();
-        user.setId(0);
+        user.setId(1);
         user.setName("abc");
         DBHandle handle = (DBHandle) new HandleProxy(DBHandle.class).getInstance(new DataChangeListener() {
             @Override
@@ -29,7 +29,7 @@ public class DBHandleImplTest {
 
     @Test
     public void insert(){
-        DBOrigin.init("root","root","jdbc:mysql://localhost:3306/ssm?charset=utf8mb4&useUnicode=true&characterEncoding=utf-8");
+        SqlSession.init("root","root","jdbc:mysql://localhost:3306/ssm?charset=utf8mb4&useUnicode=true&characterEncoding=utf-8");
         User user = new User();
         user.setName("abc");
         user.setDescription("哈哈哈");

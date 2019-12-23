@@ -17,7 +17,7 @@ import java.sql.DriverManager;
  * @since JDK 1.8
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DBOrigin {
+public class SqlSession {
 
     private Connection connection;
 
@@ -27,22 +27,22 @@ public class DBOrigin {
 
     private String url;
 
-    private static DBOrigin origin;
+    private static SqlSession session;
 
     private static DbSchema schema;
 
-    public static DBOrigin getInstance() {
-        return origin ;
+    public static SqlSession getInstance() {
+        return session;
     }
 
     public static void init(String userName, String pwd, String url) {
-        origin = new DBOrigin(userName, pwd, url);
+        session = new SqlSession(userName, pwd, url);
         String database = getDataBaseName(url);
         schema = new DbSpec().addSchema(database);
     }
 
 
-    private DBOrigin(String userName, String pwd, String url) {
+    private SqlSession(String userName, String pwd, String url) {
         this.userName = userName;
         this.pwd = pwd;
         this.url = url;

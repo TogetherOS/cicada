@@ -30,22 +30,19 @@ import java.util.Map;
  * @since JDK 1.8
  */
 @Slf4j
-public final class DBQuery<T extends Model> {
+public final class DBQuery<T extends Model> extends SqlSessionFactory{
 
     private Class<T> targetClass;
 
     private List<Condition> conditions = new ArrayList<>();
-
-    private DBOrigin origin;
 
     private DbTable dbTable ;
 
     private Map<String,DbColumn> columnMap = new HashMap<>() ;
 
     public DBQuery query(Class<T> clazz) {
-        origin = DBOrigin.getInstance();
         this.targetClass = clazz;
-        dbTable = origin.addTable(targetClass.getAnnotation(OriginName.class).value()) ;
+        dbTable = super.origin().addTable(targetClass.getAnnotation(OriginName.class).value()) ;
         return this;
     }
 
@@ -59,7 +56,7 @@ public final class DBQuery<T extends Model> {
         String sql = buildSQL();
         Statement statement = null;
         try {
-            statement = origin.getConnection().createStatement();
+            statement = super.origin().getConnection().createStatement();
             log.debug("execute sql>>>>>{}", sql);
             ResultSet resultSet = statement.executeQuery(sql);
             result = new ArrayList<>();
