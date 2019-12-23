@@ -10,14 +10,8 @@ import top.crossoverjie.cicada.db.model.User;
 public class DBHandleImplTest {
 
     @Test
-    public void update() {
-        DBHandle handle = (DBHandle) new HandleProxy(DBHandle.class).getInstance();
-        handle.update(User.class,1) ;
-    }
-
-    @Test
     public void update2(){
-        DBOrigin.init("root","root","jdbc:mysql://localhost:3306/ssm?charset=utf8mb4");
+        DBOrigin.init("root","root","jdbc:mysql://localhost:3306/ssm?charset=utf8mb4&useUnicode=true&characterEncoding=utf-8");
         User user = new User();
         user.setId(0);
         user.setName("abc");
@@ -30,5 +24,16 @@ public class DBHandleImplTest {
         });
         int x = handle.update(user) ;
         System.out.println(x);
+    }
+
+
+    @Test
+    public void insert(){
+        DBOrigin.init("root","root","jdbc:mysql://localhost:3306/ssm?charset=utf8mb4&useUnicode=true&characterEncoding=utf-8");
+        User user = new User();
+        user.setName("abc");
+        user.setDescription("哈哈哈");
+        DBHandle handle = (DBHandle) new HandleProxy(DBHandle.class).getInstance() ;
+        handle.insert(user) ;
     }
 }

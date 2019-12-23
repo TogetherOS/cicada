@@ -1,7 +1,5 @@
 package top.crossoverjie.cicada.db.core.handle;
 
-import top.crossoverjie.cicada.db.model.Model;
-
 /**
  * Function:
  *
@@ -11,14 +9,12 @@ import top.crossoverjie.cicada.db.model.Model;
  */
 public interface DBHandle {
 
-    /**
-     * update model
-     * @param clazz
-     * @param filed
+    /** update model
+     * @param obj model of db entity
      * @return
      */
-    int update(Class<? extends Model> clazz, int filed) ;
-
     int update(Object obj) ;
+
+    int insert(Object obj) ;
 
 }

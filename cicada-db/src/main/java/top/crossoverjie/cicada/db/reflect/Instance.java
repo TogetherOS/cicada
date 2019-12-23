@@ -69,7 +69,7 @@ public class Instance {
             Method method = obj.getClass().getDeclaredMethod("get" + methodName(field.getName()));
             return method.invoke(obj) ;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Exception", e);
         }
         return null ;
     }

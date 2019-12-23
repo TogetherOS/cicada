@@ -1,6 +1,7 @@
 package top.crossoverjie.cicada.db;
 
 import com.healthmarketscience.sqlbuilder.BinaryCondition;
+import com.healthmarketscience.sqlbuilder.InsertQuery;
 import com.healthmarketscience.sqlbuilder.SelectQuery;
 import com.healthmarketscience.sqlbuilder.UpdateQuery;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbColumn;
@@ -46,5 +47,18 @@ public class SQLBuilder {
                 .addSetClause(_table1_col1,"abc2")
                 .addCondition(BinaryCondition.equalTo(_table1_col1,"abc")) ;
         System.out.println(updateQuery.toString());
+    }
+
+    @Test
+    public void insert(){
+        DbSpec _spec = new DbSpec();
+        DbSchema _schema1 = _spec.addSchema("Schema1");
+        DbTable _table1 = _schema1.addTable("Table1");
+        DbColumn _table1_col1 = _table1.addColumn("col1", "VARCHAR", 213);
+        DbColumn _table1_col2 = _table1.addColumn("col2", "VARCHAR", 213);
+        InsertQuery insertSelectQuery = new InsertQuery(_table1) ;
+        insertSelectQuery.addPreparedColumns(_table1_col1,_table1_col2) ;
+
+        System.out.println(insertSelectQuery.toString());
     }
 }
