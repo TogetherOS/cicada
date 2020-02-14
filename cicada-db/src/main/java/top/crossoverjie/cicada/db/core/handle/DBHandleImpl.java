@@ -84,7 +84,7 @@ public class DBHandleImpl extends SqlSessionFactory implements DBHandle {
     }
 
     @Override
-    public int insert(Object obj) {
+    public void insert(Object obj) {
         dbTable = super.origin().addTable(obj.getClass().getAnnotation(OriginName.class).value());
         InsertQuery insertSelectQuery = new InsertQuery(dbTable);
         List<Field> values = new ArrayList<>();
@@ -127,7 +127,5 @@ public class DBHandleImpl extends SqlSessionFactory implements DBHandle {
             }
         }
 
-
-        return 0;
     }
 }

@@ -42,7 +42,7 @@ public class HandleProxy<T> {
             try {
                 this.target = clazz.newInstance() ;
             } catch (Exception e) {
-                log.error("");
+                log.error("exception={}",e);
             }
         }
 

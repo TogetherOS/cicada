@@ -15,6 +15,12 @@ public interface DBHandle {
      */
     int update(Object obj) ;
 
-    int insert(Object obj) ;
+
+    /**
+     * insert model
+     * @param obj
+     * @return
+     */
+    void insert(Object obj) ;
 
 }

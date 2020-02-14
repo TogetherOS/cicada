@@ -1,6 +1,6 @@
 package top.crossoverjie.cicada.server;
 
-import top.crossoverjie.cicada.server.bootstrap.NettyBootStrap;
+import top.crossoverjie.cicada.server.bootstrap.BootStrap;
 import top.crossoverjie.cicada.server.config.CicadaSetting;
 
 /**
@@ -21,7 +21,7 @@ public final class CicadaServer {
      */
     public static void start(Class<?> clazz,String path) throws Exception {
         CicadaSetting.setting(clazz,path) ;
-        NettyBootStrap.startCicada();
+        BootStrap.startCicada();
     }
 
 
