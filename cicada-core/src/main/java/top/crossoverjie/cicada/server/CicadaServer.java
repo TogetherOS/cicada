@@ -21,6 +21,9 @@ public final class CicadaServer {
      */
     public static void start(Class<?> clazz,String path) throws Exception {
         CicadaSetting.setting(clazz,path) ;
+
+        CicadaSetting.initHandle();
+
         BootStrap.startCicada();
     }
 

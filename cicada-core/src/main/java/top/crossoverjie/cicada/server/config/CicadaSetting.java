@@ -2,6 +2,7 @@ package top.crossoverjie.cicada.server.config;
 
 import top.crossoverjie.cicada.server.CicadaServer;
 import top.crossoverjie.cicada.server.bean.CicadaBeanManager;
+import top.crossoverjie.cicada.server.bootstrap.InitializeHandle;
 import top.crossoverjie.cicada.server.configuration.AbstractCicadaConfiguration;
 import top.crossoverjie.cicada.server.configuration.ApplicationConfiguration;
 import top.crossoverjie.cicada.server.configuration.ConfigurationHolder;
@@ -47,6 +48,15 @@ public final class CicadaSetting {
 
         //initBean route bean factory
         CicadaBeanManager.getInstance().initBean(rootPath);
+    }
+
+
+    public static void initHandle() throws Exception{
+        List<Class<?>> configuration = ClassScanner.getInitHandles(AppConfig.getInstance().getRootPackageName());
+        for (Class<?> clazz : configuration) {
+            InitializeHandle handle = (InitializeHandle) clazz.newInstance();
+            handle.handle();
+        }
     }
 
 
