@@ -46,8 +46,7 @@ public final class CicadaBeanManager {
     public void initBean(String packageName) throws Exception {
         Map<String, Class<?>> cicadaBean = ClassScanner.getCicadaBean(packageName);
 
-        Class<?> bean = ClassScanner.getBeanFactory();
-        cicadaBeanFactory = (CicadaBeanFactory) bean.newInstance() ;
+        cicadaBeanFactory = ClassScanner.getCicadaBeanFactory() ;
 
         for (Map.Entry<String, Class<?>> classEntry : cicadaBean.entrySet()) {
             Object instance = classEntry.getValue().newInstance();
