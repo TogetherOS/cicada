@@ -62,7 +62,7 @@ Of course, it is recommended to introduce an additional `IOC` container plugin:
 <dependency>
     <groupId>top.crossoverjie.opensource</groupId>
     <artifactId>cicada-ioc</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.4</version>
 </dependency>
 ```
 
