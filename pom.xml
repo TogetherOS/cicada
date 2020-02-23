@@ -36,7 +36,7 @@
 
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/TogetherOS/cicadaissues</url>
+        <url>https://github.com/TogetherOS/cicada/issues</url>
     </issueManagement>
 
     <scm>
