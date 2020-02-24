@@ -296,10 +296,24 @@ public final class ClassScanner {
     private static final String BASE_PACKAGE = "top.crossoverjie.cicada";
 
     /**
+     * get CicadaFactory object by spi.
+     * @return
+     */
+    public static CicadaBeanFactory getCicadaBeanFactory() {
+        ServiceLoader<CicadaBeanFactory> cicadaBeanFactories = ServiceLoader.load(CicadaBeanFactory.class);
+        if (cicadaBeanFactories.iterator().hasNext()){
+            return cicadaBeanFactories.iterator().next() ;
+        }
+
+        return new CicadaDefaultBean();
+    }
+
+    /**
      * get custom route bean
      * @return
      * @throws Exception
      */
+    @Deprecated
     public static Class<?> getBeanFactory() throws Exception {
         List<Class<?>> classList = new ArrayList<>();
 
@@ -332,8 +346,8 @@ public final class ClassScanner {
         return classList.get(0);
     }
 
-
-    public static Set<Class<?>> getCustomRouteBeanClasses(String packageName) throws Exception {
+    @Deprecated
+    private static Set<Class<?>> getCustomRouteBeanClasses(String packageName) throws Exception {
 
         if (cicada_classes == null){
             cicada_classes = new HashSet<>(32) ;
