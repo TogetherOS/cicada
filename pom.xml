@@ -21,7 +21,7 @@
 
     <modules>
         <module>cicada-core</module>
-        <!--<module>cicada-example</module>-->
+        <module>cicada-example</module>
         <module>cicada-ioc</module>
         <module>cicada-base</module>
     </modules>
