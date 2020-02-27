@@ -31,7 +31,6 @@
         <junit.version>4.11</junit.version>
         <netty.version>4.1.42.Final</netty.version>
         <logback.version>1.1.11</logback.version>
-        <mysql-connector-java.version>5.1.45</mysql-connector-java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -104,13 +103,6 @@
                 <groupId>top.crossoverjie.opensource</groupId>
                 <artifactId>cicada-base</artifactId>
                 <version>1.0.3</version>
-            </dependency>
-
-            <!-- mysql-connector -->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql-connector-java.version}</version>
             </dependency>
 
         </dependencies>

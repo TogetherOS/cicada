@@ -4,10 +4,10 @@ import com.healthmarketscience.sqlbuilder.dbspec.basic.DbSchema;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbSpec;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbTable;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 
 /**
  * Function:
@@ -21,15 +21,21 @@ public class SqlSession {
 
     private Connection connection;
 
+
+    @Getter
     private String userName;
 
+    @Getter
     private String pwd;
 
+    @Getter
     private String url;
 
     private static SqlSession session;
 
     private static DbSchema schema;
+
+    private static ConnectionFactory connectionFactory ;
 
     public static SqlSession getInstance() {
         return session;
@@ -39,6 +45,9 @@ public class SqlSession {
         session = new SqlSession(userName, pwd, url);
         String database = getDataBaseName(url);
         schema = new DbSpec().addSchema(database);
+
+        // FIXME: 2020-02-28 temporary
+        connectionFactory = new DefaultConnection() ;
     }
 
 
@@ -49,15 +58,7 @@ public class SqlSession {
     }
 
     public Connection getConnection() {
-        if (connection == null) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                connection = DriverManager.getConnection(url, userName, pwd);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return connection;
+        return connectionFactory.getConnection(session) ;
     }
 
     public DbTable addTable(String tableName){
