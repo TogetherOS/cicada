@@ -7,6 +7,7 @@ public abstract class InitializeHandle {
 
     /**
      *
+     * @throws Exception
      */
     public abstract void handle() throws Exception;
 }

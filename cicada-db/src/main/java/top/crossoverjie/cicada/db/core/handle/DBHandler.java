@@ -30,7 +30,7 @@ import java.util.Map;
  * @since JDK 1.8
  */
 @Slf4j
-public class DBHandleImpl extends SqlSessionFactory implements DBHandle {
+public class DBHandler extends SqlSessionFactory implements DBHandle {
 
     private DbTable dbTable;
 

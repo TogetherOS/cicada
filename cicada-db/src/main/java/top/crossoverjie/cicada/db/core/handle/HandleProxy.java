@@ -27,10 +27,10 @@ public class HandleProxy<T> {
 
     public T getInstance(DataChangeListener listener) {
         this.listener = listener ;
-        return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[] {clazz}, new ProxyInvocation(DBHandleImpl.class));
+        return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[] {clazz}, new ProxyInvocation(DBHandler.class));
     }
     public T getInstance() {
-        return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[] {clazz}, new ProxyInvocation(DBHandleImpl.class));
+        return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[] {clazz}, new ProxyInvocation(DBHandler.class));
     }
 
 
