@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import top.crossoverjie.cicada.base.bean.CicadaBeanFactory;
 import top.crossoverjie.cicada.base.log.LoggerBuilder;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 
 /**
@@ -18,7 +18,7 @@ public class CicadaIoc implements CicadaBeanFactory {
 
     private static final Logger LOGGER = LoggerBuilder.getLogger(CicadaIoc.class) ;
 
-    private static Map<String,Object> beans = new HashMap<>(16) ;
+    private static Map<String,Object> beans = new ConcurrentHashMap<>(16) ;
 
     @Override
     public void register(Object object) {
