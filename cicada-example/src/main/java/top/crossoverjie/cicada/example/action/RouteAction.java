@@ -10,6 +10,7 @@ import top.crossoverjie.cicada.server.annotation.CicadaAction;
 import top.crossoverjie.cicada.server.annotation.CicadaRoute;
 import top.crossoverjie.cicada.server.bean.CicadaBeanManager;
 import top.crossoverjie.cicada.server.context.CicadaContext;
+import top.crossoverjie.cicada.server.enums.HttpMethod;
 
 /**
  * Function:
@@ -68,6 +69,11 @@ public class RouteAction {
         ExceptionHandle bean = CicadaBeanManager.getInstance().getBean(ExceptionHandle.class);
         LOGGER.info("====" +bean.getClass());
         context.html("<p>12345</p>");
+    }
+
+    @CicadaRoute(value = "method",method = HttpMethod.POST)
+    public void methodSupport(CicadaContext context){
+        context.text("POST only");
     }
 
 }
