@@ -2,8 +2,11 @@ package top.crossoverjie.cicada.example.action;
 
 import lombok.extern.slf4j.Slf4j;
 import top.crossoverjie.cicada.db.core.DBQuery;
+import top.crossoverjie.cicada.db.core.handle.DBHandle;
+import top.crossoverjie.cicada.db.core.handle.HandleProxy;
 import top.crossoverjie.cicada.db.sql.EqualToCondition;
 import top.crossoverjie.cicada.example.exception.ExceptionHandle;
+import top.crossoverjie.cicada.example.listener.UserSaveListener;
 import top.crossoverjie.cicada.example.model.User;
 import top.crossoverjie.cicada.example.req.DemoReq;
 import top.crossoverjie.cicada.server.action.req.Cookie;
@@ -36,6 +39,19 @@ public class RouteAction {
                 .addCondition(new EqualToCondition("id", 1)).all();
         reqWorkRes.setDataBody(all);
         CicadaContext.getContext().json(reqWorkRes);
+    }
+
+
+    @CicadaRoute("saveUser")
+    public void saveUser(DemoReq req){
+        DBHandle handle = (DBHandle) new HandleProxy(DBHandle.class).getInstance(new UserSaveListener()) ;
+        User user = new User();
+        user.setName(req.getName());
+        handle.insert(user);
+        WorkRes workRes = new WorkRes();
+        workRes.setCode("200");
+        workRes.setMessage("success");
+        CicadaContext.getContext().json(workRes);
     }
 
     @CicadaRoute("getUserText")
