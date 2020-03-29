@@ -36,7 +36,8 @@ public class RouteAction {
         log.info(req.toString());
         WorkRes<List> reqWorkRes = new WorkRes<>();
 
-        List<User> all = new DBQuery<User>().query(User.class).addCondition(new EqualToCondition("password", "abc123"))
+        List<User> all = new DBQuery<User>().query(User.class)
+                .addCondition(new EqualToCondition("password", "abc123"))
                 .addCondition(new EqualToCondition("id", 1)).all();
         reqWorkRes.setDataBody(all);
         CicadaContext.getContext().json(reqWorkRes);
@@ -44,8 +45,8 @@ public class RouteAction {
 
 
     @CicadaRoute("saveUser")
-    public void saveUser(DemoReq req){
-        DBHandle handle = (DBHandle) new HandleProxy(DBHandle.class).getInstance(new UserSaveListener()) ;
+    public void saveUser(DemoReq req) {
+        DBHandle handle = (DBHandle) new HandleProxy(DBHandle.class).getInstance(new UserSaveListener());
         User user = new User();
         user.setName(req.getName());
         handle.insert(user);
@@ -56,8 +57,8 @@ public class RouteAction {
     }
 
     @CicadaRoute("updateUser")
-    public void updateUser(DemoReq req){
-        DBHandle handle = (DBHandle) new HandleProxy(DBHandle.class).getInstance(new UserUpdateListener()) ;
+    public void updateUser(DemoReq req) {
+        DBHandle handle = (DBHandle) new HandleProxy(DBHandle.class).getInstance(new UserUpdateListener());
         User user = new User();
         user.setId(req.getId());
         user.setName(req.getName());
