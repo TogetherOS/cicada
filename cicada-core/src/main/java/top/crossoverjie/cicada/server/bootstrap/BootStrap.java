@@ -28,9 +28,9 @@ import static top.crossoverjie.cicada.server.constant.CicadaConstant.SystemPrope
  *         Date: 2018/9/10 21:56
  * @since JDK 1.8
  */
-public class NettyBootStrap {
+public class BootStrap {
 
-    private final static Logger LOGGER = LoggerBuilder.getLogger(NettyBootStrap.class);
+    private final static Logger LOGGER = LoggerBuilder.getLogger(BootStrap.class);
 
     private static AppConfig appConfig = AppConfig.getInstance() ;
     private static EventLoopGroup boss = new NioEventLoopGroup(1,new DefaultThreadFactory("boss"));

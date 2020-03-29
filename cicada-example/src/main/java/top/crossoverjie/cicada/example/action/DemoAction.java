@@ -26,6 +26,7 @@ import static top.crossoverjie.cicada.server.configuration.ConfigurationHolder.g
  * @since JDK 1.8
  */
 @CicadaAction(value = "demoAction")
+@Deprecated
 public class DemoAction implements WorkAction {
 
 

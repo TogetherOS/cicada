@@ -24,6 +24,7 @@
         <module>cicada-example</module>
         <module>cicada-ioc</module>
         <module>cicada-base</module>
+        <module>cicada-db</module>
     </modules>
 
     <properties>
@@ -103,6 +104,7 @@
                 <artifactId>cicada-base</artifactId>
                 <version>1.0.3</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 
