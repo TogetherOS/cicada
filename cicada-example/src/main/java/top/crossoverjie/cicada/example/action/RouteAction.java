@@ -39,6 +39,7 @@ public class RouteAction {
         List<User> all = new DBQuery<User>().query(User.class)
                 .addCondition(new EqualToCondition("password", "abc123"))
                 .addCondition(new EqualToCondition("id", req.getId())).all();
+
         reqWorkRes.setDataBody(all);
         CicadaContext.getContext().json(reqWorkRes);
     }
