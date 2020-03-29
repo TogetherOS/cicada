@@ -7,6 +7,7 @@ import top.crossoverjie.cicada.db.core.handle.HandleProxy;
 import top.crossoverjie.cicada.db.sql.EqualToCondition;
 import top.crossoverjie.cicada.example.exception.ExceptionHandle;
 import top.crossoverjie.cicada.example.listener.UserSaveListener;
+import top.crossoverjie.cicada.example.listener.UserUpdateListener;
 import top.crossoverjie.cicada.example.model.User;
 import top.crossoverjie.cicada.example.req.DemoReq;
 import top.crossoverjie.cicada.server.action.req.Cookie;
@@ -51,6 +52,20 @@ public class RouteAction {
         WorkRes workRes = new WorkRes();
         workRes.setCode("200");
         workRes.setMessage("success");
+        CicadaContext.getContext().json(workRes);
+    }
+
+    @CicadaRoute("updateUser")
+    public void updateUser(DemoReq req){
+        DBHandle handle = (DBHandle) new HandleProxy(DBHandle.class).getInstance(new UserUpdateListener()) ;
+        User user = new User();
+        user.setId(req.getId());
+        user.setName(req.getName());
+        int count = handle.update(user);
+        WorkRes workRes = new WorkRes();
+        workRes.setCode("200");
+        workRes.setMessage("success");
+        workRes.setDataBody(count);
         CicadaContext.getContext().json(workRes);
     }
 
