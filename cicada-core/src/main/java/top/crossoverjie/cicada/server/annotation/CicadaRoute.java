@@ -1,6 +1,8 @@
 package top.crossoverjie.cicada.server.annotation;
 
 
+import top.crossoverjie.cicada.server.enums.HttpMethod;
+
 import java.lang.annotation.*;
 
 @Target(ElementType.METHOD)
@@ -9,4 +11,6 @@ import java.lang.annotation.*;
 public @interface CicadaRoute {
 
     String value() default "" ;
+
+    HttpMethod[] method() default {};
 }

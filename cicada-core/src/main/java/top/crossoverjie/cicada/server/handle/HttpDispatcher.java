@@ -84,7 +84,7 @@ public final class HttpDispatcher extends SimpleChannelInboundHandler<DefaultHtt
             }
 
             // execute Method
-            Method method = routerScanner.routeMethod(queryStringDecoder);
+            Method method = routerScanner.routeMethod(cicadaRequest.getMethod(),queryStringDecoder);
             routeProcess.invoke(method,queryStringDecoder) ;
 
 

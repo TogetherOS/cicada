@@ -18,6 +18,8 @@ public enum StatusEnum {
     /** empty of package */
     NULL_PACKAGE("8000", "Your main class is empty of package"),
 
+    REPEAT_ROUTE("8000","Request correspond multiple method"),
+
     /** 404 */
     NOT_FOUND("404", "Need to declare a method by using @CicadaRoute!"),
 
