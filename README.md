@@ -292,7 +292,7 @@ public class ExceptionHandle implements GlobalHandelException {
 
 ## Performance Test
 
-![](https://ws4.sinaimg.cn/large/006tNbRwly1fv4luap7w0j31kw0iwdnu.jpg)
+![](https://user-images.githubusercontent.com/15684156/50533885-5dd41900-0b6e-11e9-925f-6ee563664f85.png)
 
 > Test Conditions: 100 threads and 100 connections ;1G RAM/4 CPU
 
